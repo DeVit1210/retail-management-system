@@ -1,4 +1,4 @@
-package by.bsuir.retail.entity.warehouse;
+package by.bsuir.retail.entity.products;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

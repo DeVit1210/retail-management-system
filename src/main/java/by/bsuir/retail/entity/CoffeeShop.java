@@ -2,7 +2,7 @@ package by.bsuir.retail.entity;
 
 import by.bsuir.retail.entity.users.Cashier;
 import by.bsuir.retail.entity.users.CoffeeShopManager;
-import by.bsuir.retail.entity.warehouse.Material;
+import by.bsuir.retail.entity.products.Material;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +30,7 @@ public class CoffeeShop {
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "warehouse")
-    @MapKeyColumn(name = "material_id")
+    @MapKeyColumn
     @Column(name = "quantity")
     private Map<Material, Integer> warehouse;
 }
