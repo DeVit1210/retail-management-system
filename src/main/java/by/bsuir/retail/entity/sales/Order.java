@@ -30,4 +30,6 @@ public class Order {
     @Column(name = "quantity")
     private Map<Product, Double> composition;
     private int discountPercent;
+    @OneToOne
+    private Payment payment;
 }

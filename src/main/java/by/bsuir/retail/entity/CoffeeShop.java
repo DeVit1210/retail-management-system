@@ -1,5 +1,6 @@
 package by.bsuir.retail.entity;
 
+import by.bsuir.retail.entity.supply.Supply;
 import by.bsuir.retail.entity.users.Cashier;
 import by.bsuir.retail.entity.users.CoffeeShopManager;
 import by.bsuir.retail.entity.products.Material;
@@ -27,6 +28,9 @@ public class CoffeeShop {
 
     @OneToMany(mappedBy = "coffeeShop")
     private List<Cashier> cashierList;
+
+    @OneToMany(mappedBy = "coffeeShop")
+    private List<Supply> supplyList;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "warehouse")

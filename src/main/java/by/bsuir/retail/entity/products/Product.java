@@ -1,7 +1,10 @@
 package by.bsuir.retail.entity.products;
 
+import by.bsuir.retail.entity.sales.OrderLine;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -16,4 +19,6 @@ public class Product {
     private String name;
     private int weight;
     private double saleCost;
+    @OneToMany(mappedBy = "product")
+    private List<OrderLine> salesHistory;
 }

@@ -18,7 +18,6 @@ public class TechProcess {
     private long id;
     @OneToOne
     private Product createdProduct;
-
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "material_composition")
     @MapKeyColumn
