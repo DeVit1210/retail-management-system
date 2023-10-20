@@ -19,6 +19,6 @@ public class Product {
     private String name;
     private int weight;
     private double saleCost;
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<OrderLine> salesHistory;
 }

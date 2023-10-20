@@ -1,4 +1,4 @@
-package by.bsuir.retail.security;
+package by.bsuir.retail.security.converter;
 
 import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;

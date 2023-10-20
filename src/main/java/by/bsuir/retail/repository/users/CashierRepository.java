@@ -1,7 +1,10 @@
 package by.bsuir.retail.repository.users;
 
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import by.bsuir.retail.entity.users.Cashier;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CashierRepository extends ReactiveCrudRepository<CashierRepository, Long> {
+import java.util.Optional;
 
+public interface CashierRepository extends JpaRepository<Cashier, Long> {
+    Optional<Cashier> findByUsername(String username);
 }

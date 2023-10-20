@@ -1,4 +1,4 @@
-package by.bsuir.retail.security;
+package by.bsuir.retail.security.converter;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,8 +15,7 @@ public class AuthenticationCreator {
         Claims claims = verificationResult.getClaims();
         String username = claims.getSubject();
         Date expiration = claims.getExpiration();
-        GrantedAuthority role = claims.get("role", GrantedAuthority.class);
         CustomPrincipal customPrincipal = new CustomPrincipal(username, expiration);
-        return new UsernamePasswordAuthenticationToken(customPrincipal, null, Collections.singletonList(role));
+        return new UsernamePasswordAuthenticationToken(customPrincipal, null);
     }
 }

@@ -1,6 +1,6 @@
 package by.bsuir.retail.security.jwt;
 
-import by.bsuir.retail.security.VerificationResult;
+import by.bsuir.retail.security.converter.VerificationResult;
 import by.bsuir.retail.security.exception.AuthException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

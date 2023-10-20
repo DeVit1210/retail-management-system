@@ -1,6 +1,10 @@
 package by.bsuir.retail.repository.users;
 
+import by.bsuir.retail.entity.users.NetworkManager;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 
-public interface NetworkManagerRepository extends ReactiveCrudRepository<CashierRepository, Long> {
+import java.util.Optional;
+
+public interface NetworkManagerRepository extends ReactiveCrudRepository<NetworkManager, Long> {
+    Optional<NetworkManager> findByUsername(String username);
 }
