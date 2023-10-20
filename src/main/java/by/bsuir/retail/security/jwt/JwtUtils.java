@@ -1,8 +1,7 @@
 package by.bsuir.retail.security.jwt;
 
-import by.bsuir.retail.security.exception.AuthException;
-import by.bsuir.retail.security.exception.TokenExpiredException;
 import by.bsuir.retail.security.VerificationResult;
+import by.bsuir.retail.security.exception.AuthException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -64,11 +62,11 @@ public class JwtUtils {
 //        return (userDetails.getUsername().equals(username) && !isTokenExpired(token));
 //    }
 
-    public Mono<VerificationResult> isTokenExpired(String token)  {
+    public VerificationResult verifyToken(String token)  {
         if(extractExpirationDate(token).after(new Date(System.currentTimeMillis()))) {
             throw new AuthException("token is expired!", "TOKEN_EXPIRED");
         }
-        return Mono.just(new VerificationResult(extractAllClaims(token), token));
+        return new VerificationResult(extractAllClaims(token), token);
     }
 
     public Claims extractAllClaims(String token) {
