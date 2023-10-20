@@ -1,4 +1,4 @@
-package by.bsuir.retail.security.exception;
+package by.bsuir.retail.security.enhanced.exception;
 
 public class ApiException extends RuntimeException {
     protected String errorCode;

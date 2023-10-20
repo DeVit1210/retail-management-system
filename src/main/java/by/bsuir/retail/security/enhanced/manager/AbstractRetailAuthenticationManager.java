@@ -1,8 +1,7 @@
-package by.bsuir.retail.security.manager;
+package by.bsuir.retail.security.enhanced.manager;
 
 import by.bsuir.retail.entity.users.Role;
-import by.bsuir.retail.security.exception.AuthException;
-import io.jsonwebtoken.Claims;
+import by.bsuir.retail.security.enhanced.exception.AuthException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

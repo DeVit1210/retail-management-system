@@ -1,4 +1,4 @@
-package by.bsuir.retail.security.config;
+package by.bsuir.retail.security.enhanced.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

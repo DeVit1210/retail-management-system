@@ -1,4 +1,4 @@
-package by.bsuir.retail.security.converter;
+package by.bsuir.retail.security.enhanced.converter;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

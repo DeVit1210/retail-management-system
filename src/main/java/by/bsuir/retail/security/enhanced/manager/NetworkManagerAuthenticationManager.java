@@ -1,9 +1,9 @@
-package by.bsuir.retail.security.manager;
+package by.bsuir.retail.security.enhanced.manager;
 
 import by.bsuir.retail.entity.users.NetworkManager;
 import by.bsuir.retail.entity.users.Role;
 import by.bsuir.retail.repository.users.NetworkManagerRepository;
-import by.bsuir.retail.security.converter.CustomPrincipal;
+import by.bsuir.retail.security.enhanced.converter.CustomPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

@@ -1,4 +1,4 @@
-package by.bsuir.retail.security.exception;
+package by.bsuir.retail.security.enhanced.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

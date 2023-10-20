@@ -1,13 +1,14 @@
-package by.bsuir.retail.security.config;
+package by.bsuir.retail.security.enhanced.config;
 
-import by.bsuir.retail.security.manager.CashierAuthenticationManager;
-import by.bsuir.retail.security.manager.CoffeeShopManagerAuthenticationManager;
-import by.bsuir.retail.security.manager.NetworkManagerAuthenticationManager;
+import by.bsuir.retail.security.enhanced.manager.CashierAuthenticationManager;
+import by.bsuir.retail.security.enhanced.manager.CoffeeShopManagerAuthenticationManager;
+import by.bsuir.retail.security.enhanced.manager.NetworkManagerAuthenticationManager;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManagerResolver;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.util.function.BiPredicate;
 
@@ -28,4 +29,5 @@ public class AuthenticationManagerResolverConfig {
             } else return coffeeShopManagerAuthenticationManager;
         };
     }
+
 }
