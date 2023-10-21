@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManagerResolver;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.util.function.BiPredicate;
 
