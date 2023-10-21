@@ -20,6 +20,6 @@ public class CoffeeShopManagerAuthenticationManager extends AbstractRetailAuthen
         CoffeeShopManager coffeeShopManager = coffeeShopManagerRepository.findByUsername(principal.getUsername())
                 .orElseThrow(RuntimeException::new);
         verifyUser(coffeeShopManager, CoffeeShopManager.class);
-        return new UsernamePasswordAuthenticationToken(principal, null, getAuthorities(Role.COFFEE_SHOP_MANAGER));
+        return new UsernamePasswordAuthenticationToken(principal, coffeeShopManager, getAuthorities(Role.COFFEE_SHOP_MANAGER));
     }
 }

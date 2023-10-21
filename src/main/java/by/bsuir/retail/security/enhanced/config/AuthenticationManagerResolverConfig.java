@@ -1,5 +1,7 @@
 package by.bsuir.retail.security.enhanced.config;
 
+import by.bsuir.retail.entity.users.Role;
+import by.bsuir.retail.request.auth.AuthenticationRequest;
 import by.bsuir.retail.security.enhanced.manager.CashierAuthenticationManager;
 import by.bsuir.retail.security.enhanced.manager.CoffeeShopManagerAuthenticationManager;
 import by.bsuir.retail.security.enhanced.manager.NetworkManagerAuthenticationManager;

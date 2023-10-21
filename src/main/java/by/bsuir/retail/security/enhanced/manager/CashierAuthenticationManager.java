@@ -4,8 +4,10 @@ import by.bsuir.retail.entity.users.Cashier;
 import by.bsuir.retail.entity.users.Role;
 import by.bsuir.retail.repository.users.CashierRepository;
 import by.bsuir.retail.security.enhanced.converter.CustomPrincipal;
+import by.bsuir.retail.service.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
@@ -19,8 +21,8 @@ public class CashierAuthenticationManager extends AbstractRetailAuthenticationMa
         CustomPrincipal principal = (CustomPrincipal) authentication.getPrincipal();
         // TODO: create some custom exception for wrong user principals
         Cashier cashier = cashierRepository.findByUsername(principal.getUsername())
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new UserNotFoundException(Role.CASHIER));
         verifyUser(cashier, Cashier.class);
-        return new UsernamePasswordAuthenticationToken(principal, null, getAuthorities(Role.CASHIER));
+        return new UsernamePasswordAuthenticationToken(principal, cashier, getAuthorities(Role.CASHIER));
     }
 }

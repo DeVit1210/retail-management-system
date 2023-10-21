@@ -2,9 +2,8 @@ package by.bsuir.retail.entity.users;
 
 import by.bsuir.retail.entity.CoffeeShop;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -15,8 +14,9 @@ import java.util.Collections;
 @PrimaryKeyJoinColumn
 @Table(name = "cashiers")
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
 public class Cashier extends User {
     @Id
     private long id;

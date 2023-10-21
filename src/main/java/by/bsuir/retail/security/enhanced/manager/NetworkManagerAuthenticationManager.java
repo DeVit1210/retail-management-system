@@ -20,6 +20,6 @@ public class NetworkManagerAuthenticationManager extends AbstractRetailAuthentic
         NetworkManager networkManager = networkManagerRepository.findByUsername(principal.getUsername())
                 .orElseThrow(RuntimeException::new);
         verifyUser(networkManager, NetworkManager.class);
-        return new UsernamePasswordAuthenticationToken(principal, null, getAuthorities(Role.NETWORK_MANAGER));
+        return new UsernamePasswordAuthenticationToken(principal, networkManager, getAuthorities(Role.NETWORK_MANAGER));
     }
 }
