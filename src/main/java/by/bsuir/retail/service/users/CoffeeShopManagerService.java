@@ -15,4 +15,8 @@ public class CoffeeShopManagerService {
         return coffeeShopManagerRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException(Role.COFFEE_SHOP_MANAGER));
     }
+
+    public CoffeeShopManager saveManager(CoffeeShopManager manager) {
+        return coffeeShopManagerRepository.save(manager);
+    }
 }

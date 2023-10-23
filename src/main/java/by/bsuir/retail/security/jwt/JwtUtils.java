@@ -15,6 +15,11 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 @Component
@@ -65,7 +70,7 @@ public class JwtUtils {
     }
 
     public VerificationResult verifyToken(String token)  {
-        if(extractExpirationDate(token).after(new Date(System.currentTimeMillis()))) {
+        if (extractExpirationDate(token).after(new Date(System.currentTimeMillis()))) {
             throw new AuthException("token is expired!", "TOKEN_EXPIRED");
         }
         return new VerificationResult(extractAllClaims(token), token);

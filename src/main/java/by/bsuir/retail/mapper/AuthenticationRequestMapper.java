@@ -1,10 +1,9 @@
 package by.bsuir.retail.mapper;
 
 import by.bsuir.retail.request.auth.AuthenticationRequest;
-import by.bsuir.retail.security.simple.CustomUsernamePasswordAuthenticationToken;
+import by.bsuir.retail.security.simple.authtoken.CustomUsernamePasswordAuthenticationToken;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 @Mapper(componentModel = "spring")
 public interface AuthenticationRequestMapper  {

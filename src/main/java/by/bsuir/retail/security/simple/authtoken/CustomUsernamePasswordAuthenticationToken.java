@@ -1,8 +1,6 @@
-package by.bsuir.retail.security.simple;
+package by.bsuir.retail.security.simple.authtoken;
 
 
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Named;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 public class CustomUsernamePasswordAuthenticationToken extends UsernamePasswordAuthenticationToken {

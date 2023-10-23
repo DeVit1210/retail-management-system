@@ -2,8 +2,6 @@ package by.bsuir.retail.security.jwt.claims;
 
 import by.bsuir.retail.entity.users.Cashier;
 import by.bsuir.retail.service.users.CashierService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ClaimsMutator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

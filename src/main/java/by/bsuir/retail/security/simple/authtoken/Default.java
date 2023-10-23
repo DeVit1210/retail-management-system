@@ -1,4 +1,4 @@
-package by.bsuir.retail.security.simple;
+package by.bsuir.retail.security.simple.authtoken;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

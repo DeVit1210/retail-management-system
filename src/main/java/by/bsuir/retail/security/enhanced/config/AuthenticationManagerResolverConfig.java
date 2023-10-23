@@ -1,7 +1,5 @@
 package by.bsuir.retail.security.enhanced.config;
 
-import by.bsuir.retail.entity.users.Role;
-import by.bsuir.retail.request.auth.AuthenticationRequest;
 import by.bsuir.retail.security.enhanced.manager.CashierAuthenticationManager;
 import by.bsuir.retail.security.enhanced.manager.CoffeeShopManagerAuthenticationManager;
 import by.bsuir.retail.security.enhanced.manager.NetworkManagerAuthenticationManager;
@@ -16,9 +14,9 @@ import java.util.function.BiPredicate;
 @Configuration
 @RequiredArgsConstructor
 public class AuthenticationManagerResolverConfig {
-    private CashierAuthenticationManager cashierAuthenticationManager;
-    private NetworkManagerAuthenticationManager networkManagerAuthenticationManager;
-    private CoffeeShopManagerAuthenticationManager coffeeShopManagerAuthenticationManager;
+    private final CashierAuthenticationManager cashierAuthenticationManager;
+    private final NetworkManagerAuthenticationManager networkManagerAuthenticationManager;
+    private final CoffeeShopManagerAuthenticationManager coffeeShopManagerAuthenticationManager;
     @Bean
     public AuthenticationManagerResolver<HttpServletRequest> authenticationManagerResolver() {
         return httpServletRequest -> {
