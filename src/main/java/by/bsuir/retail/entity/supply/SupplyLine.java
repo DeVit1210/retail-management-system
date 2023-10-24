@@ -23,7 +23,7 @@ public class SupplyLine {
     private long id;
     @ManyToOne
     private Material material;
-    LocalDateTime purchasedAt;
+    private LocalDateTime purchasedAt;
     private double purchaseCost;
     private int quantity;
 }

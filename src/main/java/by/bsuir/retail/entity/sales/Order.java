@@ -28,7 +28,7 @@ public class Order {
     @CollectionTable(name = "product_composition")
     @MapKeyColumn
     @Column(name = "quantity")
-    private Map<Product, Double> composition;
+    private Map<Product, Integer> composition;
     private int discountPercent;
     @OneToOne
     private Payment payment;

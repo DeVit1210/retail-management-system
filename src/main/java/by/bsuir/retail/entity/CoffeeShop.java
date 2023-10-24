@@ -5,9 +5,7 @@ import by.bsuir.retail.entity.users.Cashier;
 import by.bsuir.retail.entity.users.CoffeeShopManager;
 import by.bsuir.retail.entity.products.Material;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 import java.util.Map;
@@ -15,12 +13,15 @@ import java.util.Map;
 @Entity
 @Table(name = "coffee_shops")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class CoffeeShop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String name;
     private String address;
 
     @OneToOne

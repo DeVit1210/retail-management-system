@@ -3,6 +3,8 @@ package by.bsuir.retail.entity.products;
 import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.entity.products.Material;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +14,8 @@ import java.util.Map;
 @Table(name = "tech_processes")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TechProcess {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
