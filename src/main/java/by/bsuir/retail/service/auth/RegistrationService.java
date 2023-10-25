@@ -1,6 +1,5 @@
 package by.bsuir.retail.service.auth;
 
-import by.bsuir.retail.entity.users.Role;
 import by.bsuir.retail.mapper.RegistrationRequestMapper;
 import by.bsuir.retail.request.auth.RegistrationRequest;
 import by.bsuir.retail.response.auth.RegistrationResponse;
