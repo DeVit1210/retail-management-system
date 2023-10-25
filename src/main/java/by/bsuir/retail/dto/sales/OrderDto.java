@@ -13,6 +13,7 @@ public class OrderDto {
     private String createdAt;
     private Map<String, Integer> orderComposition;
     private int discountPercent;
-    private int totalCostWithDiscount;
-    private int totalCostWithoutDiscount;
+    private double totalCost;
+//    private int totalCostWithDiscount;
+//    private int totalCostWithoutDiscount;
 }

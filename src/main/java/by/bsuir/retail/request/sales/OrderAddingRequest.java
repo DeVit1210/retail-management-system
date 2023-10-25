@@ -10,4 +10,6 @@ public class OrderAddingRequest {
     private String createdAt;
     private Map<Long, Integer> orderComposition;
     private int discountPercent;
+    private double paidInCash;
+    private double paidWithCard;
 }

@@ -9,15 +9,16 @@ import by.bsuir.retail.service.products.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-@RequiredArgsConstructor
 public abstract class TechProcessMapper {
+    @Autowired
     protected ProductService productService;
+    @Autowired
     protected MaterialService materialService;
     @Mapping(target = "processId", source = "techProcess.id")
     @Mapping(target = "createdProductName", source = "techProcess.createdProduct.name")
