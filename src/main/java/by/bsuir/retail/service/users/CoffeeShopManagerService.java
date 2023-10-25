@@ -19,4 +19,8 @@ public class CoffeeShopManagerService {
     public CoffeeShopManager saveManager(CoffeeShopManager manager) {
         return coffeeShopManagerRepository.save(manager);
     }
+
+    public void deleteManager(long id) {
+        coffeeShopManagerRepository.deleteById(id);
+    }
 }
