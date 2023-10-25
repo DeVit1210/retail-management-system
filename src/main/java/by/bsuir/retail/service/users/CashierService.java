@@ -15,7 +15,7 @@ public class CashierService {
         return cashierRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(Role.CASHIER));
     }
     public Cashier saveCashier(Cashier cashier) {
-        cashierRepository.save(cashier);
+        return cashierRepository.save(cashier);
     }
     public void deleteCashier(long id) {
         cashierRepository.deleteById(id);

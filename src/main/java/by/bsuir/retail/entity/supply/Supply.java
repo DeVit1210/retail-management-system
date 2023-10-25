@@ -30,4 +30,5 @@ public class Supply {
     @MapKeyColumn
     @Column(name = "quantity")
     private Map<Material, Integer> composition;
+    private double totalCost;
 }

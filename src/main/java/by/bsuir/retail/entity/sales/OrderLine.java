@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class OrderLine {
-    // TODO: contemplate about creating CreatingHistory class
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
