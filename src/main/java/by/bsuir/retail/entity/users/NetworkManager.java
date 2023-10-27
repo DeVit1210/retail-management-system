@@ -1,5 +1,6 @@
 package by.bsuir.retail.entity.users;
 
+import by.bsuir.retail.entity.RetailManagementEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -16,7 +17,7 @@ import java.util.Collections;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
-public class NetworkManager extends User {
+public class NetworkManager extends User implements RetailManagementEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

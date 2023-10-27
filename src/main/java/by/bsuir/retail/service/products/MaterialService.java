@@ -1,6 +1,7 @@
 package by.bsuir.retail.service.products;
 
 import by.bsuir.retail.entity.products.Material;
+import by.bsuir.retail.mapper.products.MaterialMapper;
 import by.bsuir.retail.repository.products.MaterialRepository;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import lombok.RequiredArgsConstructor;
@@ -14,4 +15,5 @@ public class MaterialService {
         return materialRepository.findById(materialId)
                 .orElseThrow(() -> new WrongRetailEntityIdException(Material.class, materialId));
     }
+
 }

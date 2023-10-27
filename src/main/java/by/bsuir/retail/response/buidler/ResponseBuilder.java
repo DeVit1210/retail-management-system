@@ -1,5 +1,8 @@
 package by.bsuir.retail.response.buidler;
 
+import by.bsuir.retail.entity.RetailManagementEntity;
+import by.bsuir.retail.response.entity.MultipleEntityResponse;
+import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.response.auth.AuthenticationResponse;
 import by.bsuir.retail.response.auth.RegistrationResponse;
 import by.bsuir.retail.security.jwt.JwtUtils;
@@ -11,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -36,5 +40,13 @@ public class ResponseBuilder {
                 )
                 .build()
         );
+    }
+
+    public ResponseEntity<MultipleEntityResponse> buildMultipleEntityResponse(List<? extends RetailManagementEntity> response) {
+        return ResponseEntity.ok(MultipleEntityResponse.builder().response(response).build());
+    }
+
+    public ResponseEntity<SingleEntityResponse> buildSingleEntityResponse(RetailManagementEntity response) {
+        return ResponseEntity.ok(SingleEntityResponse.builder().response(response).build());
     }
 }

@@ -1,5 +1,6 @@
 package by.bsuir.retail.entity.products;
 
+import by.bsuir.retail.entity.RetailManagementEntity;
 import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.entity.products.Material;
 import jakarta.persistence.*;
@@ -16,7 +17,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TechProcess {
+public class TechProcess implements RetailManagementEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

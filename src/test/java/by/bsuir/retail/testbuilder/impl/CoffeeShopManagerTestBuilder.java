@@ -15,7 +15,7 @@ public class CoffeeShopManagerTestBuilder implements TestBuilder<CoffeeShopManag
     private String password = "password";
     private boolean enabled = false;
     private String fullName = "fullName";
-    private CoffeeShop managedCoffeeShop = CoffeeShopTestBuilder.builder().build();
+    private CoffeeShop managedCoffeeShop = new CoffeeShop();
 
     @Override
     public CoffeeShopManager build() {

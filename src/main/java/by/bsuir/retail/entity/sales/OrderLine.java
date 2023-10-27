@@ -1,5 +1,6 @@
 package by.bsuir.retail.entity.sales;
 
+import by.bsuir.retail.entity.RetailManagementEntity;
 import by.bsuir.retail.entity.products.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderLine {
+public class OrderLine implements RetailManagementEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

@@ -1,11 +1,12 @@
 package by.bsuir.retail.dto.supply;
 
+import by.bsuir.retail.entity.RetailManagementEntity;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
-public class SupplierDto {
+public class SupplierDto implements RetailManagementEntity {
     private long id;
     private String companyName;
     private String phoneNumber;

@@ -1,5 +1,6 @@
 package by.bsuir.retail.entity.supply;
 
+import by.bsuir.retail.entity.RetailManagementEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Supplier {
+public class Supplier implements RetailManagementEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

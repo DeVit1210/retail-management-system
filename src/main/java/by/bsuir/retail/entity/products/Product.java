@@ -1,5 +1,6 @@
 package by.bsuir.retail.entity.products;
 
+import by.bsuir.retail.entity.RetailManagementEntity;
 import by.bsuir.retail.entity.sales.OrderLine;
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Product {
+public class Product implements RetailManagementEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

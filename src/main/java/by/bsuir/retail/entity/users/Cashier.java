@@ -1,6 +1,7 @@
 package by.bsuir.retail.entity.users;
 
 import by.bsuir.retail.entity.CoffeeShop;
+import by.bsuir.retail.entity.RetailManagementEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -17,7 +18,7 @@ import java.util.Collections;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
-public class Cashier extends User {
+public class Cashier extends User implements RetailManagementEntity {
     @Id
     private long id;
     private String fullName;

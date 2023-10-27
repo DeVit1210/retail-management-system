@@ -1,6 +1,7 @@
 package by.bsuir.retail.entity.users;
 
 import by.bsuir.retail.entity.CoffeeShop;
+import by.bsuir.retail.entity.RetailManagementEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -17,7 +18,7 @@ import java.util.Collections;
 @Getter
 @Setter
 @SuperBuilder
-public class CoffeeShopManager extends User {
+public class CoffeeShopManager extends User implements RetailManagementEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
