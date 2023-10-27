@@ -4,6 +4,7 @@ import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.entity.sales.Payment;
 import by.bsuir.retail.repository.sales.OrderRepository;
 import by.bsuir.retail.repository.sales.PaymentRepository;
+import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class OrderService {
 
     public Order findById(long orderId) {
         return orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalArgumentException("order with such id was not found: " + orderId));
+                .orElseThrow(() -> new WrongRetailEntityIdException(Order.class, orderId));
     }
 
     public double getOrderTotalCost(Order order) {

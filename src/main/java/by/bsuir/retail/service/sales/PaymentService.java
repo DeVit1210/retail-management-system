@@ -2,6 +2,7 @@ package by.bsuir.retail.service.sales;
 
 import by.bsuir.retail.entity.sales.Payment;
 import by.bsuir.retail.repository.sales.PaymentRepository;
+import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ public class PaymentService {
 
     public Payment findById(long paymentId) {
         return paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new IllegalArgumentException("payment with such id was not found: " + paymentId));
+                .orElseThrow(() -> new WrongRetailEntityIdException(Payment.class, paymentId));
     }
 
     public double getPaymentTotalCost(Payment payment) {

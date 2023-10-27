@@ -2,6 +2,7 @@ package by.bsuir.retail.service.products;
 
 import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.repository.products.ProductRepository;
+import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     public Product findById(long productId) {
         return productRepository.findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("product with such id was not found: " + productId));
+                .orElseThrow(() -> new WrongRetailEntityIdException(Product.class, productId));
     }
 
     public double calculateProductCost(long productId, int discountPercent) {
