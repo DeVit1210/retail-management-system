@@ -36,6 +36,8 @@ public abstract class SupplyMapper {
     @Mapping(target = "composition", expression = "java(mapComposition(request))")
     public abstract Supply toSupply(SupplyAddingRequest request);
 
+    public abstract List<SupplyDto> toSupplyDtoList(List<Supply> supplyList);
+
     protected Map<String, Integer> mapComposition(Supply supply) {
         return supply.getComposition().entrySet()
                 .stream()

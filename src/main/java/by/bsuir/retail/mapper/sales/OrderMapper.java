@@ -4,6 +4,7 @@ import by.bsuir.retail.dto.sales.OrderDto;
 import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.request.sales.OrderAddingRequest;
+import by.bsuir.retail.service.CalculatingService;
 import by.bsuir.retail.service.products.ProductService;
 import by.bsuir.retail.service.sales.OrderService;
 import by.bsuir.retail.service.users.CashierService;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public abstract class OrderMapper {
     @Autowired
-    protected OrderService orderService;
+    protected CalculatingService calculatingService;
     @Autowired
     protected CashierService cashierService;
     @Autowired
@@ -26,7 +27,7 @@ public abstract class OrderMapper {
     @Mapping(target = "cashierName", source = "order.cashier.fullName")
     @Mapping(target = "createdAt", source = "createdAt", dateFormat = "yyyy-MM-dd")
     @Mapping(target = "orderComposition", expression = "java(mapOrderComposition(order))")
-    @Mapping(target = "totalCost", expression = "java(orderService.getOrderTotalCost(order))")
+    @Mapping(target = "totalCost", expression = "java(calculatingService.getOrderTotalCost(order))")
     public abstract OrderDto toOrderDto(Order order);
 
     @Mapping(target = "cashier", expression = "java(cashierService.findById(request.getCashierId()))")

@@ -20,4 +20,5 @@ public abstract class SupplyLineMapper {
     @Mapping(target = "material", expression = "java(materialService.findById(materialId))")
     @Mapping(target = "purchasedAt",  expression = "java(java.time.LocalDateTime.now())")
     public abstract SupplyLine toSupplyLine(long materialId, int quantity, double purchaseCost);
+    public abstract List<SupplyLineDto> toSupplyLineDtoList(List<SupplyLine> supplyLineList);
 }

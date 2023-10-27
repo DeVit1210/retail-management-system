@@ -11,6 +11,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,8 @@ public abstract class TechProcessMapper {
     @Mapping(target = "createdProduct", expression = "java(productService.findById(request.getProductId()))")
     @Mapping(target = "ingredients", expression = "java(mapIngredients(request))")
     public abstract TechProcess toTechProcess(TechProcessAddingRequest request);
+
+    public abstract List<TechProcessDto> toTechProcessDtoList(List<TechProcess> techProcessList);
 
     protected Map<String, Integer> mapIngredients(TechProcess techProcess) {
         return techProcess.getIngredients().entrySet()

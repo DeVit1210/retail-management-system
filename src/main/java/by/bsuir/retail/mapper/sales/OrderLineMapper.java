@@ -12,6 +12,7 @@ import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class OrderLineMapper {
@@ -20,11 +21,8 @@ public abstract class OrderLineMapper {
     @Mapping(target = "productName", source = "product.name")
     public abstract OrderLineDto toOrderLineDto(OrderLine orderLine);
     @Mapping(target = "product", expression = "java(productService.findById(productId))")
-    @Mapping(target = "soldAt", expression = "java(getCurrentTime())")
+    @Mapping(target = "soldAt", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "saleCost", expression = "java(productService.calculateProductCost(productId, discountPercent))")
     public abstract OrderLine toOrderLine(Long productId, int quantity, int discountPercent);
-    @Named("currentTime")
-    public LocalDateTime getCurrentTime() {
-        return LocalDateTime.now();
-    }
+    public abstract List<OrderLineDto> toOrderLineDtoList(List<OrderLine> orderLineList);
 }

@@ -6,9 +6,12 @@ import by.bsuir.retail.request.supply.SupplierAddingRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface SupplierMapper {
     @Mapping(target = "supplyQuantity", expression = "java(supplier.getSupplyList().size())")
     SupplierDto toSupplierDto(Supplier supplier);
     Supplier toSupplier(SupplierAddingRequest request);
+    List<SupplierDto> toSupplierDtoList(List<Supplier> supplierList);
 }
