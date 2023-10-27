@@ -13,5 +13,5 @@ public class SupplyDto {
     private String coffeeShopName;
     private String supplierName;
     private Map<String, Integer> supplyComposition;
-    private double totalSupplyCost;
+    private double totalCost;
 }

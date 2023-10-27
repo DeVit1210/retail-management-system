@@ -11,6 +11,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,8 @@ public abstract class OrderMapper {
     @Mapping(target = "createdAt", source = "createdAt", dateFormat = "yyyy-MM-dd")
     @Mapping(target = "composition", expression = "java(mapOrderComposition(request))")
     public abstract Order toOrder(OrderAddingRequest request);
+
+    public abstract List<OrderDto> toOrderDtoList(List<Order> orderList);
 
     protected Map<String, Integer> mapOrderComposition(Order order) {
         return order.getComposition().entrySet()

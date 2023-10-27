@@ -8,7 +8,7 @@ import lombok.Getter;
 public class SupplyLineDto {
     private long id;
     private String materialName;
-    private int materialQuantity;
+    private int quantity;
     private String purchasedAt;
     private double purchaseCost;
 }

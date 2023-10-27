@@ -24,7 +24,6 @@ public class Supply {
     private CoffeeShop coffeeShop;
     @ManyToOne
     private Supplier supplier;
-
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "supply_composition")
     @MapKeyColumn
