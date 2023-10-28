@@ -6,7 +6,6 @@ import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.request.sales.OrderAddingRequest;
 import by.bsuir.retail.service.CalculatingService;
 import by.bsuir.retail.service.products.ProductService;
-import by.bsuir.retail.service.sales.OrderService;
 import by.bsuir.retail.service.users.CashierService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -25,13 +24,13 @@ public abstract class OrderMapper {
     @Autowired
     protected ProductService productService;
     @Mapping(target = "cashierName", source = "order.cashier.fullName")
-    @Mapping(target = "createdAt", source = "createdAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "createdAt", source = "createdAt", dateFormat = "yyyy-MM-dd HH:mm")
     @Mapping(target = "orderComposition", expression = "java(mapOrderComposition(order))")
     @Mapping(target = "totalCost", expression = "java(calculatingService.getOrderTotalCost(order))")
     public abstract OrderDto toOrderDto(Order order);
 
     @Mapping(target = "cashier", expression = "java(cashierService.findById(request.getCashierId()))")
-    @Mapping(target = "createdAt", source = "createdAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "createdAt", source = "createdAt", dateFormat = "yyyy-MM-dd HH:mm")
     @Mapping(target = "composition", expression = "java(mapOrderComposition(request))")
     public abstract Order toOrder(OrderAddingRequest request);
 

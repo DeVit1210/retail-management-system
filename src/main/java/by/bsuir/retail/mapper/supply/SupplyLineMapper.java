@@ -3,13 +3,16 @@ package by.bsuir.retail.mapper.supply;
 import by.bsuir.retail.dto.supply.SupplyLineDto;
 import by.bsuir.retail.entity.supply.SupplyLine;
 import by.bsuir.retail.request.supply.SupplyAddingRequest;
+import by.bsuir.retail.request.supply.SupplyLineAddingRequest;
 import by.bsuir.retail.service.products.MaterialService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValueMappingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Mapper(componentModel = "spring", nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
 public abstract class SupplyLineMapper {
@@ -17,8 +20,27 @@ public abstract class SupplyLineMapper {
     protected MaterialService materialService;
     @Mapping(target = "materialName", source = "material.name")
     public abstract SupplyLineDto toSupplyLineDto(SupplyLine supplyLine);
-    @Mapping(target = "material", expression = "java(materialService.findById(materialId))")
+    @Mapping(target = "material", expression = "java(materialService.findById(request.getMaterialId()))")
     @Mapping(target = "purchasedAt",  expression = "java(java.time.LocalDateTime.now())")
-    public abstract SupplyLine toSupplyLine(long materialId, int quantity, double purchaseCost);
+    public abstract SupplyLine toSupplyLine(SupplyLineAddingRequest request);
     public abstract List<SupplyLineDto> toSupplyLineDtoList(List<SupplyLine> supplyLineList);
+    public abstract List<SupplyLine> toSupplyLineList(List<SupplyLineAddingRequest> supplyLineAddingRequestList);
+    public List<SupplyLineAddingRequest> toSupplyLineRequestList(SupplyAddingRequest request) {
+        List<SupplyLineAddingRequest> supplyLineAddingRequestList = new ArrayList<>();
+
+        List<Long> materialIdList = request.getMaterialIdList();
+        List<Double> materialCostList = request.getMaterialCostList();
+        List<Integer> materialQuantityList = request.getMaterialQuantityList();
+
+        IntStream.range(0, materialQuantityList.size()).forEach(value ->
+            supplyLineAddingRequestList.add(SupplyLineAddingRequest.builder()
+                    .materialId(materialIdList.get(value))
+                    .purchaseCost(materialCostList.get(value))
+                    .quantity(materialQuantityList.get(value))
+                    .build()
+            )
+        );
+
+        return supplyLineAddingRequestList;
+    }
 }

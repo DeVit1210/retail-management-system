@@ -5,13 +5,12 @@ import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.request.products.MaterialAddingRequest;
 import by.bsuir.retail.testbuilder.impl.MaterialTestBuilder;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class MaterialMapperTest {
     @Autowired

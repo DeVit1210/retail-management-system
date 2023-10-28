@@ -10,24 +10,21 @@ import by.bsuir.retail.service.products.ProductService;
 import by.bsuir.retail.testbuilder.impl.MaterialTestBuilder;
 import by.bsuir.retail.testbuilder.impl.ProductTestBuilder;
 import by.bsuir.retail.testbuilder.impl.TechProcessTestBuilder;
-import jakarta.inject.Inject;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:test.properties")

@@ -6,7 +6,6 @@ import by.bsuir.retail.entity.products.TechProcess;
 import by.bsuir.retail.request.products.TechProcessAddingRequest;
 import by.bsuir.retail.service.products.MaterialService;
 import by.bsuir.retail.service.products.ProductService;
-import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;

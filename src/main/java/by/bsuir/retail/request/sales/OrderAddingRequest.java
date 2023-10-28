@@ -1,10 +1,12 @@
 package by.bsuir.retail.request.sales;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.Map;
 
 @Getter
+@Builder
 public class OrderAddingRequest {
     private long cashierId;
     private String createdAt;

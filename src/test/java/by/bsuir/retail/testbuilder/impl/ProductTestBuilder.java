@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor(staticName = "builder")
 @AllArgsConstructor
 public class ProductTestBuilder implements TestBuilder<Product> {
+    private long id = 1;
     private String name = "productName";
     private int weight = 100;
     private double saleCost = 1.0;
