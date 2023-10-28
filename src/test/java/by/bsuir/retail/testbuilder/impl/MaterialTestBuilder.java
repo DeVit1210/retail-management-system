@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor(staticName = "builder")
 @AllArgsConstructor
 public class MaterialTestBuilder implements TestBuilder<Material> {
+    private long id = 1;
     private String name = "materialName";
     private int weight = 1000;
     private double purchaseCost = 1.0;
@@ -21,6 +22,7 @@ public class MaterialTestBuilder implements TestBuilder<Material> {
     @Override
     public Material build() {
         return Material.builder()
+                .id(id)
                 .name(name)
                 .weight(weight)
                 .purchaseCost(purchaseCost)

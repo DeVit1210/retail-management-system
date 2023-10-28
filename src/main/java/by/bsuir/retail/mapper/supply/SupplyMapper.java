@@ -57,9 +57,9 @@ public abstract class SupplyMapper {
             throw new IllegalArgumentException("list sizes must be equal!");
         }
         Map<Material, Integer> result = new HashMap<>();
-        IntStream.range(0, materialList.size()).forEach(value -> {
-            result.put(materialList.get(value), materialQuantityList.get(value));
-        });
+        IntStream.range(0, materialList.size()).forEach(value ->
+            result.put(materialList.get(value), materialQuantityList.get(value))
+        );
         return result;
     }
 }

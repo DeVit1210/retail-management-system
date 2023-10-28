@@ -6,10 +6,16 @@ import by.bsuir.retail.repository.supply.SupplierRepository;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.data.repository.query.QueryMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.management.Query;
 import java.util.List;
 
 @Service

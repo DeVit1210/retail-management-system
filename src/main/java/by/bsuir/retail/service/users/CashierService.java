@@ -5,6 +5,7 @@ import by.bsuir.retail.entity.users.Role;
 import by.bsuir.retail.repository.users.CashierRepository;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.service.exception.UserNotFoundException;
+import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class CashierService {
     }
     public Cashier findById(long cashierId) {
         return cashierRepository.findById(cashierId)
-                .orElseThrow(() -> new IllegalArgumentException("user with such id was not found: " + cashierId));
+                .orElseThrow(() -> new WrongRetailEntityIdException(Cashier.class, cashierId));
     }
     public Cashier saveCashier(Cashier cashier) {
         return cashierRepository.save(cashier);

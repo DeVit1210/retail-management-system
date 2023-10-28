@@ -11,6 +11,6 @@ import java.util.Map;
 public class TechProcessDto implements RetailManagementEntity {
     private long processId;
     private String createdProductName;
-    private String createdProductWeight;
+    private int createdProductWeight;
     private Map<String, Integer> ingredientNameAndQuantity;
 }
