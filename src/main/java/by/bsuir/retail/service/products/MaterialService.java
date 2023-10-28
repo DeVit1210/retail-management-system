@@ -3,8 +3,10 @@ package by.bsuir.retail.service.products;
 import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.mapper.products.MaterialMapper;
 import by.bsuir.retail.repository.products.MaterialRepository;
+import by.bsuir.retail.request.products.MaterialAddingRequest;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
+import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +27,11 @@ public class MaterialService {
     public ResponseEntity<MultipleEntityResponse> findAll() {
         List<Material> materialList = materialRepository.findAll();
         return responseBuilder.buildMultipleEntityResponse(mapper.toMaterialDtoList(materialList));
+    }
+
+    public ResponseEntity<SingleEntityResponse> addMaterial(MaterialAddingRequest request) {
+        Material material = mapper.toMaterial(request);
+        Material savedMaterial = materialRepository.save(material);
+        return responseBuilder.buildSingleEntityResponse(mapper.toMaterialDto(savedMaterial));
     }
 }

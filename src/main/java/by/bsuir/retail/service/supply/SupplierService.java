@@ -3,19 +3,15 @@ package by.bsuir.retail.service.supply;
 import by.bsuir.retail.entity.supply.Supplier;
 import by.bsuir.retail.mapper.supply.SupplierMapper;
 import by.bsuir.retail.repository.supply.SupplierRepository;
+import by.bsuir.retail.request.supply.SupplierAddingRequest;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
+import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Example;
-import org.springframework.data.repository.query.FluentQuery;
-import org.springframework.data.repository.query.QueryMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.management.Query;
 import java.util.List;
 
 @Service
@@ -31,5 +27,11 @@ public class SupplierService {
     public ResponseEntity<MultipleEntityResponse> findAll() {
         List<Supplier> supplierList = supplierRepository.findAll();
         return responseBuilder.buildMultipleEntityResponse(mapper.toSupplierDtoList(supplierList));
+    }
+
+    public ResponseEntity<SingleEntityResponse> addSupplier(SupplierAddingRequest request) {
+        Supplier supplier = mapper.toSupplier(request);
+        Supplier savedSupplier = supplierRepository.save(supplier);
+        return responseBuilder.buildSingleEntityResponse(mapper.toSupplierDto(savedSupplier));
     }
 }

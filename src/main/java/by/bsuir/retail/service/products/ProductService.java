@@ -3,8 +3,10 @@ package by.bsuir.retail.service.products;
 import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.mapper.products.ProductMapper;
 import by.bsuir.retail.repository.products.ProductRepository;
+import by.bsuir.retail.request.products.ProductAddingRequest;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
+import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,12 @@ public class ProductService {
         final double defaultCost = findById(productId).getSaleCost();
         final double discountAmount = (defaultCost / 100) * discountPercent;
         return defaultCost - discountAmount;
+    }
+
+    public ResponseEntity<SingleEntityResponse> addProduct(ProductAddingRequest request) {
+        Product product = mapper.toProduct(request);
+        Product savedProduct = productRepository.save(product);
+        return responseBuilder.buildSingleEntityResponse(mapper.toProductDto(savedProduct));
     }
 
 }
