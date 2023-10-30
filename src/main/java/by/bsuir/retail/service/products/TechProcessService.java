@@ -35,4 +35,8 @@ public class TechProcessService {
         TechProcess savedTechProcess = techProcessRepository.save(techProcess);
         return responseBuilder.buildSingleEntityResponse(mapper.toTechProcessDto(savedTechProcess));
     }
+
+    public ResponseEntity<SingleEntityResponse> getById(long techProcessId) {
+        return responseBuilder.buildSingleEntityResponse(findById(techProcessId));
+    }
 }

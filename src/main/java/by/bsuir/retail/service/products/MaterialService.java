@@ -34,4 +34,8 @@ public class MaterialService {
         Material savedMaterial = materialRepository.save(material);
         return responseBuilder.buildSingleEntityResponse(mapper.toMaterialDto(savedMaterial));
     }
+
+    public ResponseEntity<SingleEntityResponse> getById(long materialId) {
+        return responseBuilder.buildSingleEntityResponse(findById(materialId));
+    }
 }

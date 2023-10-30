@@ -37,4 +37,8 @@ public class OrderService {
         paymentService.createPayment(request, savedOrder);
         return responseBuilder.buildSingleEntityResponse(mapper.toOrderDto(savedOrder));
     }
+
+    public ResponseEntity<SingleEntityResponse> getById(long orderId) {
+        return responseBuilder.buildSingleEntityResponse(findById(orderId));
+    }
 }

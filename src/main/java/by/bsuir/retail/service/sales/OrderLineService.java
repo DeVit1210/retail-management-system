@@ -6,6 +6,7 @@ import by.bsuir.retail.repository.sales.OrderLineRepository;
 import by.bsuir.retail.request.sales.OrderAddingRequest;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
+import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +31,9 @@ public class OrderLineService {
     public void createOrderLines(OrderAddingRequest request) {
         List<OrderLine> orderLineList = mapper.toOrderLineList(request);
         orderLineRepository.saveAll(orderLineList);
+    }
+
+    public ResponseEntity<SingleEntityResponse> getById(long orderLineId) {
+        return responseBuilder.buildSingleEntityResponse(findById(orderLineId));
     }
 }

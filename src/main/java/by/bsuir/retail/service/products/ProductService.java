@@ -25,6 +25,10 @@ public class ProductService {
                 .orElseThrow(() -> new WrongRetailEntityIdException(Product.class, productId));
     }
 
+    public ResponseEntity<SingleEntityResponse> getById(long productId) {
+        return responseBuilder.buildSingleEntityResponse(findById(productId));
+    }
+
     public ResponseEntity<MultipleEntityResponse> findAll() {
         List<Product> productList = productRepository.findAll();
         return responseBuilder.buildMultipleEntityResponse(mapper.toProductDtoList(productList));

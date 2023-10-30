@@ -7,6 +7,7 @@ import by.bsuir.retail.repository.sales.PaymentRepository;
 import by.bsuir.retail.request.sales.OrderAddingRequest;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
+import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +35,9 @@ public class PaymentService {
     public void createPayment(OrderAddingRequest request, Order order) {
         Payment payment = mapper.toPayment(request, order);
         paymentRepository.save(payment);
+    }
+
+    public ResponseEntity<SingleEntityResponse> getById(long paymentId) {
+        return responseBuilder.buildSingleEntityResponse(findById(paymentId));
     }
 }

@@ -34,4 +34,8 @@ public class SupplierService {
         Supplier savedSupplier = supplierRepository.save(supplier);
         return responseBuilder.buildSingleEntityResponse(mapper.toSupplierDto(savedSupplier));
     }
+
+    public ResponseEntity<SingleEntityResponse> getById(long supplierId) {
+        return responseBuilder.buildSingleEntityResponse(findById(supplierId));
+    }
 }

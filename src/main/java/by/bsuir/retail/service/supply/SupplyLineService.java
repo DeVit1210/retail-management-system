@@ -7,6 +7,7 @@ import by.bsuir.retail.request.supply.SupplyAddingRequest;
 import by.bsuir.retail.request.supply.SupplyLineAddingRequest;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
+import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,5 +34,9 @@ public class SupplyLineService {
         List<SupplyLineAddingRequest> supplyLineRequestList = mapper.toSupplyLineRequestList(request);
         List<SupplyLine> supplyLineList = mapper.toSupplyLineList(supplyLineRequestList);
         supplyLineRepository.saveAll(supplyLineList);
+    }
+
+    public ResponseEntity<SingleEntityResponse> getById(long supplyLineId) {
+        return responseBuilder.buildSingleEntityResponse(findById(supplyLineId));
     }
 }

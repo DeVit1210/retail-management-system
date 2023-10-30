@@ -36,4 +36,8 @@ public class SupplyService {
         Supply savedSupply = supplyRepository.save(supply);
         return responseBuilder.buildSingleEntityResponse(mapper.toSupplyDto(savedSupply));
     }
+
+    public ResponseEntity<SingleEntityResponse> getById(long supplyId) {
+        return responseBuilder.buildSingleEntityResponse(findById(supplyId));
+    }
 }
