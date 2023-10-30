@@ -1,6 +1,6 @@
 package by.bsuir.retail.service.auth;
 
-import by.bsuir.retail.mapper.RegistrationRequestMapper;
+import by.bsuir.retail.mapper.auth.RegistrationRequestMapper;
 import by.bsuir.retail.request.auth.RegistrationRequest;
 import by.bsuir.retail.response.auth.RegistrationResponse;
 import by.bsuir.retail.response.buidler.ResponseBuilder;

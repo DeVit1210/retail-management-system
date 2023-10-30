@@ -1,4 +1,4 @@
-package by.bsuir.retail.mapper;
+package by.bsuir.retail.mapper.auth;
 
 import by.bsuir.retail.entity.users.Cashier;
 import by.bsuir.retail.entity.users.CoffeeShopManager;

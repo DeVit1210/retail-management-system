@@ -1,8 +1,7 @@
 package by.bsuir.retail.security.simple;
 
-import by.bsuir.retail.entity.users.Cashier;
 import by.bsuir.retail.entity.users.Role;
-import by.bsuir.retail.mapper.RegistrationRequestMapper;
+import by.bsuir.retail.mapper.auth.RegistrationRequestMapper;
 import by.bsuir.retail.repository.users.CashierRepository;
 import by.bsuir.retail.repository.users.CoffeeShopManagerRepository;
 import by.bsuir.retail.repository.users.NetworkManagerRepository;

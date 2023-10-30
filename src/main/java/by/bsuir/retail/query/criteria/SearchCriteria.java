@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public abstract class SearchCriteria {
+public abstract class SearchCriteria<T> {
     private String fieldName;
     private Operator operator;
-    public abstract <T> T getValue();
+    private T value;
 }

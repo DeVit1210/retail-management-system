@@ -1,6 +1,6 @@
 package by.bsuir.retail.service.auth;
 
-import by.bsuir.retail.mapper.AuthenticationRequestMapper;
+import by.bsuir.retail.mapper.auth.AuthenticationRequestMapper;
 import by.bsuir.retail.request.auth.AuthenticationRequest;
 import by.bsuir.retail.response.auth.AuthenticationResponse;
 import by.bsuir.retail.response.buidler.ResponseBuilder;

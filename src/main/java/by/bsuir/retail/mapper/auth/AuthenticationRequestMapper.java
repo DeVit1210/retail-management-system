@@ -1,4 +1,4 @@
-package by.bsuir.retail.mapper;
+package by.bsuir.retail.mapper.auth;
 
 import by.bsuir.retail.request.auth.AuthenticationRequest;
 import by.bsuir.retail.security.simple.authtoken.CustomUsernamePasswordAuthenticationToken;
