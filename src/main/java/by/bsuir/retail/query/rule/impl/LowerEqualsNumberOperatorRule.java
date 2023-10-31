@@ -7,14 +7,14 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class LowerEqualsNumberOperatorRule extends Rule {
+public class LowerEqualsNumberOperatorRule extends NumberOperatorRule {
     @Override
     public boolean evaluate() {
-        return criteria.getOperator().equals(Operator.LOWER_OR_EQUALS) && criteria.getValue() instanceof Number;
+        return criteria.getOperator().equals(Operator.LOWER_OR_EQUALS);
     }
 
     @Override
     public <T> Predicate getResult(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-        return builder.le(root.get(criteria.getFieldName()), (Number) criteria.getValue());
+        return builder.le(root.get(criteria.getFieldName()), criteria.getValue());
     }
 }

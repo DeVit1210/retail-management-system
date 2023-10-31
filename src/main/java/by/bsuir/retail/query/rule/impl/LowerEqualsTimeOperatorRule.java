@@ -9,14 +9,14 @@ import jakarta.persistence.criteria.Root;
 
 import java.time.LocalDateTime;
 
-public class LowerEqualsTimeOperatorRule extends Rule {
+public class LowerEqualsTimeOperatorRule extends TimeOperatorRule {
     @Override
     public boolean evaluate() {
-        return criteria.getOperator().equals(Operator.LOWER_OR_EQUALS) && criteria.getValue() instanceof LocalDateTime;
+        return criteria.getOperator().equals(Operator.LOWER_OR_EQUALS);
     }
 
     @Override
     public <T> Predicate getResult(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-        return builder.lessThanOrEqualTo(root.get(criteria.getFieldName()), (LocalDateTime) criteria.getValue());
+        return builder.lessThanOrEqualTo(root.get(criteria.getFieldName()), criteria.getValue());
     }
 }
