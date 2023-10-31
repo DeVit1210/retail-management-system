@@ -8,8 +8,11 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class TrueOperatorRule implements Rule {
-    private BasicSearchCriteria criteria;
+public class TrueOperatorRule extends BasicOperatorRule {
+    public TrueOperatorRule(BasicSearchCriteria criteria) {
+        super(criteria);
+    }
+
     @Override
     public boolean evaluate() {
         return criteria.getOperator().equals(Operator.TRUE);

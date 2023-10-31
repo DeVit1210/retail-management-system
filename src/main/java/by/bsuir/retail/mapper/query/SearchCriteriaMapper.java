@@ -17,7 +17,7 @@ public interface SearchCriteriaMapper {
 
     @Mapping(target = "operator", expression = "java(Operator.fromSignature(dto.getOperatorSignature()))")
     @Mapping(target = "value", expression = "java(Double.parseDouble(dto.getValue()))")
-    IntegerSearchCriteria toNumberSearchCriteria(SearchCriteriaDto dto);
+    DoubleSearchCriteria toNumberSearchCriteria(SearchCriteriaDto dto);
 
     @Mapping(target = "operator", expression = "java(Operator.fromSignature(dto.getOperatorSignature()))")
     BasicSearchCriteria toBasicSearchCriteria();

@@ -8,9 +8,13 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import org.springframework.data.jpa.domain.Specification;
 
-public class EqualsOperatorRule implements Rule {
-    private BasicSearchCriteria criteria;
+public class EqualsOperatorRule extends BasicOperatorRule {
+    public EqualsOperatorRule(BasicSearchCriteria criteria) {
+        super(criteria);
+    }
+
     @Override
     public boolean evaluate() {
         return criteria.getOperator().equals(Operator.EQUALS);

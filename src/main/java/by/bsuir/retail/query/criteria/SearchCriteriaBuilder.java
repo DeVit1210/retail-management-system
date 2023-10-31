@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 public class SearchCriteriaBuilder {
     private final SearchCriteriaMapper mapper;
 
-    // TODO: refactor rules based on value type
     // TODO: implement ruleEngine
     // TODO: init rule engine based on dto.valueType
     //  (int -> get all subclasses of IntegerOperatorRule, build IntegerSearchCriteria and inject into rule engine all the rules)
