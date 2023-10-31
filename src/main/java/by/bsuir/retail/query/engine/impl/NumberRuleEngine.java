@@ -17,8 +17,8 @@ import java.util.List;
 @Component
 public class NumberRuleEngine extends RuleEngine {
     @Autowired
-    public NumberRuleEngine(List<Rule> ruleList, SearchCriteriaMapper mapper) {
-        super(ruleList, mapper);
+    public NumberRuleEngine(SearchCriteriaMapper mapper) {
+        this.mapper = mapper;
     }
 
     @Override

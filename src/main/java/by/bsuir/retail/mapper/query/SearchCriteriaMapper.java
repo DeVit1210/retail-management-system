@@ -2,6 +2,7 @@ package by.bsuir.retail.mapper.query;
 
 import by.bsuir.retail.query.criteria.impl.*;
 import by.bsuir.retail.dto.query.SearchCriteriaDto;
+import by.bsuir.retail.query.engine.RuleEngine;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -21,4 +22,5 @@ public interface SearchCriteriaMapper {
 
     @Mapping(target = "operator", expression = "java(Operator.fromSignature(dto.getOperatorSignature()))")
     BasicSearchCriteria toBasicSearchCriteria();
+
 }

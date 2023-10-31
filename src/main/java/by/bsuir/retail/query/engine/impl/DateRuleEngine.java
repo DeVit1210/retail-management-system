@@ -16,8 +16,8 @@ import java.util.List;
 @Component
 public class DateRuleEngine extends RuleEngine {
     @Autowired
-    public DateRuleEngine(List<Rule> ruleList, SearchCriteriaMapper mapper) {
-        super(ruleList, mapper);
+    public DateRuleEngine(SearchCriteriaMapper mapper) {
+        this.mapper = mapper;
     }
 
     @Override

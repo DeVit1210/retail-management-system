@@ -15,8 +15,8 @@ import java.util.List;
 
 @Component
 public class BasicRuleEngine extends RuleEngine {
-    public BasicRuleEngine(List<Rule> ruleList, SearchCriteriaMapper mapper) {
-        super(ruleList, mapper);
+    public BasicRuleEngine(SearchCriteriaMapper mapper) {
+        this.mapper = mapper;
     }
     @Override
     public void init(SearchCriteriaDto dto) {

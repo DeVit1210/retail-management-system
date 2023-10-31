@@ -15,8 +15,8 @@ import java.util.List;
 
 @Component
 public class TimeRuleEngine extends RuleEngine {
-    public TimeRuleEngine(List<Rule> ruleList, SearchCriteriaMapper mapper) {
-        super(ruleList, mapper);
+    public TimeRuleEngine(SearchCriteriaMapper mapper) {
+        this.mapper = mapper;
     }
 
     @Override
