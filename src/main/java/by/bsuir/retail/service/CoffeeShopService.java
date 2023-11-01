@@ -1,6 +1,8 @@
 package by.bsuir.retail.service;
 
 import by.bsuir.retail.entity.CoffeeShop;
+import by.bsuir.retail.entity.products.Material;
+import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.mapper.CoffeeShopMapper;
 import by.bsuir.retail.repository.CoffeeShopRepository;
 import by.bsuir.retail.request.CoffeeShopAddingRequest;
@@ -44,5 +46,13 @@ public class CoffeeShopService {
         CoffeeShop coffeeShop = mapper.toCoffeeShop(request);
         CoffeeShop savedCoffeeShop = coffeeShopRepository.save(coffeeShop);
         return responseBuilder.buildSingleEntityResponse(mapper.toCoffeeShopDto(savedCoffeeShop));
+    }
+
+    public CoffeeShop findCoffeeShopByOrder(Order order) {
+        return order.getCashier().getCoffeeShop();
+    }
+
+    public void updateCoffeeShop(CoffeeShop coffeeShop) {
+        coffeeShopRepository.save(coffeeShop);
     }
 }

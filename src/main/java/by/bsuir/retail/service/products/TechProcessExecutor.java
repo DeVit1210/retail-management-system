@@ -1,0 +1,19 @@
+package by.bsuir.retail.service.products;
+
+import by.bsuir.retail.entity.products.Material;
+import by.bsuir.retail.entity.products.TechProcess;
+import org.springframework.stereotype.Component;
+
+import java.util.Map;
+
+public class TechProcessExecutor {
+    public static void execute(Map<Material, Integer> coffeeShopWarehouse, TechProcess techProcess, int times) {
+        Map<Material, Integer> ingredients = techProcess.getIngredients();
+        ingredients.forEach((material, quantityForOneProduct) -> {
+            Integer totalMaterialQuantity = quantityForOneProduct * times;
+            Integer currentMaterialLeftover = coffeeShopWarehouse.get(material);
+            // TODO: check whether lefover higher than requested or not
+            coffeeShopWarehouse.replace(material, currentMaterialLeftover - totalMaterialQuantity);
+        });
+    }
+}

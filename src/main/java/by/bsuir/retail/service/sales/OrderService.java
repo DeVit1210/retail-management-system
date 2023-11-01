@@ -9,6 +9,7 @@ import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
+import by.bsuir.retail.service.products.KitchenService;
 import by.bsuir.retail.service.query.SpecificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
     private final SpecificationService specificationService;
+    private final KitchenService kitchenService;
     private final OrderLineService orderLineService;
     private final PaymentService paymentService;
     private final OrderRepository orderRepository;
@@ -44,11 +46,13 @@ public class OrderService {
 
     public ResponseEntity<SingleEntityResponse> addOrder(OrderAddingRequest request) {
         Order order = mapper.toOrder(request);
+        kitchenService.prepareOrder(order);
         orderLineService.createOrderLines(request);
         Order savedOrder = orderRepository.save(order);
         paymentService.createPayment(request, savedOrder);
         return responseBuilder.buildSingleEntityResponse(mapper.toOrderDto(savedOrder));
     }
+
 
     public ResponseEntity<SingleEntityResponse> getById(long orderId) {
         return responseBuilder.buildSingleEntityResponse(findById(orderId));

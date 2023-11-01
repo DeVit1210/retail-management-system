@@ -3,7 +3,7 @@ package by.bsuir.retail.controller.product;
 import by.bsuir.retail.request.products.TechProcessAddingRequest;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
-import by.bsuir.retail.service.products.TechProcessService;
+import by.bsuir.retail.service.products.KitchenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/techProcess")
 public class TechProcessController {
-    private final TechProcessService techProcessService;
+    private final KitchenService kitchenService;
     @GetMapping
     public ResponseEntity<MultipleEntityResponse> getAllTechProcess() {
-        return techProcessService.findAll();
+        return kitchenService.findAll();
     }
     @GetMapping("/{techProcessId}")
     public ResponseEntity<SingleEntityResponse> getTechProcess(@PathVariable long techProcessId) {
-        return techProcessService.getById(techProcessId);
+        return kitchenService.getById(techProcessId);
     }
     @PostMapping
     public ResponseEntity<SingleEntityResponse> addTechProcess(@RequestBody TechProcessAddingRequest request) {
-        return techProcessService.addTechProcess(request);
+        return kitchenService.addTechProcess(request);
     }
 }
