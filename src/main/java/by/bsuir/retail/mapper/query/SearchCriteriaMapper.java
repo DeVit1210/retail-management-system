@@ -6,6 +6,8 @@ import by.bsuir.retail.query.engine.RuleEngine;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface SearchCriteriaMapper {
     @Mapping(target = "operator", expression = "java(Operator.fromSignature(dto.getOperatorSignature()))")
