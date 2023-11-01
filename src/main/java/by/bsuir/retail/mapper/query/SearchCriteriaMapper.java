@@ -23,6 +23,6 @@ public interface SearchCriteriaMapper {
     DoubleSearchCriteria toNumberSearchCriteria(SearchCriteriaDto dto);
 
     @Mapping(target = "operator", expression = "java(Operator.fromSignature(dto.getOperatorSignature()))")
-    BasicSearchCriteria toBasicSearchCriteria();
+    BasicSearchCriteria toBasicSearchCriteria(SearchCriteriaDto dto);
 
 }

@@ -1,6 +1,8 @@
 package by.bsuir.retail.service.sales;
 
 import by.bsuir.retail.entity.sales.Order;
+import by.bsuir.retail.entity.sales.Shift;
+import by.bsuir.retail.entity.users.Cashier;
 import by.bsuir.retail.mapper.sales.OrderMapper;
 import by.bsuir.retail.repository.sales.OrderRepository;
 import by.bsuir.retail.request.query.SearchQueryRequest;
@@ -16,7 +18,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,8 +57,25 @@ public class OrderService {
         return responseBuilder.buildSingleEntityResponse(mapper.toOrderDto(savedOrder));
     }
 
-
     public ResponseEntity<SingleEntityResponse> getById(long orderId) {
         return responseBuilder.buildSingleEntityResponse(findById(orderId));
     }
+
+    public double getShiftTotalIncome(Shift shift) {
+        return findShiftOrderList(shift)
+                .stream()
+                .map(Order::getPayment)
+                .map(paymentService::getPaymentTotalCost)
+                .reduce(0.0, Double::sum);
+    }
+
+    public ResponseEntity<MultipleEntityResponse> getShiftOrderList(Shift shift) {
+        List<Order> orderList = findShiftOrderList(shift);
+        return responseBuilder.buildMultipleEntityResponse(mapper.toOrderDtoList(orderList));
+    }
+
+    private List<Order> findShiftOrderList(Shift shift) {
+        return orderRepository.findByCashierAndCreatedAtBetween(shift.getCashier(), shift.getStartTime(), shift.getEndTime());
+    }
+
 }

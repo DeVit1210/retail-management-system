@@ -67,13 +67,14 @@ public class KitchenService {
         CoffeeShop currentCoffeeShop = coffeeShopService.findCoffeeShopByOrder(order);
         Map<Material, Integer> coffeeShopWarehouse = currentCoffeeShop.getWarehouse();
         Map<Product, Integer> orderComposition = order.getComposition();
-        orderComposition.forEach((product, quantity) -> prepareProduct(product, quantity, coffeeShopWarehouse));
+        orderComposition.entrySet().forEach(entry -> prepareProduct(entry, coffeeShopWarehouse));
         coffeeShopService.updateCoffeeShop(currentCoffeeShop);
     }
 
-    private void prepareProduct(Product product, int productQuantity, Map<Material, Integer> coffeeShopWarehouse) {
+    private void prepareProduct(Map.Entry<Product, Integer> productEntry, Map<Material, Integer> coffeeShopWarehouse) {
+        Product product = productEntry.getKey();
+        Integer productQuantity = productEntry.getValue();
         TechProcess techProcess = findByProduct(product);
         TechProcessExecutor.execute(coffeeShopWarehouse, techProcess, productQuantity);
     }
-
 }

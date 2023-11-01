@@ -20,7 +20,7 @@ public class BasicRuleEngine extends RuleEngine {
     }
     @Override
     public void init(SearchCriteriaDto dto) {
-        BasicSearchCriteria basicSearchCriteria = mapper.toBasicSearchCriteria();
+        BasicSearchCriteria basicSearchCriteria = mapper.toBasicSearchCriteria(dto);
         this.ruleList = List.of(
                 new NotEqualsOperatorRule(basicSearchCriteria),
                 new EqualsOperatorRule(basicSearchCriteria),
