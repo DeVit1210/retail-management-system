@@ -1,5 +1,7 @@
 package by.bsuir.retail.service.sales;
 
+import by.bsuir.retail.entity.products.Product;
+import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.entity.sales.OrderLine;
 import by.bsuir.retail.mapper.sales.OrderLineMapper;
 import by.bsuir.retail.repository.sales.OrderLineRepository;
@@ -41,12 +43,16 @@ public class OrderLineService {
         return responseBuilder.buildMultipleEntityResponse(mapper.toOrderLineDtoList(orderLineList));
     }
 
-    public void createOrderLines(OrderAddingRequest request) {
-        List<OrderLine> orderLineList = mapper.toOrderLineList(request);
+    public void createOrderLines(OrderAddingRequest request, Order order) {
+        List<OrderLine> orderLineList = mapper.toOrderLineList(request, order);
         orderLineRepository.saveAll(orderLineList);
     }
 
     public ResponseEntity<SingleEntityResponse> getById(long orderLineId) {
         return responseBuilder.buildSingleEntityResponse(findById(orderLineId));
+    }
+
+    public List<OrderLine> findAllByProduct(Product product) {
+        return orderLineRepository.findAllByProduct(product);
     }
 }

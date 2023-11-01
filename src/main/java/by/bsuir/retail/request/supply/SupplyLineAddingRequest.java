@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public class SupplyLineAddingRequest {
     private long materialId;
+    private long supplyId;
     private int quantity;
     private double purchaseCost;
 }

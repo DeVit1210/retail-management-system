@@ -1,6 +1,7 @@
 package by.bsuir.retail.mapper.supply;
 
 import by.bsuir.retail.dto.supply.SupplyLineDto;
+import by.bsuir.retail.entity.supply.Supply;
 import by.bsuir.retail.entity.supply.SupplyLine;
 import by.bsuir.retail.request.supply.SupplyAddingRequest;
 import by.bsuir.retail.request.supply.SupplyLineAddingRequest;
@@ -25,7 +26,7 @@ public abstract class SupplyLineMapper {
     public abstract SupplyLine toSupplyLine(SupplyLineAddingRequest request);
     public abstract List<SupplyLineDto> toSupplyLineDtoList(List<SupplyLine> supplyLineList);
     public abstract List<SupplyLine> toSupplyLineList(List<SupplyLineAddingRequest> supplyLineAddingRequestList);
-    public List<SupplyLineAddingRequest> toSupplyLineRequestList(SupplyAddingRequest request) {
+    public List<SupplyLineAddingRequest> toSupplyLineRequestList(SupplyAddingRequest request, Supply supply) {
         List<SupplyLineAddingRequest> supplyLineAddingRequestList = new ArrayList<>();
 
         List<Long> materialIdList = request.getMaterialIdList();
@@ -35,6 +36,7 @@ public abstract class SupplyLineMapper {
         IntStream.range(0, materialQuantityList.size()).forEach(value ->
             supplyLineAddingRequestList.add(SupplyLineAddingRequest.builder()
                     .materialId(materialIdList.get(value))
+                    .supplyId(supply.getId())
                     .purchaseCost(materialCostList.get(value))
                     .quantity(materialQuantityList.get(value))
                     .build()

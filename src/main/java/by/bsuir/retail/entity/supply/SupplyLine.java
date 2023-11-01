@@ -22,6 +22,8 @@ public class SupplyLine implements RetailManagementEntity {
     private long id;
     @ManyToOne
     private Material material;
+    @ManyToOne
+    private Supply supply;
     private LocalDateTime purchasedAt;
     private double purchaseCost;
     private int quantity;

@@ -1,5 +1,7 @@
 package by.bsuir.retail.service.supply;
 
+import by.bsuir.retail.entity.products.Material;
+import by.bsuir.retail.entity.supply.Supply;
 import by.bsuir.retail.entity.supply.SupplyLine;
 import by.bsuir.retail.mapper.supply.SupplyLineMapper;
 import by.bsuir.retail.repository.supply.SupplyLineRepository;
@@ -41,13 +43,17 @@ public class SupplyLineService {
         return responseBuilder.buildMultipleEntityResponse(mapper.toSupplyLineDtoList(supplyLineList));
     }
 
-    public void createSupplyLines(SupplyAddingRequest request) {
-        List<SupplyLineAddingRequest> supplyLineRequestList = mapper.toSupplyLineRequestList(request);
+    public void createSupplyLines(SupplyAddingRequest request, Supply supply) {
+        List<SupplyLineAddingRequest> supplyLineRequestList = mapper.toSupplyLineRequestList(request, supply);
         List<SupplyLine> supplyLineList = mapper.toSupplyLineList(supplyLineRequestList);
         supplyLineRepository.saveAll(supplyLineList);
     }
 
     public ResponseEntity<SingleEntityResponse> getById(long supplyLineId) {
         return responseBuilder.buildSingleEntityResponse(findById(supplyLineId));
+    }
+
+    public List<SupplyLine> findAllByMaterial(Material material) {
+        return supplyLineRepository.findAllByMaterial(material);
     }
 }

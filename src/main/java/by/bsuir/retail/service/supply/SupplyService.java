@@ -42,8 +42,8 @@ public class SupplyService {
 
     public ResponseEntity<SingleEntityResponse> addSupply(SupplyAddingRequest request) {
         Supply supply = mapper.toSupply(request);
-        supplyLineService.createSupplyLines(request);
         Supply savedSupply = supplyRepository.save(supply);
+        supplyLineService.createSupplyLines(request, savedSupply);
         return responseBuilder.buildSingleEntityResponse(mapper.toSupplyDto(savedSupply));
     }
 

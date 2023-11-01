@@ -51,8 +51,8 @@ public class OrderService {
     public ResponseEntity<SingleEntityResponse> addOrder(OrderAddingRequest request) {
         Order order = mapper.toOrder(request);
         kitchenService.prepareOrder(order);
-        orderLineService.createOrderLines(request);
         Order savedOrder = orderRepository.save(order);
+        orderLineService.createOrderLines(request, order);
         paymentService.createPayment(request, savedOrder);
         return responseBuilder.buildSingleEntityResponse(mapper.toOrderDto(savedOrder));
     }

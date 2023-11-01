@@ -27,7 +27,6 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class CashierService {
     private final CashierRepository cashierRepository;
-    private final ResponseBuilder responseBuilder;
     public Cashier findByUsername(String username) {
         return cashierRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(Role.CASHIER));
     }

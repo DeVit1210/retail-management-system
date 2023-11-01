@@ -22,6 +22,8 @@ public class OrderLine implements RetailManagementEntity {
     private long id;
     @ManyToOne
     private Product product;
+    @ManyToOne
+    private Order order;
     private int quantity;
     private LocalDateTime soldAt;
     private double saleCost;
