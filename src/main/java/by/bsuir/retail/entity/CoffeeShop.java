@@ -18,6 +18,11 @@ import java.util.Map;
 @Setter
 @Builder
 public class CoffeeShop {
+
+    // TODO: связать Shift c CoffeeShop, a Cashier с Shift
+    // Как Cashier будет знать, к какой кофейне он относится?
+    // Возможно, он будет выбирать, в какой кофейне открыть смену перед тем, как это сделать
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

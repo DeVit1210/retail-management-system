@@ -1,5 +1,6 @@
 package by.bsuir.retail.service.sales;
 
+import by.bsuir.retail.entity.CoffeeShop;
 import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.entity.sales.OrderLine;
@@ -17,7 +18,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,9 +48,9 @@ public class OrderLineService {
         return responseBuilder.buildMultipleEntityResponse(mapper.toOrderLineDtoList(orderLineList));
     }
 
-    public void createOrderLines(OrderAddingRequest request, Order order) {
-        List<OrderLine> orderLineList = mapper.toOrderLineList(request, order);
-        orderLineRepository.saveAll(orderLineList);
+    public void createOrderLines(Order order) {
+        order.getComposition().forEach(orderLine -> orderLine.setOrder(order));
+        orderLineRepository.saveAll(order.getComposition());
     }
 
     public ResponseEntity<SingleEntityResponse> getById(long orderLineId) {
@@ -55,4 +60,16 @@ public class OrderLineService {
     public List<OrderLine> findAllByProduct(Product product) {
         return orderLineRepository.findAllByProduct(product);
     }
+
+
+//    public List<OrderLine> findBy(Product product, CoffeeShop coffeeShop) {
+//        return findAllByProduct(product)
+//                .stream()
+//                .filter(orderLine -> orderLine.getOrder().getCashier().getCoffeeShop().equals(coffeeShop))
+//                .toList();
+//    }
+//
+//    public List<OrderLine> findBy(Product product, LocalDateTime start, LocalDateTime end) {
+//        return orderLineRepository.findAllByProductAndSoldAtBetween(product, start, end);
+//    }
 }

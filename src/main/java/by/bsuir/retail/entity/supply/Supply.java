@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -25,10 +26,7 @@ public class Supply implements RetailManagementEntity {
     private CoffeeShop coffeeShop;
     @ManyToOne
     private Supplier supplier;
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "supply_composition")
-    @MapKeyColumn
-    @Column(name = "quantity")
-    private Map<Material, Integer> composition;
+    @OneToMany(mappedBy = "supply", fetch = FetchType.EAGER)
+    private List<SupplyLine> composition;
     private double totalCost;
 }

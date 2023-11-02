@@ -25,24 +25,19 @@ public abstract class SupplyLineMapper {
     @Mapping(target = "purchasedAt",  expression = "java(java.time.LocalDateTime.now())")
     public abstract SupplyLine toSupplyLine(SupplyLineAddingRequest request);
     public abstract List<SupplyLineDto> toSupplyLineDtoList(List<SupplyLine> supplyLineList);
-    public abstract List<SupplyLine> toSupplyLineList(List<SupplyLineAddingRequest> supplyLineAddingRequestList);
-    public List<SupplyLineAddingRequest> toSupplyLineRequestList(SupplyAddingRequest request, Supply supply) {
-        List<SupplyLineAddingRequest> supplyLineAddingRequestList = new ArrayList<>();
-
+    public List<SupplyLine> toSupplyLineList(SupplyAddingRequest request) {
         List<Long> materialIdList = request.getMaterialIdList();
-        List<Double> materialCostList = request.getMaterialCostList();
         List<Integer> materialQuantityList = request.getMaterialQuantityList();
+        List<Double> materialCostList = request.getMaterialCostList();
 
-        IntStream.range(0, materialQuantityList.size()).forEach(value ->
-            supplyLineAddingRequestList.add(SupplyLineAddingRequest.builder()
-                    .materialId(materialIdList.get(value))
-                    .supplyId(supply.getId())
-                    .purchaseCost(materialCostList.get(value))
-                    .quantity(materialQuantityList.get(value))
-                    .build()
-            )
-        );
-
-        return supplyLineAddingRequestList;
+        return IntStream.range(0, materialIdList.size())
+                .mapToObj(value -> SupplyLineAddingRequest.builder()
+                        .materialId(materialIdList.get(value))
+                        .purchaseCost(materialCostList.get(value))
+                        .quantity(materialQuantityList.get(value))
+                        .build()
+                )
+                .map(this::toSupplyLine)
+                .toList();
     }
 }

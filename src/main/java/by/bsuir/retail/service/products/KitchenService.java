@@ -5,6 +5,7 @@ import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.entity.products.TechProcess;
 import by.bsuir.retail.entity.sales.Order;
+import by.bsuir.retail.entity.sales.OrderLine;
 import by.bsuir.retail.mapper.products.TechProcessMapper;
 import by.bsuir.retail.repository.products.TechProcessRepository;
 import by.bsuir.retail.request.products.TechProcessAddingRequest;
@@ -66,14 +67,14 @@ public class KitchenService {
     public void prepareOrder(Order order) {
         CoffeeShop currentCoffeeShop = coffeeShopService.findCoffeeShopByOrder(order);
         Map<Material, Integer> coffeeShopWarehouse = currentCoffeeShop.getWarehouse();
-        Map<Product, Integer> orderComposition = order.getComposition();
-        orderComposition.entrySet().forEach(entry -> prepareProduct(entry, coffeeShopWarehouse));
+        List<OrderLine> orderComposition = order.getComposition();
+        orderComposition.forEach(orderLine -> prepareProduct(orderLine, coffeeShopWarehouse));
         coffeeShopService.updateCoffeeShop(currentCoffeeShop);
     }
 
-    private void prepareProduct(Map.Entry<Product, Integer> productEntry, Map<Material, Integer> coffeeShopWarehouse) {
-        Product product = productEntry.getKey();
-        Integer productQuantity = productEntry.getValue();
+    private void prepareProduct(OrderLine orderLine, Map<Material, Integer> coffeeShopWarehouse) {
+        Product product = orderLine.getProduct();
+        int productQuantity = orderLine.getQuantity();
         TechProcess techProcess = findByProduct(product);
         TechProcessExecutor.execute(coffeeShopWarehouse, techProcess, productQuantity);
     }

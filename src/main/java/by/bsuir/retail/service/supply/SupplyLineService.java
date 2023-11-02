@@ -1,5 +1,6 @@
 package by.bsuir.retail.service.supply;
 
+import by.bsuir.retail.entity.CoffeeShop;
 import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.entity.supply.Supply;
 import by.bsuir.retail.entity.supply.SupplyLine;
@@ -18,6 +19,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -43,10 +45,9 @@ public class SupplyLineService {
         return responseBuilder.buildMultipleEntityResponse(mapper.toSupplyLineDtoList(supplyLineList));
     }
 
-    public void createSupplyLines(SupplyAddingRequest request, Supply supply) {
-        List<SupplyLineAddingRequest> supplyLineRequestList = mapper.toSupplyLineRequestList(request, supply);
-        List<SupplyLine> supplyLineList = mapper.toSupplyLineList(supplyLineRequestList);
-        supplyLineRepository.saveAll(supplyLineList);
+    public void saveSupplyLines(Supply supply) {
+        supply.getComposition().forEach(supplyLine -> supplyLine.setSupply(supply));
+        supplyLineRepository.saveAll(supply.getComposition());
     }
 
     public ResponseEntity<SingleEntityResponse> getById(long supplyLineId) {
@@ -56,4 +57,17 @@ public class SupplyLineService {
     public List<SupplyLine> findAllByMaterial(Material material) {
         return supplyLineRepository.findAllByMaterial(material);
     }
+
+    public List<SupplyLine> findBy(Material material, CoffeeShop coffeeShop) {
+        return findAllByMaterial(material)
+                .stream()
+                .filter(supplyLine -> supplyLine.getSupply().getCoffeeShop().equals(coffeeShop))
+                .toList();
+    }
+
+    public List<SupplyLine> findBy(Material material, LocalDateTime start, LocalDateTime end) {
+        return supplyLineRepository.findByMaterialAndPurchasedAtBetween(material, start, end);
+    }
+
 }
+

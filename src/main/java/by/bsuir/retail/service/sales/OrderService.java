@@ -52,7 +52,7 @@ public class OrderService {
         Order order = mapper.toOrder(request);
         kitchenService.prepareOrder(order);
         Order savedOrder = orderRepository.save(order);
-        orderLineService.createOrderLines(request, order);
+        orderLineService.createOrderLines(savedOrder);
         paymentService.createPayment(request, savedOrder);
         return responseBuilder.buildSingleEntityResponse(mapper.toOrderDto(savedOrder));
     }

@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -25,12 +26,9 @@ public class Order implements RetailManagementEntity {
     @ManyToOne
     private Cashier cashier;
     private LocalDateTime createdAt;
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "product_composition")
-    @MapKeyColumn
-    @Column(name = "quantity")
-    private Map<Product, Integer> composition;
     private int discountPercent;
+    @OneToMany(mappedBy = "order",fetch = FetchType.EAGER)
+    private List<OrderLine> composition;
     @OneToOne
     private Payment payment;
 }

@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface SupplyLineRepository extends JpaRepository<SupplyLine, Long>, JpaSpecificationExecutor<SupplyLine> {
     List<SupplyLine> findAllByMaterial(Material material);
+    List<SupplyLine> findByMaterialAndPurchasedAtBetween(Material material, LocalDateTime start, LocalDateTime end);
 }
