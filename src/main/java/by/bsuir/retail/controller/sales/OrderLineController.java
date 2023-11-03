@@ -17,7 +17,7 @@ public class OrderLineController {
     private final OrderLineService orderLineController;
     @GetMapping
     public ResponseEntity<MultipleEntityResponse> getAllOrderLine() {
-        return orderLineController.findAll();
+        return orderLineController.getAll();
     }
     @GetMapping("/{orderLineId}")
     public ResponseEntity<SingleEntityResponse> getOrderLine(@PathVariable long orderLineId) {

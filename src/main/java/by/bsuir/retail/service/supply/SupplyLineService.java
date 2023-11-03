@@ -2,6 +2,7 @@ package by.bsuir.retail.service.supply;
 
 import by.bsuir.retail.entity.CoffeeShop;
 import by.bsuir.retail.entity.products.Material;
+import by.bsuir.retail.entity.sales.OrderLine;
 import by.bsuir.retail.entity.supply.Supply;
 import by.bsuir.retail.entity.supply.SupplyLine;
 import by.bsuir.retail.mapper.supply.SupplyLineMapper;

@@ -49,7 +49,7 @@ class ProductControllerTest {
                 ProductTestBuilder.builder().withId(3).build()
         );
         MultipleEntityResponse response = MultipleEntityResponse.builder().response(productList).build();
-        when(productService.findAll()).thenReturn(ResponseEntity.ok(response));
+        when(productService.getAll()).thenReturn(ResponseEntity.ok(response));
         mockMvc
                 .perform(get("/product"))
                 .andExpect(status().isOk())

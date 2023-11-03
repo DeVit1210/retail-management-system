@@ -11,7 +11,6 @@ import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import by.bsuir.retail.service.query.SpecificationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -35,15 +34,22 @@ public class ProductService {
         return responseBuilder.buildSingleEntityResponse(findById(productId));
     }
 
-    public ResponseEntity<MultipleEntityResponse> findAll() {
-        List<Product> productList = productRepository.findAll();
-        return responseBuilder.buildMultipleEntityResponse(mapper.toProductDtoList(productList));
+    public List<Product> findAll() {
+        return productRepository.findAll();
     }
 
-    public ResponseEntity<MultipleEntityResponse> findAll(SearchQueryRequest request) {
+    public List<Product> findAll(SearchQueryRequest request) {
         Specification<Product> specificationChain = specificationService.createSpecificationChain(request, Product.class);
-        List<Product> productList = productRepository.findAll(specificationChain);
-        return responseBuilder.buildMultipleEntityResponse(mapper.toProductDtoList(productList));
+        return productRepository.findAll(specificationChain);
+    }
+
+    public ResponseEntity<MultipleEntityResponse> getAll() {
+        return responseBuilder.buildMultipleEntityResponse(mapper.toProductDtoList(findAll()));
+    }
+
+
+    public ResponseEntity<MultipleEntityResponse> getAll(SearchQueryRequest request) {
+        return responseBuilder.buildMultipleEntityResponse(mapper.toProductDtoList(findAll(request)));
     }
 
     public double calculateProductCost(long productId, int discountPercent) {

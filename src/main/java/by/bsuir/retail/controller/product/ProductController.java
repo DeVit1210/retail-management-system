@@ -19,7 +19,7 @@ public class ProductController {
     }
     @GetMapping
     public ResponseEntity<MultipleEntityResponse> getAllProducts() {
-        return productService.findAll();
+        return productService.getAll();
     }
     @PostMapping
     public ResponseEntity<SingleEntityResponse> addProduct(@RequestBody ProductAddingRequest request) {

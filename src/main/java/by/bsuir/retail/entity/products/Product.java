@@ -20,6 +20,8 @@ public class Product implements RetailManagementEntity {
     private String name;
     private int weight;
     private double saleCost;
+    @OneToOne(mappedBy = "createdProduct")
+    private TechProcess techProcess;
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<OrderLine> salesHistory;
 }

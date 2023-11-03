@@ -1,6 +1,7 @@
 package by.bsuir.retail.service.query;
 
 import by.bsuir.retail.dto.query.SearchCriteriaDto;
+import by.bsuir.retail.utils.SpecificationUtils;
 import by.bsuir.retail.query.engine.RuleEngine;
 import by.bsuir.retail.query.engine.RuleEngineBuilder;
 import by.bsuir.retail.query.rule.Rule;
@@ -22,6 +23,7 @@ public class SpecificationService {
     }
 
     public <T> Specification<T> createSpecificationChain(SearchQueryRequest request, Class<T> clazz) {
+        if(request == null) return SpecificationUtils.empty();
         List<Specification<T>> specificationList = request.getSearchCriteriaList().stream()
                 .map(dto -> this.buildSpecification(dto, clazz))
                 .toList();

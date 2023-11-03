@@ -29,16 +29,22 @@ public class OrderLineService {
                 .orElseThrow(() -> new WrongRetailEntityIdException(OrderLine.class, orderLineId));
     }
 
-    public ResponseEntity<MultipleEntityResponse> findAll() {
-        List<OrderLine> orderLineList = orderLineRepository.findAll();
-        return responseBuilder.buildMultipleEntityResponse(mapper.toOrderLineDtoList(orderLineList));
+    public List<OrderLine> findAll() {
+        return orderLineRepository.findAll();
     }
 
-    private ResponseEntity<MultipleEntityResponse> findAll(SearchQueryRequest request) {
+    public List<OrderLine> findAll(SearchQueryRequest request) {
         Specification<OrderLine> specificationChain =
                 specificationService.createSpecificationChain(request, OrderLine.class);
-        List<OrderLine> orderLineList = orderLineRepository.findAll(specificationChain);
-        return responseBuilder.buildMultipleEntityResponse(mapper.toOrderLineDtoList(orderLineList));
+        return orderLineRepository.findAll(specificationChain);
+    }
+
+    public ResponseEntity<MultipleEntityResponse> getAll() {
+        return responseBuilder.buildMultipleEntityResponse(mapper.toOrderLineDtoList(findAll()));
+    }
+
+    private ResponseEntity<MultipleEntityResponse> getAll(SearchQueryRequest request) {
+        return responseBuilder.buildMultipleEntityResponse(mapper.toOrderLineDtoList(findAll(request)));
     }
 
     public void createOrderLines(Order order) {
