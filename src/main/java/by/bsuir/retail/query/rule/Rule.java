@@ -1,6 +1,5 @@
 package by.bsuir.retail.query.rule;
 
-import by.bsuir.retail.query.criteria.SearchCriteria;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

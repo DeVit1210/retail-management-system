@@ -7,8 +7,6 @@ import by.bsuir.retail.entity.supply.SupplyLine;
 import by.bsuir.retail.mapper.supply.SupplyLineMapper;
 import by.bsuir.retail.repository.supply.SupplyLineRepository;
 import by.bsuir.retail.request.query.SearchQueryRequest;
-import by.bsuir.retail.request.supply.SupplyAddingRequest;
-import by.bsuir.retail.request.supply.SupplyLineAddingRequest;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
@@ -57,6 +55,7 @@ public class SupplyLineService {
     public List<SupplyLine> findAllByMaterial(Material material) {
         return supplyLineRepository.findAllByMaterial(material);
     }
+
 
     public List<SupplyLine> findBy(Material material, CoffeeShop coffeeShop) {
         return findAllByMaterial(material)

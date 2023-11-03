@@ -1,13 +1,10 @@
 package by.bsuir.retail.service.sales;
 
-import by.bsuir.retail.entity.CoffeeShop;
-import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.entity.sales.OrderLine;
 import by.bsuir.retail.mapper.sales.OrderLineMapper;
 import by.bsuir.retail.repository.sales.OrderLineRepository;
 import by.bsuir.retail.request.query.SearchQueryRequest;
-import by.bsuir.retail.request.sales.OrderAddingRequest;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
@@ -18,11 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,9 +50,6 @@ public class OrderLineService {
         return responseBuilder.buildSingleEntityResponse(findById(orderLineId));
     }
 
-    public List<OrderLine> findAllByProduct(Product product) {
-        return orderLineRepository.findAllByProduct(product);
-    }
 
 
 //    public List<OrderLine> findBy(Product product, CoffeeShop coffeeShop) {
