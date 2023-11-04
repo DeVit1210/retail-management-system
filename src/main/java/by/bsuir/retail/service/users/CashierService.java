@@ -1,27 +1,20 @@
 package by.bsuir.retail.service.users;
 
-import by.bsuir.retail.entity.sales.Order;
-import by.bsuir.retail.entity.sales.Shift;
+import by.bsuir.retail.entity.CoffeeShop;
 import by.bsuir.retail.entity.users.Cashier;
 import by.bsuir.retail.entity.users.Role;
 import by.bsuir.retail.repository.users.CashierRepository;
-import by.bsuir.retail.request.sales.OrderAddingRequest;
-import by.bsuir.retail.response.buidler.ResponseBuilder;
-import by.bsuir.retail.response.entity.MultipleEntityResponse;
-import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.exception.UserNotFoundException;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
-import by.bsuir.retail.service.sales.OrderService;
-import by.bsuir.retail.service.sales.ShiftService;
+import by.bsuir.retail.utils.ThrowableUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -41,4 +34,14 @@ public class CashierService {
         cashierRepository.deleteById(id);
     }
 
+    public List<Cashier> findAllByCoffeeShop(CoffeeShop coffeeShop) {
+        return cashierRepository.findAllByCoffeeShopAndEnabled(coffeeShop, true);
+    }
+
+    public Cashier getAuthenticatedCashier() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ThrowableUtils.prepareTest(authentication, Objects::nonNull).orElseThrow(UserNotFoundException.class);
+        String username = ((UserDetails) authentication.getPrincipal()).getUsername();
+        return findByUsername(username);
+    }
 }

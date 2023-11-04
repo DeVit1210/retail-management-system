@@ -2,15 +2,14 @@ package by.bsuir.retail.service;
 
 import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.entity.products.Product;
-import by.bsuir.retail.entity.products.TechProcess;
 import by.bsuir.retail.entity.sales.OrderLine;
 import by.bsuir.retail.entity.supply.SupplyLine;
 import by.bsuir.retail.request.query.ProfitabilityRequest;
-import by.bsuir.retail.request.query.SearchQueryRequest;
 import by.bsuir.retail.response.ProfitabilityResponse;
 import by.bsuir.retail.response.buidler.ProfitabilityResponseBuilder;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
+import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.products.ProductService;
 import by.bsuir.retail.service.sales.OrderLineService;
 import by.bsuir.retail.service.supply.SupplyLineService;
@@ -19,11 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +36,12 @@ public class ProfitabilityService {
         return responseBuilder.buildMultipleEntityResponse(list);
     }
 
-    public ProfitabilityResponse calculateProfitability(Product product, ProfitabilityRequest request) {
+    public ResponseEntity<SingleEntityResponse> calculateProfitability(long productId, ProfitabilityRequest request) {
+        Product product = productService.findById(productId);
+        return responseBuilder.buildSingleEntityResponse(calculateProfitability(product, request));
+    }
+
+    private ProfitabilityResponse calculateProfitability(Product product, ProfitabilityRequest request) {
         double averageSaleCost = getAverageSaleCost(product.getSalesHistory(), request);
         double averageSupplyCost = composeIngredientsAverageCost(product.getTechProcess().getIngredients(), request);
         return ProfitabilityResponseBuilder.withProduct(product)

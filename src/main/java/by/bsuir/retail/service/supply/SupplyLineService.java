@@ -57,17 +57,5 @@ public class SupplyLineService {
         return supplyLineRepository.findAllByMaterial(material);
     }
 
-
-    public List<SupplyLine> findBy(Material material, CoffeeShop coffeeShop) {
-        return findAllByMaterial(material)
-                .stream()
-                .filter(supplyLine -> supplyLine.getSupply().getCoffeeShop().equals(coffeeShop))
-                .toList();
-    }
-
-    public List<SupplyLine> findBy(Material material, LocalDateTime start, LocalDateTime end) {
-        return supplyLineRepository.findByMaterialAndPurchasedAtBetween(material, start, end);
-    }
-
 }
 

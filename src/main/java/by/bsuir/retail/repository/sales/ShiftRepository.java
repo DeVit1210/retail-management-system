@@ -12,5 +12,7 @@ import java.util.Optional;
 public interface ShiftRepository extends JpaRepository<Shift, Long> {
     List<Shift> findByCashier(Cashier cashier);
     Optional<Shift> findByCashierAndActiveIsTrue(Cashier cashier);
+    boolean existsByCashierAndActiveIsTrue(Cashier cashier);
     List<Shift> findByActiveIsTrue();
+    List<Shift> findByCashierIn(List<Cashier> cashierList);
 }
