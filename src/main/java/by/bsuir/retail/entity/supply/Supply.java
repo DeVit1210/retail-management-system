@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -28,5 +29,6 @@ public class Supply implements RetailManagementEntity {
     private Supplier supplier;
     @OneToMany(mappedBy = "supply", fetch = FetchType.EAGER)
     private List<SupplyLine> composition;
+    private LocalDateTime createdAt;
     private double totalCost;
 }

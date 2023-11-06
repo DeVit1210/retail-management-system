@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class ProfitabilityRequest {
+public class FinancialRequest {
     private long coffeeShopId;
     private String startTime;
     private String endTime;

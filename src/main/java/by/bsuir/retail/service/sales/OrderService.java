@@ -1,8 +1,8 @@
 package by.bsuir.retail.service.sales;
 
 import by.bsuir.retail.entity.sales.Order;
+import by.bsuir.retail.entity.sales.Payment;
 import by.bsuir.retail.entity.sales.Shift;
-import by.bsuir.retail.entity.users.Cashier;
 import by.bsuir.retail.mapper.sales.OrderMapper;
 import by.bsuir.retail.repository.sales.OrderRepository;
 import by.bsuir.retail.request.query.SearchQueryRequest;
@@ -18,9 +18,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,16 +34,18 @@ public class OrderService {
         return orderRepository.findById(orderId)
                 .orElseThrow(() -> new WrongRetailEntityIdException(Order.class, orderId));
     }
-
-    public ResponseEntity<MultipleEntityResponse> findAll() {
-        List<Order> orderList = orderRepository.findAll();
-        return responseBuilder.buildMultipleEntityResponse(mapper.toOrderDtoList(orderList));
+    public List<Order> findAll() {
+        return orderRepository.findAll();
     }
-
-    public ResponseEntity<MultipleEntityResponse> findAll(SearchQueryRequest request) {
+    public List<Order> findAll(SearchQueryRequest request) {
         Specification<Order> specificationChain = specificationService.createSpecificationChain(request, Order.class);
-        List<Order> orderList = orderRepository.findAll(specificationChain);
-        return responseBuilder.buildMultipleEntityResponse(mapper.toOrderDtoList(orderList));
+        return orderRepository.findAll(specificationChain);
+    }
+    public ResponseEntity<MultipleEntityResponse> getAll() {
+        return responseBuilder.buildMultipleEntityResponse(mapper.toOrderDtoList(findAll()));
+    }
+    public ResponseEntity<MultipleEntityResponse> getAll(SearchQueryRequest request) {
+        return responseBuilder.buildMultipleEntityResponse(mapper.toOrderDtoList(findAll(request)));
     }
 
     public ResponseEntity<SingleEntityResponse> addOrder(OrderAddingRequest request) {
@@ -76,6 +76,11 @@ public class OrderService {
 
     private List<Order> findShiftOrderList(Shift shift) {
         return orderRepository.findByCashierAndCreatedAtBetween(shift.getCashier(), shift.getStartTime(), shift.getEndTime());
+    }
+
+    public double getOrderTotalCost(Order order) {
+        Payment payment = order.getPayment();
+        return paymentService.getPaymentTotalCost(payment);
     }
 
 }

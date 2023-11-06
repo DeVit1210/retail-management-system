@@ -28,7 +28,6 @@ public class OrderLineService {
         return orderLineRepository.findById(orderLineId)
                 .orElseThrow(() -> new WrongRetailEntityIdException(OrderLine.class, orderLineId));
     }
-
     public List<OrderLine> findAll() {
         return orderLineRepository.findAll();
     }
@@ -55,8 +54,6 @@ public class OrderLineService {
     public ResponseEntity<SingleEntityResponse> getById(long orderLineId) {
         return responseBuilder.buildSingleEntityResponse(findById(orderLineId));
     }
-
-
 
 //    public List<OrderLine> findBy(Product product, CoffeeShop coffeeShop) {
 //        return findAllByProduct(product)

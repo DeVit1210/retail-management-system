@@ -1,6 +1,6 @@
 package by.bsuir.retail.controller.sales;
 
-import by.bsuir.retail.request.query.ProfitabilityRequest;
+import by.bsuir.retail.request.query.FinancialRequest;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.ProfitabilityService;
@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 public class ProfitabilityController {
     private final ProfitabilityService profitabilityService;
     @PostMapping
-    public ResponseEntity<MultipleEntityResponse> calculateProfitability(@RequestBody ProfitabilityRequest request) {
+    public ResponseEntity<MultipleEntityResponse> calculateProfitability(@RequestBody FinancialRequest request) {
         return profitabilityService.calculateProfitability(request);
     }
 
     @PostMapping("/{productId}")
     public ResponseEntity<SingleEntityResponse> calculateProfitability(@PathVariable long productId,
-                                                                       @RequestBody ProfitabilityRequest request) {
+                                                                       @RequestBody FinancialRequest request) {
         return profitabilityService.calculateProfitability(productId, request);
     }
 }

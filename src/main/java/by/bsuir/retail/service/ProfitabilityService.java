@@ -4,16 +4,15 @@ import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.entity.sales.OrderLine;
 import by.bsuir.retail.entity.supply.SupplyLine;
-import by.bsuir.retail.request.query.ProfitabilityRequest;
+import by.bsuir.retail.request.query.FinancialRequest;
 import by.bsuir.retail.response.ProfitabilityResponse;
 import by.bsuir.retail.response.buidler.ProfitabilityResponseBuilder;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.products.ProductService;
-import by.bsuir.retail.service.sales.OrderLineService;
 import by.bsuir.retail.service.supply.SupplyLineService;
-import by.bsuir.retail.utils.PredicateUtils;
+import by.bsuir.retail.utils.predicate.PredicateUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,22 +25,21 @@ import java.util.Map;
 public class ProfitabilityService {
     private final SupplyLineService supplyLineService;
     private final ProductService productService;
-    private final OrderLineService orderLineService;
     private final ResponseBuilder responseBuilder;
 
-    public ResponseEntity<MultipleEntityResponse> calculateProfitability(ProfitabilityRequest request) {
+    public ResponseEntity<MultipleEntityResponse> calculateProfitability(FinancialRequest request) {
         List<ProfitabilityResponse> list = productService.findAll().stream()
                 .map(product -> this.calculateProfitability(product, request))
                 .toList();
         return responseBuilder.buildMultipleEntityResponse(list);
     }
 
-    public ResponseEntity<SingleEntityResponse> calculateProfitability(long productId, ProfitabilityRequest request) {
+    public ResponseEntity<SingleEntityResponse> calculateProfitability(long productId, FinancialRequest request) {
         Product product = productService.findById(productId);
         return responseBuilder.buildSingleEntityResponse(calculateProfitability(product, request));
     }
 
-    private ProfitabilityResponse calculateProfitability(Product product, ProfitabilityRequest request) {
+    private ProfitabilityResponse calculateProfitability(Product product, FinancialRequest request) {
         double averageSaleCost = getAverageSaleCost(product.getSalesHistory(), request);
         double averageSupplyCost = composeIngredientsAverageCost(product.getTechProcess().getIngredients(), request);
         return ProfitabilityResponseBuilder.withProduct(product)
@@ -50,7 +48,7 @@ public class ProfitabilityService {
                 .createResponse();
     }
 
-    private double composeIngredientsAverageCost(Map<Material, Integer> ingredients, ProfitabilityRequest request) {
+    private double composeIngredientsAverageCost(Map<Material, Integer> ingredients, FinancialRequest request) {
 
         return ingredients.entrySet().stream()
                 .map(entry -> {
@@ -60,21 +58,17 @@ public class ProfitabilityService {
                 .reduce(0.0, Double::sum);
     }
 
-    private double calculateProfitability(double averageSaleCost, double averagePurchaseCost) {
-        return (averageSaleCost - averagePurchaseCost) / averagePurchaseCost * 100;
-    }
-
-    private double getAverageSupplyCost(List<SupplyLine> supplyLineList, int quantity, ProfitabilityRequest request) {
+    private double getAverageSupplyCost(List<SupplyLine> supplyLineList, int quantity, FinancialRequest request) {
         double totalPurchaseCost = supplyLineList.stream()
-                .filter(PredicateUtils.supplyLinePredicate(request))
+                .filter(PredicateUtils.forSupplyLine().predicate(request))
                 .mapToDouble(SupplyLine::getPurchaseCost)
                 .reduce(0.0, Double::sum);
         return (totalPurchaseCost / supplyLineList.size()) * quantity;
     }
     
-    private double getAverageSaleCost(List<OrderLine> orderLineList, ProfitabilityRequest request) {
+    private double getAverageSaleCost(List<OrderLine> orderLineList, FinancialRequest request) {
         double totalSaleCost = orderLineList.stream()
-                .filter(PredicateUtils.orderLinePredicate(request))
+                .filter(PredicateUtils.forOrderLine().predicate(request))
                 .mapToDouble(OrderLine::getSaleCost)
                 .reduce(0.0, Double::sum);
         return totalSaleCost / orderLineList.size();

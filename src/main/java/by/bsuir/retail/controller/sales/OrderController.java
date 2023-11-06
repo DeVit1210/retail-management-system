@@ -15,7 +15,7 @@ public class OrderController {
     private final OrderService orderService;
     @GetMapping
     public ResponseEntity<MultipleEntityResponse> getAllOrder() {
-        return orderService.findAll();
+        return orderService.getAll();
     }
     @GetMapping("/{orderId}")
     public ResponseEntity<SingleEntityResponse> getOrder(@PathVariable long orderId) {

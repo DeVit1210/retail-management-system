@@ -14,7 +14,7 @@ public class SupplyController {
     private final SupplyService supplyService;
     @GetMapping
     public ResponseEntity<MultipleEntityResponse> getAllSupply() {
-        return supplyService.findAll();
+        return supplyService.getAll();
     }
     @GetMapping("/{supplyId}")
     public ResponseEntity<SingleEntityResponse> getSupply(@PathVariable long supplyId) {

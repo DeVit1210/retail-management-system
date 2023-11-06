@@ -29,25 +29,40 @@ public class SupplyService {
         return supplyRepository.findById(supplyId)
                 .orElseThrow(() -> new WrongRetailEntityIdException(Supply.class, supplyId));
     }
-    public ResponseEntity<MultipleEntityResponse> findAll() {
-        List<Supply> supplyList = supplyRepository.findAll();
-        return responseBuilder.buildMultipleEntityResponse(mapper.toSupplyDtoList(supplyList));
+
+    public List<Supply> findAll() {
+        return supplyRepository.findAll();
     }
 
-    public ResponseEntity<MultipleEntityResponse> findAll(SearchQueryRequest request) {
+    public List<Supply> findAll(SearchQueryRequest request) {
         Specification<Supply> specificationChain = specificationService.createSpecificationChain(request, Supply.class);
-        List<Supply> supplyList = supplyRepository.findAll(specificationChain);
-        return responseBuilder.buildMultipleEntityResponse(mapper.toSupplyDtoList(supplyList));
+        return supplyRepository.findAll(specificationChain);
+    }
+
+    public ResponseEntity<MultipleEntityResponse> getAll() {
+        return responseBuilder.buildMultipleEntityResponse(mapper.toSupplyDtoList(findAll()));
+    }
+
+    public ResponseEntity<MultipleEntityResponse> getAll(SearchQueryRequest request) {
+        return responseBuilder.buildMultipleEntityResponse(mapper.toSupplyDtoList(findAll(request)));
     }
 
     public ResponseEntity<SingleEntityResponse> addSupply(SupplyAddingRequest request) {
         Supply supply = mapper.toSupply(request);
+        supply.setTotalCost(calculateTotalSupplyCost(supply));
         Supply savedSupply = supplyRepository.save(supply);
-        supplyLineService.saveSupplyLines(supply);
+        supplyLineService.saveSupplyLines(savedSupply);
         return responseBuilder.buildSingleEntityResponse(mapper.toSupplyDto(savedSupply));
     }
 
     public ResponseEntity<SingleEntityResponse> getById(long supplyId) {
         return responseBuilder.buildSingleEntityResponse(findById(supplyId));
     }
+
+    private double calculateTotalSupplyCost(Supply supply) {
+        return supply.getComposition().stream()
+                .mapToDouble(supplyLine -> supplyLine.getPurchaseCost() * supplyLine.getQuantity())
+                .reduce(0.0, Double::sum);
+    }
+
 }

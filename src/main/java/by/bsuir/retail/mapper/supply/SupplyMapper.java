@@ -36,6 +36,7 @@ public abstract class SupplyMapper {
     @Mapping(target = "coffeeShop", expression = "java(coffeeShopService.findById(request.getCoffeeShopId()))")
     @Mapping(target = "supplier", expression = "java(supplierService.findById(request.getSupplierId()))")
     @Mapping(target = "composition", expression = "java(supplyLineMapper.toSupplyLineList(request))")
+    @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
     public abstract Supply toSupply(SupplyAddingRequest request);
 
     public abstract List<SupplyDto> toSupplyDtoList(List<Supply> supplyList);
