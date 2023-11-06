@@ -1,5 +1,7 @@
 package by.bsuir.retail.service.sales;
 
+import by.bsuir.retail.entity.CoffeeShop;
+import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.entity.sales.OrderLine;
 import by.bsuir.retail.mapper.sales.OrderLineMapper;
@@ -15,7 +17,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -55,14 +59,14 @@ public class OrderLineService {
         return responseBuilder.buildSingleEntityResponse(findById(orderLineId));
     }
 
-//    public List<OrderLine> findBy(Product product, CoffeeShop coffeeShop) {
-//        return findAllByProduct(product)
-//                .stream()
-//                .filter(orderLine -> orderLine.getOrder().getCashier().getCoffeeShop().equals(coffeeShop))
-//                .toList();
-//    }
-//
-//    public List<OrderLine> findBy(Product product, LocalDateTime start, LocalDateTime end) {
-//        return orderLineRepository.findAllByProductAndSoldAtBetween(product, start, end);
-//    }
+    public List<OrderLine> getCoffeeShopOrderLineList(CoffeeShop coffeeShop) {
+        LocalDateTime startSearchingTime = LocalDateTime.now().minusWeeks(1);
+        return orderLineRepository.findAllBySoldAtAfter(startSearchingTime).stream()
+                .filter(orderLine -> this.isOrderLineInCoffeeShop(orderLine, coffeeShop))
+                .toList();
+    }
+
+    private boolean isOrderLineInCoffeeShop(OrderLine orderLine, CoffeeShop coffeeShop) {
+        return orderLine.getOrder().getCashier().getCoffeeShop().equals(coffeeShop);
+    }
 }

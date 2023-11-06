@@ -1,8 +1,6 @@
 package by.bsuir.retail.service.supply;
 
-import by.bsuir.retail.entity.CoffeeShop;
 import by.bsuir.retail.entity.products.Material;
-import by.bsuir.retail.entity.sales.OrderLine;
 import by.bsuir.retail.entity.supply.Supply;
 import by.bsuir.retail.entity.supply.SupplyLine;
 import by.bsuir.retail.mapper.supply.SupplyLineMapper;
@@ -18,7 +16,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service

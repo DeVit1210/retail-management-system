@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -54,5 +55,10 @@ public class CoffeeShopService {
 
     public void updateCoffeeShop(CoffeeShop coffeeShop) {
         coffeeShopRepository.save(coffeeShop);
+    }
+
+    public Map<Material, Integer> getWarehouse(long coffeeShopId) {
+        CoffeeShop coffeeShop = findById(coffeeShopId);
+        return coffeeShop.getWarehouse();
     }
 }

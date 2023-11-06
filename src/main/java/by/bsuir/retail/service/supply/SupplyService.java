@@ -51,6 +51,7 @@ public class SupplyService {
         Supply supply = mapper.toSupply(request);
         supply.setTotalCost(calculateTotalSupplyCost(supply));
         Supply savedSupply = supplyRepository.save(supply);
+        // TODO: add supplied materials to the coffeeShop's warehouse
         supplyLineService.saveSupplyLines(savedSupply);
         return responseBuilder.buildSingleEntityResponse(mapper.toSupplyDto(savedSupply));
     }

@@ -1,23 +1,18 @@
 package by.bsuir.retail.mapper.supply;
 
 import by.bsuir.retail.dto.supply.SupplyDto;
-import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.entity.supply.Supply;
 import by.bsuir.retail.entity.supply.SupplyLine;
 import by.bsuir.retail.request.supply.SupplyAddingRequest;
 import by.bsuir.retail.service.CoffeeShopService;
-import by.bsuir.retail.service.products.MaterialService;
 import by.bsuir.retail.service.supply.SupplierService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @Mapper(componentModel = "spring")
 public abstract class SupplyMapper {

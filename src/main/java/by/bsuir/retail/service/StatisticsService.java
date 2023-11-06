@@ -26,7 +26,7 @@ public class StatisticsService {
                 .withSupplyListProvider(supplyService::findAll)
                 .andSupplyTotalCostMapper(Supply::getTotalCost)
                 .buildReport();
+
         return responseBuilder.buildSingleEntityResponse(financialReportResponse);
     }
-
 }

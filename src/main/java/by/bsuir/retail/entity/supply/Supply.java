@@ -2,7 +2,6 @@ package by.bsuir.retail.entity.supply;
 
 import by.bsuir.retail.entity.CoffeeShop;
 import by.bsuir.retail.entity.RetailManagementEntity;
-import by.bsuir.retail.entity.products.Material;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Table(name = "supply")
