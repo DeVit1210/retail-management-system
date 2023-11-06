@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 public class StockReportResponseBuilder {
     private final Material material;
+    private String coffeeShopName;
     private int leftover;
     private int totalWeekExpense;
 
@@ -35,9 +36,15 @@ public class StockReportResponseBuilder {
 
     public StockReportResponse buildReport() {
         return StockReportResponse.builder()
+                .coffeeShopName(coffeeShopName)
                 .materialName(material.getName())
                 .materialQuantity(leftover)
                 .expirationDate(getExpirationDate())
                 .build();
+    }
+
+    public StockReportResponseBuilder withCoffeeShopName(String name) {
+        this.coffeeShopName = name;
+        return this;
     }
 }

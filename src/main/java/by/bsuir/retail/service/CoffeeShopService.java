@@ -31,16 +31,22 @@ public class CoffeeShopService {
                 .orElseThrow(() -> new IllegalArgumentException("coffee shop is not found with id: " + coffeeShopId));
     }
 
-    public ResponseEntity<MultipleEntityResponse> findAll() {
-        List<CoffeeShop> coffeeShopList = coffeeShopRepository.findAll();
-        return responseBuilder.buildMultipleEntityResponse(mapper.toCoffeeShopDtoList(coffeeShopList));
+    public List<CoffeeShop> findAll() {
+        return coffeeShopRepository.findAll();
     }
 
-    public ResponseEntity<MultipleEntityResponse> findAll(SearchQueryRequest request) {
+    public List<CoffeeShop> findAll(SearchQueryRequest request) {
         Specification<CoffeeShop> specificationChain
                 = specificationService.createSpecificationChain(request, CoffeeShop.class);
-        List<CoffeeShop> coffeeShopList = coffeeShopRepository.findAll(specificationChain);
-        return responseBuilder.buildMultipleEntityResponse(mapper.toCoffeeShopDtoList(coffeeShopList));
+        return coffeeShopRepository.findAll(specificationChain);
+    }
+
+    public ResponseEntity<MultipleEntityResponse> getAll() {
+        return responseBuilder.buildMultipleEntityResponse(mapper.toCoffeeShopDtoList(findAll()));
+    }
+
+    public ResponseEntity<MultipleEntityResponse> getAll(SearchQueryRequest request) {
+        return responseBuilder.buildMultipleEntityResponse(mapper.toCoffeeShopDtoList(findAll(request)));
     }
 
     public ResponseEntity<SingleEntityResponse> addCoffeeShop(CoffeeShopAddingRequest request) {
