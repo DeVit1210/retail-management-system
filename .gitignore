@@ -23,7 +23,6 @@ target/
 *.iml
 *.ipr
 pom.xml
-src/main/resources/application.properties
 compose.yaml
 mvnw
 
