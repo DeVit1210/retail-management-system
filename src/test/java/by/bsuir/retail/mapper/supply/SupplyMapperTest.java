@@ -5,14 +5,12 @@ import by.bsuir.retail.entity.CoffeeShop;
 import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.entity.supply.Supplier;
 import by.bsuir.retail.entity.supply.Supply;
+import by.bsuir.retail.entity.supply.SupplyLine;
 import by.bsuir.retail.request.supply.SupplyAddingRequest;
 import by.bsuir.retail.service.CoffeeShopService;
 import by.bsuir.retail.service.products.MaterialService;
 import by.bsuir.retail.service.supply.SupplierService;
-import by.bsuir.retail.testbuilder.impl.CoffeeShopTestBuilder;
-import by.bsuir.retail.testbuilder.impl.MaterialTestBuilder;
-import by.bsuir.retail.testbuilder.impl.SupplierTestBuilder;
-import by.bsuir.retail.testbuilder.impl.SupplyTestBuilder;
+import by.bsuir.retail.testbuilder.impl.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -101,15 +99,15 @@ class SupplyMapperTest {
     private void assertToSupply(Supply supply) {
         assertEquals(supply.getCoffeeShop(), coffeeShop);
         assertEquals(supply.getSupplier(), supplier);
-        assertTrue(supply.getComposition().containsKey(firstMaterial));
-        assertTrue(supply.getComposition().containsKey(secondMaterial));
+        assertTrue(supply.getComposition().stream().anyMatch(supplyLine -> supplyLine.getMaterial().equals(firstMaterial)));
+        assertTrue(supply.getComposition().stream().anyMatch(supplyLine -> supplyLine.getMaterial().equals(secondMaterial)));
     }
 
     private Supply buildSupply() {
-        Map<Material, Integer> composition = new HashMap<>() {{
-            put(firstMaterial, 1);
-            put(secondMaterial, 2);
-        }};
+        List<SupplyLine> composition = List.of(
+                SupplyLineTestBuilder.builder().withMaterial(firstMaterial).withQuantity(1).build(),
+                SupplyLineTestBuilder.builder().withMaterial(secondMaterial).withQuantity(2).build()
+        );
         return SupplyTestBuilder.builder()
                 .withCoffeeShop(coffeeShop)
                 .withSupplier(supplier)

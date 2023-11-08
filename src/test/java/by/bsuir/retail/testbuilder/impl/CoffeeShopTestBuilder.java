@@ -19,6 +19,7 @@ import java.util.Map;
 @NoArgsConstructor(staticName = "builder")
 @AllArgsConstructor
 public class CoffeeShopTestBuilder implements TestBuilder<CoffeeShop> {
+    private long id = 1;
     private String name = "coffeeShopName";
     private String address = "coffeeShopAddress";
     private CoffeeShopManager coffeeShopManager = CoffeeShopManagerTestBuilder.builder().build();
@@ -28,6 +29,7 @@ public class CoffeeShopTestBuilder implements TestBuilder<CoffeeShop> {
     @Override
     public CoffeeShop build() {
         return CoffeeShop.builder()
+                .id(id)
                 .name(name)
                 .address(address)
                 .manager(coffeeShopManager)

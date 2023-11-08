@@ -9,6 +9,7 @@ import by.bsuir.retail.service.report.CalculatingService;
 import by.bsuir.retail.service.products.ProductService;
 import by.bsuir.retail.service.users.CashierService;
 import by.bsuir.retail.testbuilder.impl.CashierTestBuilder;
+import by.bsuir.retail.testbuilder.impl.OrderLineTestBuilder;
 import by.bsuir.retail.testbuilder.impl.OrderTestBuilder;
 import by.bsuir.retail.testbuilder.impl.ProductTestBuilder;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,7 @@ import org.springframework.test.context.TestPropertySource;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -90,18 +92,18 @@ class OrderMapperTest {
         assertEquals(order.getCreatedAt(), LocalDateTime.parse(orderCreatedAt, formatter));
         assertEquals(order.getCashier(), cashier);
         assertEquals(order.getComposition().size(), 2);
-        assertTrue(order.getComposition().containsKey(firstProduct));
-        assertTrue(order.getComposition().containsKey(secondProduct));
+        assertTrue(order.getComposition().stream().anyMatch(orderLine -> orderLine.getProduct().equals(firstProduct)));
+        assertTrue(order.getComposition().stream().anyMatch(orderLine -> orderLine.getProduct().equals(secondProduct)));
     }
     private Order buildOrder() {
         LocalDateTime createdAt = LocalDateTime.parse(orderCreatedAt, formatter);
         return OrderTestBuilder.builder()
                 .withCashier(cashier)
                 .withCreatedAt(createdAt)
-                .withComposition(new HashMap<>() {{
-                    put(firstProduct, 1);
-                    put(secondProduct, 1);
-                }})
+                .withComposition(List.of(
+                        OrderLineTestBuilder.builder().withProduct(firstProduct).withQuantity(1).build(),
+                        OrderLineTestBuilder.builder().withProduct(secondProduct).withQuantity(2).build()
+                ))
                 .build();
     }
 

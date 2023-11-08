@@ -36,7 +36,7 @@ public class WarehouseService {
     }
 
     public void updateWarehouse(Order order) {
-        CoffeeShop currentCoffeeShop = coffeeShopService.findCoffeeShopByOrder(order);
+        CoffeeShop currentCoffeeShop = order.getCashier().getCoffeeShop();
         Map<Material, Integer> coffeeShopWarehouse = currentCoffeeShop.getWarehouse();
         List<OrderLine> orderComposition = order.getComposition();
         orderComposition.forEach(orderLine -> updateForOrderLine(orderLine, coffeeShopWarehouse));

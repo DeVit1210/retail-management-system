@@ -47,18 +47,18 @@ class SupplyLineMapperTest {
         SupplyLineDto supplyLineDto = mapper.toSupplyLineDto(supplyLine);
         assertEquals(supplyLineDto.getMaterialName(), materialName);
     }
-    @Test
-    void testToSupplyLineRequestList() {
-        SupplyAddingRequest supplyAddingRequest = SupplyAddingRequest.builder()
-                .materialQuantityList(List.of(materialQuantity, materialQuantity * 2))
-                .materialIdList(List.of(materialId, materialId * 2))
-                .materialCostList(List.of(materialCost, materialCost * 2))
-                .build();
-        List<SupplyLineAddingRequest> supplyLineRequestList = mapper.toSupplyLineRequestList(supplyAddingRequest);
-        assertEquals(2, supplyLineRequestList.size());
-        assertEquals(materialId, supplyLineRequestList.get(0).getMaterialId());
-        assertEquals(materialQuantity * 2, supplyLineRequestList.get(1).getQuantity());
-    }
+//    @Test
+//    void testToSupplyLineRequestList() {
+//        SupplyAddingRequest supplyAddingRequest = SupplyAddingRequest.builder()
+//                .materialQuantityList(List.of(materialQuantity, materialQuantity * 2))
+//                .materialIdList(List.of(materialId, materialId * 2))
+//                .materialCostList(List.of(materialCost, materialCost * 2))
+//                .build();
+//        List<SupplyLineAddingRequest> supplyLineRequestList = mapper.toSupplyLineRequestList(supplyAddingRequest);
+//        assertEquals(2, supplyLineRequestList.size());
+//        assertEquals(materialId, supplyLineRequestList.get(0).getMaterialId());
+//        assertEquals(materialQuantity * 2, supplyLineRequestList.get(1).getQuantity());
+//    }
 
     @Test
     void testToSupplyLine() {

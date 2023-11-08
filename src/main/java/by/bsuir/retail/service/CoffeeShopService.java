@@ -28,6 +28,9 @@ public class CoffeeShopService {
     private final CoffeeShopRepository coffeeShopRepository;
     private final CoffeeShopMapper mapper;
     private final ResponseBuilder responseBuilder;
+    public CoffeeShop save(CoffeeShop coffeeShop) {
+        return coffeeShopRepository.save(coffeeShop);
+    }
     public CoffeeShop findById(long coffeeShopId) {
         return coffeeShopRepository.findById(coffeeShopId)
                 .orElseThrow(() -> new IllegalArgumentException("coffee shop is not found with id: " + coffeeShopId));
@@ -42,6 +45,7 @@ public class CoffeeShopService {
                 = specificationService.createSpecificationChain(request, CoffeeShop.class);
         return coffeeShopRepository.findAll(specificationChain);
     }
+
 
     public ResponseEntity<MultipleEntityResponse> getAll() {
         return responseBuilder.buildMultipleEntityResponse(mapper.toCoffeeShopDtoList(findAll()));
