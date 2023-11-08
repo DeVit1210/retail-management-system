@@ -2,7 +2,7 @@ package by.bsuir.retail.utils.predicate;
 
 import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.entity.sales.OrderLine;
-import by.bsuir.retail.entity.sales.profitability.ProfitabilityFilterType;
+import by.bsuir.retail.entity.sales.profitability.FilterType;
 import by.bsuir.retail.entity.supply.Supply;
 import by.bsuir.retail.entity.supply.SupplyLine;
 import by.bsuir.retail.request.query.FinancialRequest;
@@ -32,7 +32,7 @@ public interface PredicateUtils<T> {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime start = LocalDateTime.parse(request.getStartTime(), formatter);
         LocalDateTime end = LocalDateTime.parse(request.getEndTime(), formatter);
-        ProfitabilityFilterType filterType = ProfitabilityFilterType.fromType(request.getFilterType());
+        FilterType filterType = FilterType.fromType(request.getFilterType());
         return switch (filterType) {
             case BY_COFFEE_SHOP -> inCoffeeShop(request.getCoffeeShopId());
             case BY_DATE -> between(start, end);

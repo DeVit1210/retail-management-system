@@ -1,9 +1,9 @@
-package by.bsuir.retail.service.users;
+package by.bsuir.retail.service.report;
 
 import by.bsuir.retail.entity.CoffeeShop;
 import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.entity.sales.OrderLine;
-import by.bsuir.retail.response.StockReportResponse;
+import by.bsuir.retail.response.report.StockReportResponse;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.buidler.StockReportResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
@@ -40,7 +40,6 @@ public class StockService {
         CoffeeShop coffeeShop = coffeeShopService.findById(coffeeShopId);
         List<OrderLine> orderLineList = orderLineService.getCoffeeShopOrderLineList(coffeeShop);
         Map<Material, Integer> totalExpensesForEachMaterial = this.getTotalExpensesForEachMaterial(orderLineList);
-        Map<Material, Integer> warehouse = coffeeShop.getWarehouse();
         List<StockReportResponse> stockReportResponseList =
                 totalExpensesForEachMaterial.entrySet().stream().map(toStockReportResponse(coffeeShop)).toList();
         return responseBuilder.buildMultipleEntityResponse(stockReportResponseList);

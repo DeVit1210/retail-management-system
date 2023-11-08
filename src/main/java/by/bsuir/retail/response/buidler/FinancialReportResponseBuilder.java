@@ -4,7 +4,7 @@ package by.bsuir.retail.response.buidler;
 import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.entity.supply.Supply;
 import by.bsuir.retail.request.query.FinancialRequest;
-import by.bsuir.retail.response.FinancialReportResponse;
+import by.bsuir.retail.response.report.FinancialReportResponse;
 import by.bsuir.retail.utils.predicate.PredicateUtils;
 
 import java.util.List;

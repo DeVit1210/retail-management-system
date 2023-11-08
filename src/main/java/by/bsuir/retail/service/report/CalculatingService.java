@@ -1,4 +1,4 @@
-package by.bsuir.retail.service;
+package by.bsuir.retail.service.report;
 
 import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.entity.sales.Payment;

@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 @AllArgsConstructor
 @Getter
-public enum ProfitabilityFilterType {
+public enum FilterType {
 
     BY_COFFEE_SHOP("coffeeShop"),
     BY_DATE("date"),
@@ -15,7 +15,7 @@ public enum ProfitabilityFilterType {
 
     private final String type;
 
-    public static ProfitabilityFilterType fromType(String type) {
+    public static FilterType fromType(String type) {
         return Arrays.stream(values())
                 .filter(profitabilityFilterType -> profitabilityFilterType.getType().equals(type))
                 .findFirst()

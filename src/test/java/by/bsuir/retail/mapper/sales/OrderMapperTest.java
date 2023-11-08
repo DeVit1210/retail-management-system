@@ -5,7 +5,7 @@ import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.entity.users.Cashier;
 import by.bsuir.retail.request.sales.OrderAddingRequest;
-import by.bsuir.retail.service.CalculatingService;
+import by.bsuir.retail.service.report.CalculatingService;
 import by.bsuir.retail.service.products.ProductService;
 import by.bsuir.retail.service.users.CashierService;
 import by.bsuir.retail.testbuilder.impl.CashierTestBuilder;

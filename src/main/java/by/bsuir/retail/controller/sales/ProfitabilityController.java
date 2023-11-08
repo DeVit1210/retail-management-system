@@ -3,7 +3,7 @@ package by.bsuir.retail.controller.sales;
 import by.bsuir.retail.request.query.FinancialRequest;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
-import by.bsuir.retail.service.ProfitabilityService;
+import by.bsuir.retail.service.report.ProfitabilityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -8,6 +8,8 @@ import by.bsuir.retail.request.supply.SupplyAddingRequest;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
+import by.bsuir.retail.service.CoffeeShopService;
+import by.bsuir.retail.service.WarehouseService;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import by.bsuir.retail.service.query.SpecificationService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class SupplyService {
     private final SupplyLineService supplyLineService;
     private final SupplyRepository supplyRepository;
     private final ResponseBuilder responseBuilder;
+    private final WarehouseService warehouseService;
     private final SupplyMapper mapper;
     public Supply findById(long supplyId) {
         return supplyRepository.findById(supplyId)
@@ -49,9 +52,9 @@ public class SupplyService {
 
     public ResponseEntity<SingleEntityResponse> addSupply(SupplyAddingRequest request) {
         Supply supply = mapper.toSupply(request);
+        warehouseService.updateWarehouse(supply);
         supply.setTotalCost(calculateTotalSupplyCost(supply));
         Supply savedSupply = supplyRepository.save(supply);
-        // TODO: add supplied materials to the coffeeShop's warehouse
         supplyLineService.saveSupplyLines(savedSupply);
         return responseBuilder.buildSingleEntityResponse(mapper.toSupplyDto(savedSupply));
     }

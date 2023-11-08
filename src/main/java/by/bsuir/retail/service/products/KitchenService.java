@@ -14,6 +14,7 @@ import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.CoffeeShopService;
+import by.bsuir.retail.service.WarehouseService;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import by.bsuir.retail.service.query.SpecificationService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class KitchenService {
     private final SpecificationService specificationService;
-    private final CoffeeShopService coffeeShopService;
+    private final WarehouseService warehouseService;
     private final ResponseBuilder responseBuilder;
     private final TechProcessRepository techProcessRepository;
     private final TechProcessMapper mapper;
@@ -65,17 +66,6 @@ public class KitchenService {
     }
 
     public void prepareOrder(Order order) {
-        CoffeeShop currentCoffeeShop = coffeeShopService.findCoffeeShopByOrder(order);
-        Map<Material, Integer> coffeeShopWarehouse = currentCoffeeShop.getWarehouse();
-        List<OrderLine> orderComposition = order.getComposition();
-        orderComposition.forEach(orderLine -> prepareProduct(orderLine, coffeeShopWarehouse));
-        coffeeShopService.updateCoffeeShop(currentCoffeeShop);
-    }
-
-    private void prepareProduct(OrderLine orderLine, Map<Material, Integer> coffeeShopWarehouse) {
-        Product product = orderLine.getProduct();
-        int productQuantity = orderLine.getQuantity();
-        TechProcess techProcess = findByProduct(product);
-        TechProcessExecutor.execute(coffeeShopWarehouse, techProcess, productQuantity);
+        warehouseService.updateWarehouse(order);
     }
 }

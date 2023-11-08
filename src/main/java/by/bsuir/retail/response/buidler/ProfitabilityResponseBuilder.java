@@ -2,8 +2,7 @@ package by.bsuir.retail.response.buidler;
 
 
 import by.bsuir.retail.entity.products.Product;
-import by.bsuir.retail.response.ProfitabilityResponse;
-import lombok.NoArgsConstructor;
+import by.bsuir.retail.response.report.ProfitabilityResponse;
 
 public class ProfitabilityResponseBuilder {
     private final String productName;

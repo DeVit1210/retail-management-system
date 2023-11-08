@@ -1,8 +1,8 @@
-package by.bsuir.retail.service;
+package by.bsuir.retail.service.report;
 
 import by.bsuir.retail.entity.supply.Supply;
 import by.bsuir.retail.request.query.FinancialRequest;
-import by.bsuir.retail.response.FinancialReportResponse;
+import by.bsuir.retail.response.report.FinancialReportResponse;
 import by.bsuir.retail.response.buidler.FinancialReportResponseBuilder;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.SingleEntityResponse;

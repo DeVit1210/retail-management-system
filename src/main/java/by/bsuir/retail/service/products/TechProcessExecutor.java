@@ -11,7 +11,6 @@ public class TechProcessExecutor {
         ingredients.forEach((material, quantityForOneProduct) -> {
             Integer totalMaterialQuantity = quantityForOneProduct * times;
             Integer currentMaterialLeftover = coffeeShopWarehouse.get(material);
-            // TODO: check whether lefover higher than requested or not
             coffeeShopWarehouse.replace(material, currentMaterialLeftover - totalMaterialQuantity);
         });
     }

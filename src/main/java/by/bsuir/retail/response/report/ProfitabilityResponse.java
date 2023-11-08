@@ -1,4 +1,4 @@
-package by.bsuir.retail.response;
+package by.bsuir.retail.response.report;
 
 
 import by.bsuir.retail.entity.RetailManagementEntity;

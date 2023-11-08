@@ -2,6 +2,7 @@ package by.bsuir.retail.service;
 
 import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.entity.sales.Payment;
+import by.bsuir.retail.service.report.CalculatingService;
 import by.bsuir.retail.service.sales.PaymentService;
 import by.bsuir.retail.testbuilder.impl.OrderTestBuilder;
 import by.bsuir.retail.testbuilder.impl.PaymentTestBuilder;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;

@@ -1,7 +1,7 @@
 package by.bsuir.retail.response.buidler;
 
 import by.bsuir.retail.entity.products.Material;
-import by.bsuir.retail.response.StockReportResponse;
+import by.bsuir.retail.response.report.StockReportResponse;
 
 import java.time.LocalDate;
 

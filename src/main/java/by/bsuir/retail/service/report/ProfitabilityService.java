@@ -1,11 +1,11 @@
-package by.bsuir.retail.service;
+package by.bsuir.retail.service.report;
 
 import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.entity.sales.OrderLine;
 import by.bsuir.retail.entity.supply.SupplyLine;
 import by.bsuir.retail.request.query.FinancialRequest;
-import by.bsuir.retail.response.ProfitabilityResponse;
+import by.bsuir.retail.response.report.ProfitabilityResponse;
 import by.bsuir.retail.response.buidler.ProfitabilityResponseBuilder;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
