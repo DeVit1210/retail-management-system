@@ -12,7 +12,5 @@ import java.util.List;
 
 @Repository
 public interface OrderLineRepository extends JpaRepository<OrderLine, Long>, JpaSpecificationExecutor<OrderLine> {
-    List<OrderLine> findAllByProduct(Product product);
-    List<OrderLine> findAllByProductAndSoldAtBetween(Product product, LocalDateTime start, LocalDateTime end);
     List<OrderLine> findAllBySoldAtAfter(LocalDateTime time);
 }

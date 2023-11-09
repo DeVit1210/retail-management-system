@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(staticName = "builder")
 @AllArgsConstructor
 public class OrderLineTestBuilder implements TestBuilder<OrderLine> {
-    private Product product = ProductTestBuilder.builder().build();
+    private Product product = null;
     private int quantity = 1;
     private LocalDateTime soldAt = LocalDateTime.now();
     private double saleCost = 1.0;

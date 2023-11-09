@@ -25,7 +25,7 @@ public class OrderTestBuilder implements TestBuilder<Order> {
     private LocalDateTime createdAt = LocalDateTime.now();
     private List<OrderLine> composition = new ArrayList<>();
     private int discountPercent = 0;
-    private Payment payment = PaymentTestBuilder.builder().build();
+    private Payment payment = null;
     @Override
     public Order build() {
         return Order.builder()

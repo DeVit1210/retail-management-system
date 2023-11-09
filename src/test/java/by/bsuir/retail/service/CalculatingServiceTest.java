@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:test.properties")
-class CalculatedServiceTest {
+class CalculatingServiceTest {
     @InjectMocks
     private CalculatingService calculatingService;
     @Mock

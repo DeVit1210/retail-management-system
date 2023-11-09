@@ -1,11 +1,8 @@
 package by.bsuir.retail.service.products;
 
-import by.bsuir.retail.entity.CoffeeShop;
-import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.entity.products.TechProcess;
 import by.bsuir.retail.entity.sales.Order;
-import by.bsuir.retail.entity.sales.OrderLine;
 import by.bsuir.retail.mapper.products.TechProcessMapper;
 import by.bsuir.retail.repository.products.TechProcessRepository;
 import by.bsuir.retail.request.products.TechProcessAddingRequest;
@@ -13,7 +10,6 @@ import by.bsuir.retail.request.query.SearchQueryRequest;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
-import by.bsuir.retail.service.CoffeeShopService;
 import by.bsuir.retail.service.WarehouseService;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import by.bsuir.retail.service.query.SpecificationService;
@@ -23,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor

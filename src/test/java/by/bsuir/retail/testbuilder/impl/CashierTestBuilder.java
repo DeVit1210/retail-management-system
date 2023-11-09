@@ -16,7 +16,7 @@ public class CashierTestBuilder implements TestBuilder<Cashier> {
     private String password = "password";
     private boolean enabled = false;
     private String fullName = "fullName";
-    private CoffeeShop coffeeShop = CoffeeShopTestBuilder.builder().build();
+    private CoffeeShop coffeeShop = null;
     @Override
     public Cashier build() {
         return Cashier.builder()
