@@ -1,6 +1,7 @@
 package by.bsuir.retail.testbuilder.impl;
 
 import by.bsuir.retail.entity.products.Product;
+import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.entity.sales.OrderLine;
 import by.bsuir.retail.testbuilder.TestBuilder;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class OrderLineTestBuilder implements TestBuilder<OrderLine> {
     private Product product = null;
+    private Order order = null;
     private int quantity = 1;
     private LocalDateTime soldAt = LocalDateTime.now();
     private double saleCost = 1.0;
@@ -22,6 +24,7 @@ public class OrderLineTestBuilder implements TestBuilder<OrderLine> {
         return OrderLine.builder()
                 .product(product)
                 .quantity(quantity)
+                .order(order)
                 .soldAt(soldAt)
                 .saleCost(saleCost)
                 .build();

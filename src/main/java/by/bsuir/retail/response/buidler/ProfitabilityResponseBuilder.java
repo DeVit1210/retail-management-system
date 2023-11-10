@@ -27,6 +27,7 @@ public class ProfitabilityResponseBuilder {
     }
 
     private double calculateProfitability() {
+        if(averagePurchaseCost == 0 || averageSaleCost == 0) return 0;
         return (averageSaleCost - averagePurchaseCost) / averageSaleCost * 100;
     }
 

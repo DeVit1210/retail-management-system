@@ -11,6 +11,7 @@ import by.bsuir.retail.utils.predicate.impl.OrderPredicateUtils;
 import by.bsuir.retail.utils.predicate.impl.SupplyLinePredicateUtils;
 import by.bsuir.retail.utils.predicate.impl.SupplyPredicateUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.function.Predicate;
@@ -29,9 +30,9 @@ public interface PredicateUtils<T> {
 
     default Predicate<T> predicate(FinancialRequest request) {
         if(request == null) return empty(getPredicateClass());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDateTime start = LocalDateTime.parse(request.getStartTime(), formatter);
-        LocalDateTime end = LocalDateTime.parse(request.getEndTime(), formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime start = request.getStartTime() != null ? LocalDateTime.parse(request.getStartTime(), formatter) : null;
+        LocalDateTime end = request.getEndTime() != null ? LocalDateTime.parse(request.getEndTime(), formatter) : null;
         FilterType filterType = FilterType.fromType(request.getFilterType());
         return switch (filterType) {
             case BY_COFFEE_SHOP -> inCoffeeShop(request.getCoffeeShopId());
@@ -39,19 +40,15 @@ public interface PredicateUtils<T> {
             case BY_COFFEE_SHOP_AND_DATE -> inCoffeeShopBetween(request.getCoffeeShopId(), start, end);
         };
     }
+
     static PredicateUtils<Order> forOrder() {
         return new OrderPredicateUtils();
     }
-
     static PredicateUtils<Supply> forSupply() {
         return new SupplyPredicateUtils();
     }
-
     static PredicateUtils<OrderLine> forOrderLine() {
         return new OrderLinePredicateUtils();
     }
-
-    static PredicateUtils<SupplyLine> forSupplyLine() {
-        return new SupplyLinePredicateUtils();
-    }
+    static PredicateUtils<SupplyLine> forSupplyLine() { return new SupplyLinePredicateUtils(); }
 }

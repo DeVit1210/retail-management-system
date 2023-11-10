@@ -12,5 +12,4 @@ import java.util.List;
 @Repository
 public interface SupplyLineRepository extends JpaRepository<SupplyLine, Long>, JpaSpecificationExecutor<SupplyLine> {
     List<SupplyLine> findAllByMaterial(Material material);
-    List<SupplyLine> findByMaterialAndPurchasedAtBetween(Material material, LocalDateTime start, LocalDateTime end);
 }

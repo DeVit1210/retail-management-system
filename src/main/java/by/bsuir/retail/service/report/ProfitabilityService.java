@@ -12,6 +12,7 @@ import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.products.ProductService;
 import by.bsuir.retail.service.supply.SupplyLineService;
+import by.bsuir.retail.utils.ThrowableUtils;
 import by.bsuir.retail.utils.predicate.PredicateUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -49,21 +50,21 @@ public class ProfitabilityService {
     }
 
     private double composeIngredientsAverageCost(Map<Material, Integer> ingredients, FinancialRequest request) {
-
         return ingredients.entrySet().stream()
                 .map(entry -> {
                     List<SupplyLine> supplyLineList = supplyLineService.findAllByMaterial(entry.getKey());
-                    return getAverageSupplyCost(supplyLineList, entry.getValue(), request);
+                    return getAverageSupplyCost(supplyLineList, entry, request);
                 })
                 .reduce(0.0, Double::sum);
     }
 
-    private double getAverageSupplyCost(List<SupplyLine> supplyLineList, int quantity, FinancialRequest request) {
+    private double getAverageSupplyCost(List<SupplyLine> supplyLineList, Map.Entry<Material, Integer> entry, FinancialRequest request) {
         double totalPurchaseCost = supplyLineList.stream()
                 .filter(PredicateUtils.forSupplyLine().predicate(request))
                 .mapToDouble(SupplyLine::getPurchaseCost)
                 .reduce(0.0, Double::sum);
-        return (totalPurchaseCost / supplyLineList.size()) * quantity;
+        if(totalPurchaseCost == 0) totalPurchaseCost = entry.getKey().getPurchaseCost();
+        return (totalPurchaseCost / supplyLineList.size()) * entry.getValue();
     }
     
     private double getAverageSaleCost(List<OrderLine> orderLineList, FinancialRequest request) {
