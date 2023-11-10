@@ -10,12 +10,11 @@ import by.bsuir.retail.utils.predicate.PredicateUtils;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
-import java.util.stream.Stream;
 
 public class FinancialReportResponseBuilder {
     private final FinancialRequest request;
-    private Stream<Order> orderStream;
-    private Stream<Supply> supplyStream;
+    private List<Order> orderStream;
+    private List<Supply> supplyStream;
     private double totalIncome;
     private double totalExpense;
 
@@ -27,29 +26,29 @@ public class FinancialReportResponseBuilder {
         return new FinancialReportResponseBuilder(request);
     }
     public FinancialReportResponseBuilder withOrderListProvider(Supplier<List<Order>> orderListProvider) {
-        this.orderStream = orderListProvider.get().stream().filter(PredicateUtils.forOrder().predicate(request));
+        this.orderStream = orderListProvider.get().stream().filter(PredicateUtils.forOrder().predicate(request)).toList();
         return this;
     }
 
     public FinancialReportResponseBuilder andOrderIncomeMapper(ToDoubleFunction<? super Order> incomeMapper) {
-        this.totalIncome = orderStream.mapToDouble(incomeMapper).reduce(0.0, Double::sum);
+        this.totalIncome = orderStream.stream().mapToDouble(incomeMapper).reduce(0.0, Double::sum);
         return this;
     }
 
     public FinancialReportResponseBuilder withSupplyListProvider(Supplier<List<Supply>> supplyListProvider) {
-        this.supplyStream = supplyListProvider.get().stream().filter(PredicateUtils.forSupply().predicate(request));
+        this.supplyStream = supplyListProvider.get().stream().filter(PredicateUtils.forSupply().predicate(request)).toList();
         return this;
     }
 
     public FinancialReportResponseBuilder andSupplyTotalCostMapper(ToDoubleFunction<? super Supply> totalCostMapper) {
-        this.totalExpense = supplyStream.mapToDouble(totalCostMapper).reduce(0.0, Double::sum);
+        this.totalExpense = supplyStream.stream().mapToDouble(totalCostMapper).reduce(0.0, Double::sum);
         return this;
     }
 
     public FinancialReportResponse buildReport() {
         return FinancialReportResponse.builder()
-                .orderQuantity(orderStream.count())
-                .supplyQuantity(supplyStream.count())
+                .orderQuantity(orderStream.size())
+                .supplyQuantity(supplyStream.size())
                 .totalIncome(totalIncome)
                 .totalExpenses(totalExpense)
                 .clearIncome(totalIncome - totalExpense)

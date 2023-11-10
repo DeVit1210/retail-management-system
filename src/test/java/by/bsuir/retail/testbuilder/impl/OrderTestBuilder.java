@@ -1,6 +1,5 @@
 package by.bsuir.retail.testbuilder.impl;
 
-import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.entity.sales.Order;
 import by.bsuir.retail.entity.sales.OrderLine;
 import by.bsuir.retail.entity.sales.Payment;
@@ -9,13 +8,10 @@ import by.bsuir.retail.testbuilder.TestBuilder;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.With;
-import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @With
 @NoArgsConstructor(staticName = "builder")
