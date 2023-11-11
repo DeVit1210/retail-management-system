@@ -29,8 +29,10 @@ public class StockReportResponseBuilder {
     }
 
     private LocalDate getExpirationDate() {
-        int averageDayExpense = totalWeekExpense / 7;
-        int daysRemained = (leftover / averageDayExpense) + 1;
+        if(leftover == 0) return LocalDate.now();
+        double averageDayExpense = (double) totalWeekExpense / 7;
+        if(averageDayExpense == 0) return LocalDate.MAX;
+        int daysRemained = (int) (leftover / averageDayExpense) + 1;
         return LocalDate.now().plusDays(daysRemained);
     }
 

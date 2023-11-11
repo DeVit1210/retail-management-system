@@ -52,6 +52,16 @@ class StatisticsServiceTest {
     private static final double supplyCost = 50;
     private static final double orderCost = 100;
 
+    @ParameterizedTest
+    @MethodSource("financialReportTestProvider")
+    void testGenerateFinancialReport(FinancialReportResponse expectedResult, FinancialRequest request) {
+        List<Order> orderList = buildOrderList();
+        List<Supply> supplyList = buildSupplyList();
+        configureFinancialReportTestMocks(orderList, supplyList);
+        var response = statisticsService.generateFinancialReport(request);
+        assertEquals(expectedResult, Objects.requireNonNull(response.getBody()).getResponse());
+    }
+
     static Stream<Arguments> financialReportTestProvider() {
         return Stream.of(
                 Arguments.of(
@@ -89,16 +99,6 @@ class StatisticsServiceTest {
                                 .build()
                 )
         );
-    }
-
-    @ParameterizedTest
-    @MethodSource("financialReportTestProvider")
-    void testGenerateFinancialReport(FinancialReportResponse expectedResult, FinancialRequest request) {
-        List<Order> orderList = buildOrderList();
-        List<Supply> supplyList = buildSupplyList();
-        configureFinancialReportTestMocks(orderList, supplyList);
-        var response = statisticsService.generateFinancialReport(request);
-        assertEquals(expectedResult, Objects.requireNonNull(response.getBody()).getResponse());
     }
 
     private void configureFinancialReportTestMocks(List<Order> orderList, List<Supply> supplyList) {

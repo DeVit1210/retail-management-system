@@ -28,20 +28,20 @@ public class StockService {
     private final OrderLineService orderLineService;
     private final MaterialService materialService;
 
-    public ResponseEntity<MultipleEntityResponse> generateStockReportForMaterial(long materialId) {
-        Material material = materialService.findById(materialId);
-        Map<CoffeeShop, Integer> totalExpensesForEachCoffeeShop = getTotalExpensesForEachCoffeeShop(material);
-        List<StockReportResponse> stockReportResponseList =
-                totalExpensesForEachCoffeeShop.entrySet().stream().map(toStockReportResponse(material)).toList();
-        return responseBuilder.buildMultipleEntityResponse(stockReportResponseList);
-    }
-
     public ResponseEntity<MultipleEntityResponse> generateStockReportForCoffeeShop(long coffeeShopId) {
         CoffeeShop coffeeShop = coffeeShopService.findById(coffeeShopId);
         List<OrderLine> orderLineList = orderLineService.getCoffeeShopOrderLineList(coffeeShop);
         Map<Material, Integer> totalExpensesForEachMaterial = this.getTotalExpensesForEachMaterial(orderLineList);
         List<StockReportResponse> stockReportResponseList =
                 totalExpensesForEachMaterial.entrySet().stream().map(toStockReportResponse(coffeeShop)).toList();
+        return responseBuilder.buildMultipleEntityResponse(stockReportResponseList);
+    }
+
+    public ResponseEntity<MultipleEntityResponse> generateStockReportForMaterial(long materialId) {
+        Material material = materialService.findById(materialId);
+        Map<CoffeeShop, Integer> totalExpensesForEachCoffeeShop = getTotalExpensesForEachCoffeeShop(material);
+        List<StockReportResponse> stockReportResponseList =
+                totalExpensesForEachCoffeeShop.entrySet().stream().map(toStockReportResponse(material)).toList();
         return responseBuilder.buildMultipleEntityResponse(stockReportResponseList);
     }
 
@@ -64,11 +64,18 @@ public class StockService {
     private Map<Material, Integer> getTotalExpensesForEachMaterial(List<OrderLine> orderLineList) {
         return orderLineList.stream()
                 .map(this::getExpensesForOrderLine)
-                .reduce(new HashMap<>(), (result, current) -> {
-                    result.replaceAll((material, quantity) -> quantity + current.getOrDefault(material, 0));
-                    return result;
-                });
+                .reduce(new HashMap<>(), StockService::updateResultingMap);
     }
+
+    private static Map<Material, Integer> updateResultingMap(Map<Material, Integer> result, Map<Material, Integer> current) {
+        current.forEach(((material, quantity) -> {
+            if(result.containsKey(material)) {
+                result.replace(material, result.get(material) + quantity);
+            } else result.put(material, quantity);
+        }));
+        return result;
+    }
+
 
     private Map<Material, Integer> getExpensesForOrderLine(OrderLine orderLine) {
         Map<Material, Integer> ingredients = orderLine.getProduct().getTechProcess().getIngredients();

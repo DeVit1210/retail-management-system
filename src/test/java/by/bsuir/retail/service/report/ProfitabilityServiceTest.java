@@ -201,21 +201,9 @@ class ProfitabilityServiceTest {
         Material secondMaterial = MaterialTestBuilder.builder().withId(2).withPurchaseCost(2.5).build();
         Material thirdMaterial = MaterialTestBuilder.builder().withId(3).withPurchaseCost(2.5).build();
 
-        Map<Material, Integer> firstComposition = new HashMap<>() {{
-            put(firstMaterial, 1);
-            put(secondMaterial, 2);
-        }};
-
-        Map<Material, Integer> secondComposition = new HashMap<>() {{
-            put(firstMaterial, 1);
-            put(thirdMaterial, 2);
-        }};
-
-        Map<Material, Integer> thirdComposition = new HashMap<>() {{
-            put(firstMaterial, 2);
-            put(secondMaterial, 2);
-            put(thirdMaterial, 3);
-        }};
+        Map<Material, Integer> firstComposition = Map.of(firstMaterial, 1, secondMaterial, 2);
+        Map<Material, Integer> secondComposition = Map.of(firstMaterial, 1, thirdMaterial, 2);
+        Map<Material, Integer> thirdComposition = Map.of(firstMaterial, 2, secondMaterial, 2, thirdMaterial, 3);
 
         TechProcess firstTechProcess = TechProcessTestBuilder.builder().withIngredients(firstComposition).build();
         TechProcess secondTechProcess = TechProcessTestBuilder.builder().withIngredients(secondComposition).build();
