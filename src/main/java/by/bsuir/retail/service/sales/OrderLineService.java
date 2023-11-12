@@ -17,6 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +61,7 @@ public class OrderLineService {
     }
 
     public List<OrderLine> getCoffeeShopOrderLineList(CoffeeShop coffeeShop) {
-        LocalDateTime startSearchingTime = LocalDateTime.now().minusWeeks(1);
+        LocalDateTime startSearchingTime = LocalDate.now().minusWeeks(1).atStartOfDay();
         return orderLineRepository.findAllBySoldAtAfter(startSearchingTime).stream()
                 .filter(orderLine -> this.isOrderLineInCoffeeShop(orderLine, coffeeShop))
                 .toList();

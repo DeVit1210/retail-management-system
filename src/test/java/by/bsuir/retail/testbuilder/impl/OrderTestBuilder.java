@@ -11,6 +11,7 @@ import lombok.With;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @With
@@ -31,5 +32,9 @@ public class OrderTestBuilder implements TestBuilder<Order> {
                 .discountPercent(discountPercent)
                 .payment(payment)
                 .build();
+    }
+
+    public List<Order> times(int quantity) {
+        return Collections.nCopies(quantity, build());
     }
 }

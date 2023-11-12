@@ -58,7 +58,7 @@ public class OrderService {
     }
 
     public ResponseEntity<SingleEntityResponse> getById(long orderId) {
-        return responseBuilder.buildSingleEntityResponse(findById(orderId));
+        return responseBuilder.buildSingleEntityResponse(mapper.toOrderDto(findById(orderId)));
     }
 
     public double getShiftTotalIncome(Shift shift) {
