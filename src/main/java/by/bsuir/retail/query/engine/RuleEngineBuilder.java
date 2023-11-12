@@ -16,7 +16,7 @@ public class RuleEngineBuilder {
     private final SearchCriteriaMapper mapper;
     private final BeanFactory beanFactory;
     public RuleEngine buildRuleEngine(SearchCriteriaDto dto) {
-        RuleEngine engine = switch (dto.getValueType()) {
+        RuleEngine engine = switch (ValueTypeResolver.resolve(dto)) {
             case "date" -> beanFactory.getBean(DateRuleEngine.class, mapper);
             case "time" -> beanFactory.getBean(TimeRuleEngine.class, mapper);
             case "number" -> beanFactory.getBean(NumberRuleEngine.class, mapper);
@@ -25,4 +25,5 @@ public class RuleEngineBuilder {
         engine.init(dto);
         return engine;
     }
+
 }

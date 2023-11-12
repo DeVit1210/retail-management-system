@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SpecificationService {
     private final RuleEngineBuilder ruleEngineBuilder;
-    private <T> Specification<T> buildSpecification(SearchCriteriaDto dto, Class<T> clazz) {
+    public  <T> Specification<T> buildSpecification(SearchCriteriaDto dto, Class<T> clazz) {
         RuleEngine engine = ruleEngineBuilder.buildRuleEngine(dto);
         Rule process = engine.process();
         return process::getResult;

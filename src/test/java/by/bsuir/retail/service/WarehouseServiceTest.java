@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -104,31 +105,19 @@ class WarehouseServiceTest {
     }
 
     private Order buildOrder(CoffeeShop savedCoffeeShop) {
-        Product firstProduct = ProductTestBuilder.builder().withId(1).build();
-        Product secondProduct = ProductTestBuilder.builder().withId(2).build();
+        Map<Material, Integer> firstIngredients = Map.of(firstMaterial, 1, secondMaterial, 2);
+        Map<Material, Integer> secondIngredients = Map.of(firstMaterial, 1, secondMaterial, 2);
 
-        Map<Material, Integer> ingredientsFirst = new HashMap<>() {{
-            put(firstMaterial, 1);
-            put(secondMaterial, 2);
-        }};
-
-        Map<Material, Integer> ingredientsSecond = new HashMap<>() {{
-            put(firstMaterial, 1);
-            put(secondMaterial, 2);
-        }};
-
-
-        TechProcess firstTP = TechProcessTestBuilder.builder().withProduct(firstProduct).withIngredients(ingredientsFirst).build();
-        TechProcess secondTP = TechProcessTestBuilder.builder().withProduct(secondProduct).withIngredients(ingredientsSecond).build();
-
-        Product finalFirstProduct = firstProduct.toBuilder().techProcess(firstTP).build();
-        Product finalSecondProduct = secondProduct.toBuilder().techProcess(secondTP).build();
+        List<Product> productList = Stream.of(firstIngredients, secondIngredients)
+                .map(composition -> TechProcessTestBuilder.builder().withIngredients(composition).build())
+                .map(techProcess -> ProductTestBuilder.builder().withTechProcess(techProcess).build())
+                .toList();
 
         List<OrderLine> orderComposition = List.of(
-                OrderLineTestBuilder.builder().withProduct(finalFirstProduct).withQuantity(2).build(),
-                OrderLineTestBuilder.builder().withProduct(finalSecondProduct).withQuantity(3).build()
+                OrderLineTestBuilder.builder().withProduct(productList.get(0)).withQuantity(2).build(),
+                OrderLineTestBuilder.builder().withProduct(productList.get(1)).withQuantity(3).build()
         );
-
+        
         Cashier cashier = CashierTestBuilder.builder().withCoffeeShop(savedCoffeeShop).build();
 
         return OrderTestBuilder.builder().withComposition(orderComposition).withCashier(cashier).build();

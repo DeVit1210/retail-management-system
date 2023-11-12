@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface SearchCriteriaMapper {
     @Mapping(target = "operator", expression = "java(Operator.fromSignature(dto.getOperatorSignature()))")
-    @Mapping(target = "value", source = "value", dateFormat = "yyyy-MM-dd HH-mm-ss")
+    @Mapping(target = "value", source = "value", dateFormat = "yyyy-MM-dd HH:mm")
     TimeSearchCriteria toTimeSearchCriteria(SearchCriteriaDto dto);
 
     @Mapping(target = "operator", expression = "java(Operator.fromSignature(dto.getOperatorSignature()))")

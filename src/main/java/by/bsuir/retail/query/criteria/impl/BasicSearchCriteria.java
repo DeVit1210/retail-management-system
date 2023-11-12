@@ -5,7 +5,6 @@ import by.bsuir.retail.query.criteria.SearchCriteria;
 
 
 public class BasicSearchCriteria extends SearchCriteria<Object> {
-
     public BasicSearchCriteria(String fieldName, Operator operator, Object value) {
         super(fieldName, operator, value);
     }

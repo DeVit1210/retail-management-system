@@ -2,13 +2,11 @@ package by.bsuir.retail.query.engine.impl;
 
 import by.bsuir.retail.dto.query.SearchCriteriaDto;
 import by.bsuir.retail.mapper.query.SearchCriteriaMapper;
+import by.bsuir.retail.query.criteria.impl.BasicSearchCriteria;
 import by.bsuir.retail.query.criteria.impl.TimeSearchCriteria;
 import by.bsuir.retail.query.engine.RuleEngine;
 import by.bsuir.retail.query.rule.Rule;
-import by.bsuir.retail.query.rule.impl.GreaterEqualsTimeOperatorRule;
-import by.bsuir.retail.query.rule.impl.GreaterTimeOperatorRule;
-import by.bsuir.retail.query.rule.impl.LowerEqualsTimeOperatorRule;
-import by.bsuir.retail.query.rule.impl.LowerTimeOperatorRule;
+import by.bsuir.retail.query.rule.impl.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,11 +20,14 @@ public class TimeRuleEngine extends RuleEngine {
     @Override
     public void init(SearchCriteriaDto dto) {
         TimeSearchCriteria timeSearchCriteria = mapper.toTimeSearchCriteria(dto);
+        BasicSearchCriteria basicSearchCriteria = mapper.toBasicSearchCriteria(dto);
         this.ruleList = List.of(
                 new LowerTimeOperatorRule(timeSearchCriteria),
                 new GreaterTimeOperatorRule(timeSearchCriteria),
                 new LowerEqualsTimeOperatorRule(timeSearchCriteria),
-                new GreaterEqualsTimeOperatorRule(timeSearchCriteria)
+                new GreaterEqualsTimeOperatorRule(timeSearchCriteria),
+                new EqualsOperatorRule(basicSearchCriteria),
+                new NotEqualsOperatorRule(basicSearchCriteria)
         );
     }
 }
