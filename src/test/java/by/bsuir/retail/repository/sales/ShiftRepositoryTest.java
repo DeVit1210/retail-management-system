@@ -8,11 +8,13 @@ import by.bsuir.retail.testbuilder.impl.ShiftTestBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,9 +28,13 @@ class ShiftRepositoryTest {
     private ShiftRepository shiftRepository;
     @Autowired
     private CashierRepository cashierRepository;
+    @Value("#{T(java.time.LocalDateTime).parse('${test.shift.endTime}')}")
+    private LocalDateTime shiftEndTime;
 
     private final Cashier firstCashier = CashierTestBuilder.builder().build();
+
     private final Cashier secondCashier = CashierTestBuilder.builder().build();
+
     private final Cashier thirdCashier = CashierTestBuilder.builder().build();
 
     @BeforeEach
@@ -151,5 +157,4 @@ class ShiftRepositoryTest {
         List<Shift> result = shiftRepository.findByCashierIn(cashierList);
         assertTrue(result.isEmpty());
     }
-
 }

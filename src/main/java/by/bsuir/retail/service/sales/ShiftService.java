@@ -50,7 +50,8 @@ public class ShiftService {
 
     public ResponseEntity<MultipleEntityResponse> getCoffeeShopActiveShifts(long coffeeShopId) {
         CoffeeShop coffeeShop = coffeeShopService.findById(coffeeShopId);
-        List<Shift> shiftList = getCoffeeShopActiveShifts(coffeeShop);
+        List<Cashier> cashierList = coffeeShop.getCashierList().stream().filter(UserDetails::isEnabled).toList();
+        List<Shift> shiftList = shiftRepository.findByCashierInAndActiveIsTrue(cashierList);
         List<Double> totalIncomeList = mapToTotalShiftIncomeList(shiftList);
         return responseBuilder.buildMultipleEntityResponse(mapper.toShiftDtoList(shiftList, totalIncomeList));
     }
@@ -71,14 +72,14 @@ public class ShiftService {
 
     public ResponseEntity<SingleEntityResponse> closeShift(Cashier cashier) {
         Shift finishedShift = findActiveByCashier(cashier).toBuilder()
-                .endTime(LocalDateTime.now())
-                .active(false)
+                .endTime(LocalDateTime.now()).active(false)
                 .build();
+        shiftRepository.save(finishedShift);
         double shiftTotalIncome = orderService.getShiftTotalIncome(finishedShift);
         return responseBuilder.buildSingleEntityResponse(mapper.toShiftDto(finishedShift, shiftTotalIncome));
     }
 
-    public ResponseEntity<MultipleEntityResponse> getCurrentShiftsStatistics() {
+    public ResponseEntity<MultipleEntityResponse> getAllActiveShiftsStatistics() {
         List<Shift> activeShiftList = shiftRepository.findByActiveIsTrue();
         List<Double> totalIncomeList = mapToTotalShiftIncomeList(activeShiftList);
         return responseBuilder.buildMultipleEntityResponse(mapper.toShiftDtoList(activeShiftList, totalIncomeList));

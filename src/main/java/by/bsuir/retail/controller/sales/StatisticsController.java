@@ -16,7 +16,7 @@ public class StatisticsController {
     private final ShiftService shiftService;
     @GetMapping("/active")
     public ResponseEntity<MultipleEntityResponse> getAllCurrentShiftsStatistics() {
-        return shiftService.getCurrentShiftsStatistics();
+        return shiftService.getAllActiveShiftsStatistics();
     }
     @GetMapping("/active/{coffeeShopId}")
     public ResponseEntity<MultipleEntityResponse> getActiveCoffeeShopShiftStatistics(@PathVariable long coffeeShopId) {
