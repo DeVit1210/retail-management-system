@@ -29,6 +29,6 @@ public class Order implements RetailManagementEntity {
     private int discountPercent;
     @OneToMany(mappedBy = "order",fetch = FetchType.EAGER)
     private List<OrderLine> composition;
-    @OneToOne
+    @OneToOne(mappedBy = "order")
     private Payment payment;
 }

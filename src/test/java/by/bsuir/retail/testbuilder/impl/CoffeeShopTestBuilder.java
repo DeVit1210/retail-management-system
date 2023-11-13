@@ -22,7 +22,6 @@ public class CoffeeShopTestBuilder implements TestBuilder<CoffeeShop> {
     private long id = 1;
     private String name = "coffeeShopName";
     private String address = "coffeeShopAddress";
-    private CoffeeShopManager coffeeShopManager = CoffeeShopManagerTestBuilder.builder().build();
     private List<Supply> supplyList = new ArrayList<>();
     private List<Cashier> cashierList = new ArrayList<>();
     private Map<Material, Integer> warehouse = new HashMap<>();
@@ -32,7 +31,6 @@ public class CoffeeShopTestBuilder implements TestBuilder<CoffeeShop> {
                 .id(id)
                 .name(name)
                 .address(address)
-                .manager(coffeeShopManager)
                 .supplyList(supplyList)
                 .cashierList(cashierList)
                 .warehouse(warehouse)

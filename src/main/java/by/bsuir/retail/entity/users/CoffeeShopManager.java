@@ -23,6 +23,7 @@ public class CoffeeShopManager extends User implements RetailManagementEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String fullName;
+
     @OneToOne
     private CoffeeShop managedCoffeeShop;
     @Override
