@@ -4,6 +4,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+/src/main/resources/application.properties
+/src/main/resources/jwt.properties
+/src/test/resources/test.properties
+
 ### STS ###
 .apt_generated
 .classpath
@@ -19,7 +23,6 @@ target/
 *.iml
 *.ipr
 pom.xml
-*.properties
 compose.yaml
 mvnw
 
