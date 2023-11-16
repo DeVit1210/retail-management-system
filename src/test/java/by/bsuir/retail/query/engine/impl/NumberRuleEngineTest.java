@@ -7,16 +7,12 @@ import by.bsuir.retail.query.criteria.impl.BasicSearchCriteria;
 import by.bsuir.retail.query.criteria.impl.DoubleSearchCriteria;
 import by.bsuir.retail.query.rule.Rule;
 import by.bsuir.retail.query.rule.impl.EqualsOperatorRule;
-import by.bsuir.retail.query.rule.impl.GreaterNumberOperatorRule;
-import by.bsuir.retail.query.rule.impl.LowerEqualsNumberOperatorRule;
 import by.bsuir.retail.query.rule.impl.NotEqualsOperatorRule;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.stream.Stream;

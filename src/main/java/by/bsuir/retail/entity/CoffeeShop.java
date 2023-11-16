@@ -1,10 +1,8 @@
 package by.bsuir.retail.entity;
 
-import by.bsuir.retail.entity.supply.Supply;
-import by.bsuir.retail.entity.supply.Transfer;
-import by.bsuir.retail.entity.users.Cashier;
-import by.bsuir.retail.entity.users.CoffeeShopManager;
 import by.bsuir.retail.entity.products.Material;
+import by.bsuir.retail.entity.supply.Supply;
+import by.bsuir.retail.entity.users.Cashier;
 import jakarta.persistence.*;
 import lombok.*;
 

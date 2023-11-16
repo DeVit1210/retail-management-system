@@ -1,11 +1,10 @@
 package by.bsuir.retail.service.query;
 
 import by.bsuir.retail.dto.query.SearchCriteriaDto;
-import by.bsuir.retail.utils.SpecificationUtils;
 import by.bsuir.retail.query.engine.RuleEngine;
-import by.bsuir.retail.query.engine.RuleEngineBuilder;
 import by.bsuir.retail.query.rule.Rule;
 import by.bsuir.retail.request.query.SearchQueryRequest;
+import by.bsuir.retail.utils.SpecificationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -15,10 +14,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class SpecificationService {
-    private final RuleEngineBuilder ruleEngineBuilder;
-    public  <T> Specification<T> buildSpecification(SearchCriteriaDto dto, Class<T> clazz) {
-        RuleEngine engine = ruleEngineBuilder.buildRuleEngine(dto);
-        Rule process = engine.process();
+    private final RuleEngine engine;
+    public <T> Specification<T> buildSpecification(SearchCriteriaDto dto, Class<T> clazz) {
+        Rule process = engine.process(dto);
         return process::getResult;
     }
 
