@@ -21,12 +21,11 @@ public class SupplierTestBuilder implements TestBuilder<Supplier> {
     private List<Supply> supplyList = new ArrayList<>();
     @Override
     public Supplier build() {
-        return Supplier.builder()
-                .companyName(companyName)
-                .phoneNumber(phoneNumber)
-                .address(address)
-                .email(email)
-                .supplyList(supplyList)
-                .build();
+        Supplier supplier = new Supplier();
+        supplier.setPhoneNumber(phoneNumber);
+        supplier.setAddress(address);
+        supplier.setEmail(email);
+        supplier.setSupplyList(supplyList);
+        return supplier;
     }
 }

@@ -3,7 +3,9 @@ package by.bsuir.retail.entity.users;
 import by.bsuir.retail.entity.CoffeeShop;
 import by.bsuir.retail.entity.RetailManagementEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,6 +25,7 @@ public class CoffeeShopManager extends User implements RetailManagementEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String fullName;
+
     @OneToOne
     private CoffeeShop managedCoffeeShop;
     @Override

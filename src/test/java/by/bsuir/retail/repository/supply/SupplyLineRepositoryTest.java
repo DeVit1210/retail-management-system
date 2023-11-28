@@ -25,9 +25,9 @@ class SupplyLineRepositoryTest {
     @Autowired
     private MaterialRepository materialRepository;
 
-    private final Material firstMaterial = MaterialTestBuilder.builder().build();
-    private final Material secondMaterial = MaterialTestBuilder.builder().build();
-    private final Material thirdMaterial = MaterialTestBuilder.builder().build();
+    private final Material firstMaterial = MaterialTestBuilder.builder().withId(1).build();
+    private final Material secondMaterial = MaterialTestBuilder.builder().withId(2).build();
+    private final Material thirdMaterial = MaterialTestBuilder.builder().withId(3).build();
 
     @BeforeEach
     void setUp() {
@@ -45,8 +45,8 @@ class SupplyLineRepositoryTest {
         List<SupplyLine> withFirstMaterial = supplyLineRepository.findAllByMaterial(firstMaterial);
         List<SupplyLine> withSecondMaterial = supplyLineRepository.findAllByMaterial(secondMaterial);
 
-        assertEquals(1, withFirstMaterial.size());
-        assertEquals(2, withSecondMaterial.size());
+        assertEquals(2, withFirstMaterial.size());
+        assertEquals(1, withSecondMaterial.size());
     }
 
 }

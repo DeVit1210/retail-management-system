@@ -3,10 +3,10 @@ package by.bsuir.retail.mapper.sales;
 import by.bsuir.retail.dto.sales.OrderDto;
 import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.entity.sales.Order;
+import by.bsuir.retail.entity.sales.OrderLine;
 import by.bsuir.retail.entity.users.Cashier;
 import by.bsuir.retail.request.sales.OrderAddingRequest;
 import by.bsuir.retail.service.report.CalculatingService;
-import by.bsuir.retail.service.products.ProductService;
 import by.bsuir.retail.service.users.CashierService;
 import by.bsuir.retail.testbuilder.impl.CashierTestBuilder;
 import by.bsuir.retail.testbuilder.impl.OrderLineTestBuilder;
@@ -22,13 +22,14 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:test.properties")
@@ -40,7 +41,7 @@ class OrderMapperTest {
     @Mock
     private CashierService cashierService;
     @Mock
-    private ProductService productService;
+    private OrderLineMapper orderLineMapper;
     @Value("${test.cashier.fullName}")
     private String cashierFullName;
     @Value("${test.order.time}")
@@ -56,7 +57,7 @@ class OrderMapperTest {
     private Cashier cashier;
     private Product firstProduct;
     private Product secondProduct;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     @BeforeEach
     void setUp() {
         cashier = CashierTestBuilder.builder().withFullName(cashierFullName).build();
@@ -74,10 +75,10 @@ class OrderMapperTest {
     void testToOrder() {
         OrderAddingRequest request = buildRequest();
         when(cashierService.findById(anyLong())).thenReturn(cashier);
-        when(productService.findById(1L)).thenReturn(firstProduct);
-        when(productService.findById(2L)).thenReturn(secondProduct);
+        List<OrderLine> orderLineList = Collections.nCopies(2, mock(OrderLine.class));
+        when(orderLineMapper.toOrderLineList(any(OrderAddingRequest.class))).thenReturn(orderLineList);
         Order order = mapper.toOrder(request);
-        assertToOrder(order);
+        assertToOrder(order, orderLineList);
     }
     private void assertToOrderDto(Order order, OrderDto orderDto) {
         assertEquals(orderDto.getDiscountPercent(), order.getDiscountPercent());
@@ -88,12 +89,10 @@ class OrderMapperTest {
         assertTrue(orderDto.getOrderComposition().containsKey(firstProductName));
         assertTrue(orderDto.getOrderComposition().containsKey(secondProductName));
     }
-    private void assertToOrder(Order order) {
+    private void assertToOrder(Order order, List<OrderLine> orderLineList) {
         assertEquals(order.getCreatedAt(), LocalDateTime.parse(orderCreatedAt, formatter));
         assertEquals(order.getCashier(), cashier);
-        assertEquals(order.getComposition().size(), 2);
-        assertTrue(order.getComposition().stream().anyMatch(orderLine -> orderLine.getProduct().equals(firstProduct)));
-        assertTrue(order.getComposition().stream().anyMatch(orderLine -> orderLine.getProduct().equals(secondProduct)));
+        assertEquals(order.getComposition(), orderLineList);
     }
     private Order buildOrder() {
         LocalDateTime createdAt = LocalDateTime.parse(orderCreatedAt, formatter);
@@ -117,4 +116,6 @@ class OrderMapperTest {
                 }})
                 .build();
     }
+
+
 }

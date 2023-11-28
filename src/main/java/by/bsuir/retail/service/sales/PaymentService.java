@@ -54,4 +54,8 @@ public class PaymentService {
     public ResponseEntity<SingleEntityResponse> getById(long paymentId) {
         return responseBuilder.buildSingleEntityResponse(findById(paymentId));
     }
+
+    public Payment findByOrder(Order order) {
+        return paymentRepository.findByOrder(order);
+    }
 }

@@ -40,28 +40,17 @@ class SupplyLineMapperTest {
 
     @Value("${test.material.cost}")
     private double materialCost;
-    private final Material material = MaterialTestBuilder.builder().withName(materialName).build();
     @Test
     void testToSupplyLineDto() {
+        Material material = MaterialTestBuilder.builder().withName(materialName).build();
         SupplyLine supplyLine = SupplyLineTestBuilder.builder().withMaterial(material).build();
         SupplyLineDto supplyLineDto = mapper.toSupplyLineDto(supplyLine);
-        assertEquals(supplyLineDto.getMaterialName(), materialName);
+        assertEquals(materialName, supplyLineDto.getMaterialName());
     }
-//    @Test
-//    void testToSupplyLineRequestList() {
-//        SupplyAddingRequest supplyAddingRequest = SupplyAddingRequest.builder()
-//                .materialQuantityList(List.of(materialQuantity, materialQuantity * 2))
-//                .materialIdList(List.of(materialId, materialId * 2))
-//                .materialCostList(List.of(materialCost, materialCost * 2))
-//                .build();
-//        List<SupplyLineAddingRequest> supplyLineRequestList = mapper.toSupplyLineRequestList(supplyAddingRequest);
-//        assertEquals(2, supplyLineRequestList.size());
-//        assertEquals(materialId, supplyLineRequestList.get(0).getMaterialId());
-//        assertEquals(materialQuantity * 2, supplyLineRequestList.get(1).getQuantity());
-//    }
 
     @Test
     void testToSupplyLine() {
+        Material material = MaterialTestBuilder.builder().build();
         SupplyLineAddingRequest request = SupplyLineAddingRequest.builder()
                 .materialId(materialId)
                 .quantity(materialQuantity)

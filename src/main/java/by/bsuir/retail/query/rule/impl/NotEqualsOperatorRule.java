@@ -6,18 +6,18 @@ import by.bsuir.retail.query.criteria.impl.BasicSearchCriteria;
 import by.bsuir.retail.query.rule.Rule;
 import jakarta.persistence.criteria.*;
 
-public class NotEqualsOperatorRule extends BasicOperatorRule {
-    public NotEqualsOperatorRule(BasicSearchCriteria criteria) {
+public class NotEqualsOperatorRule extends Rule {
+    public NotEqualsOperatorRule(SearchCriteria criteria) {
         super(criteria);
     }
 
     @Override
     public boolean evaluate() {
-        return criteria.getOperator().equals(Operator.NOT_EQUALS);
+        return criteria.matches(Operator.NOT_EQUALS);
     }
 
     @Override
     public <T> Predicate getResult(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-        return builder.notEqual(root.get(criteria.getFieldName()), criteria.getValue());
+        return criteria.handleNotEquals(root, query, builder);
     }
 }

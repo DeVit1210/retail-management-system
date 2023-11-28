@@ -1,12 +1,13 @@
 package by.bsuir.retail.entity;
 
+import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.entity.supply.Supply;
 import by.bsuir.retail.entity.users.Cashier;
-import by.bsuir.retail.entity.users.CoffeeShopManager;
-import by.bsuir.retail.entity.products.Material;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,25 +19,18 @@ import java.util.Map;
 @Setter
 @Builder
 public class CoffeeShop {
-
-    // TODO: связать Shift c CoffeeShop, a Cashier с Shift
-    // Как Cashier будет знать, к какой кофейне он относится?
-    // Возможно, он будет выбирать, в какой кофейне открыть смену перед тем, как это сделать
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String address;
 
-    @OneToOne
-    private CoffeeShopManager manager;
+    @OneToMany(mappedBy = "coffeeShop", fetch = FetchType.LAZY)
+    private List<Cashier> cashierList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "coffeeShop")
-    private List<Cashier> cashierList;
-
-    @OneToMany(mappedBy = "coffeeShop")
-    private List<Supply> supplyList;
+    @OneToMany(mappedBy = "coffeeShop", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<Supply> supplyList = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "warehouse")

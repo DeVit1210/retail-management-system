@@ -1,4 +1,4 @@
-package by.bsuir.retail.controller.sales;
+package by.bsuir.retail.controller.report;
 
 import by.bsuir.retail.request.query.FinancialRequest;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;

@@ -15,11 +15,6 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ForkJoinPool;
-import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 @Component
@@ -27,7 +22,7 @@ import java.util.function.Function;
 public class JwtUtils {
     @Value("${jwt.secret}")
     private String secret;
-    @Value("${jwt.expiration}")
+    @Value("${jwt.expiration}000")
     private long expirationInMillis;
     public String getTokenHeader() {
         return "Bearer ";

@@ -5,14 +5,13 @@ import by.bsuir.retail.entity.products.Product;
 import by.bsuir.retail.entity.sales.OrderLine;
 import by.bsuir.retail.entity.supply.SupplyLine;
 import by.bsuir.retail.request.query.FinancialRequest;
-import by.bsuir.retail.response.report.ProfitabilityResponse;
 import by.bsuir.retail.response.buidler.ProfitabilityResponseBuilder;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
+import by.bsuir.retail.response.report.ProfitabilityResponse;
 import by.bsuir.retail.service.products.ProductService;
 import by.bsuir.retail.service.supply.SupplyLineService;
-import by.bsuir.retail.utils.ThrowableUtils;
 import by.bsuir.retail.utils.predicate.PredicateUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +41,8 @@ public class ProfitabilityService {
     }
 
     private ProfitabilityResponse calculateProfitability(Product product, FinancialRequest request) {
-        double averageSaleCost = getAverageSaleCost(product.getSalesHistory(), request);
+        List<OrderLine> salesHistory = product.getSalesHistory();
+        double averageSaleCost = getAverageSaleCost(salesHistory, request);
         double averageSupplyCost = composeIngredientsAverageCost(product.getTechProcess().getIngredients(), request);
         return ProfitabilityResponseBuilder.withProduct(product)
                 .withPurchaseCost(averageSupplyCost)
@@ -59,20 +60,17 @@ public class ProfitabilityService {
     }
 
     private double getAverageSupplyCost(List<SupplyLine> supplyLineList, Map.Entry<Material, Integer> entry, FinancialRequest request) {
-        double totalPurchaseCost = supplyLineList.stream()
+        double averagePurchaseCost = supplyLineList.stream()
                 .filter(PredicateUtils.forSupplyLine().predicate(request))
-                .mapToDouble(SupplyLine::getPurchaseCost)
-                .reduce(0.0, Double::sum);
-        if(totalPurchaseCost == 0) totalPurchaseCost = entry.getKey().getPurchaseCost();
-        return (totalPurchaseCost / supplyLineList.size()) * entry.getValue();
+                .collect(Collectors.averagingDouble(supply -> supply.getPurchaseCost() / supply.getMaterial().getWeight()));
+        if(averagePurchaseCost == 0) averagePurchaseCost = entry.getKey().getPurchaseCost() / entry.getKey().getWeight();
+        return averagePurchaseCost * entry.getValue();
     }
     
     private double getAverageSaleCost(List<OrderLine> orderLineList, FinancialRequest request) {
-        double totalSaleCost = orderLineList.stream()
+        return orderLineList.stream()
                 .filter(PredicateUtils.forOrderLine().predicate(request))
-                .mapToDouble(OrderLine::getSaleCost)
-                .reduce(0.0, Double::sum);
-        return totalSaleCost / orderLineList.size();
+                .collect(Collectors.averagingDouble(OrderLine::getSaleCost));
     }
 
 }

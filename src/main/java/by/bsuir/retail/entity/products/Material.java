@@ -5,14 +5,15 @@ import by.bsuir.retail.entity.supply.SupplyLine;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "materials")
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,5 +25,5 @@ public class Material implements RetailManagementEntity {
     private int weight;
     private double purchaseCost;
     @OneToMany(mappedBy = "material", fetch = FetchType.LAZY)
-    private List<SupplyLine> supplyHistory;
+    private List<SupplyLine> supplyHistory = new ArrayList<>();
 }

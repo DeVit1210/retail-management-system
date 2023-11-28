@@ -29,9 +29,8 @@ public class ApplicationSecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationRequestSpec -> authorizationRequestSpec
-                        .requestMatchers("/user/**").permitAll()
-                        .requestMatchers("/prematch/**").permitAll()
-                        .requestMatchers("/results/**").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/coffeeShop/**").permitAll()
                         .anyRequest()
                         .authenticated()
                 )

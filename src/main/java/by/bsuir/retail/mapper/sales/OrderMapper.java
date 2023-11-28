@@ -29,7 +29,7 @@ public abstract class OrderMapper {
     public abstract OrderDto toOrderDto(Order order);
 
     @Mapping(target = "cashier", expression = "java(cashierService.findById(request.getCashierId()))")
-    @Mapping(target = "createdAt", source = "createdAt", dateFormat = "yyyy-MM-dd HH:mm")
+    @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "composition", expression = "java(orderLineMapper.toOrderLineList(request))")
     public abstract Order toOrder(OrderAddingRequest request);
 

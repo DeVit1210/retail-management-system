@@ -3,13 +3,17 @@ package by.bsuir.retail.entity.products;
 import by.bsuir.retail.entity.RetailManagementEntity;
 import by.bsuir.retail.entity.sales.OrderLine;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "products")
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
@@ -23,5 +27,5 @@ public class Product implements RetailManagementEntity {
     @OneToOne(mappedBy = "createdProduct")
     private TechProcess techProcess;
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private List<OrderLine> salesHistory;
+    private List<OrderLine> salesHistory = new ArrayList<>();
 }

@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -48,6 +49,7 @@ public class OrderService {
         return responseBuilder.buildMultipleEntityResponse(mapper.toOrderDtoList(findAll(request)));
     }
 
+    @Transactional
     public ResponseEntity<SingleEntityResponse> addOrder(OrderAddingRequest request) {
         Order order = mapper.toOrder(request);
         kitchenService.prepareOrder(order);
