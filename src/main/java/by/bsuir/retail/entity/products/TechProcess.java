@@ -1,14 +1,13 @@
 package by.bsuir.retail.entity.products;
 
 import by.bsuir.retail.entity.RetailManagementEntity;
-import by.bsuir.retail.entity.products.Product;
-import by.bsuir.retail.entity.products.Material;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Entity
@@ -27,5 +26,5 @@ public class TechProcess implements RetailManagementEntity {
     @CollectionTable(name = "material_composition")
     @MapKeyColumn
     @Column(name = "quantity")
-    private Map<Material, Integer> ingredients;
+    private Map<Material, Integer> ingredients = new HashMap<>();
 }

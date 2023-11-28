@@ -61,8 +61,8 @@ public class WarehouseService {
         Material material = supplyLine.getMaterial();
         Integer currentQuantity = warehouse.getOrDefault(material, 0);
         if (currentQuantity == 0) {
-            warehouse.put(material, supplyLine.getQuantity());
-        } else warehouse.replace(material, supplyLine.getQuantity() + currentQuantity);
+            warehouse.put(material, supplyLine.getQuantity() * material.getWeight());
+        } else warehouse.replace(material, (supplyLine.getQuantity() * material.getWeight()) + currentQuantity);
     }
 
     public void updateWarehouse(Order order) {

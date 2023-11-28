@@ -4,11 +4,11 @@ package by.bsuir.retail.response.report;
 import by.bsuir.retail.entity.RetailManagementEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.Objects;
+import lombok.ToString;
 
 @AllArgsConstructor
 @Getter
+@ToString
 public class ProfitabilityResponse implements RetailManagementEntity {
     private String productName;
     private double saleCost;

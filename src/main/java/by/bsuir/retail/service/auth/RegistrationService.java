@@ -19,7 +19,7 @@ public class RegistrationService {
     private final ResponseBuilder responseBuilder;
     public ResponseEntity<RegistrationResponse> register(RegistrationRequest request) {
         boolean userExists = appUserService.isUserExists(request);
-        if (userExists) {
+        if (!userExists) {
             UserDetails createdUser = appUserService.saveUser(request, mapper);
             return responseBuilder.buildRegistrationResponse(createdUser);
         } else throw new EmailAlreadyTakenException();

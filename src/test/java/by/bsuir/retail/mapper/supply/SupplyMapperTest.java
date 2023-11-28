@@ -8,7 +8,6 @@ import by.bsuir.retail.entity.supply.Supply;
 import by.bsuir.retail.entity.supply.SupplyLine;
 import by.bsuir.retail.request.supply.SupplyAddingRequest;
 import by.bsuir.retail.service.CoffeeShopService;
-import by.bsuir.retail.service.products.MaterialService;
 import by.bsuir.retail.service.supply.SupplierService;
 import by.bsuir.retail.testbuilder.impl.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,13 +18,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -38,7 +38,7 @@ class SupplyMapperTest {
     @Mock
     private SupplierService supplierService;
     @Mock
-    private MaterialService materialService;
+    private SupplyLineMapper supplyLineMapper;
 
     @Value("${test.coffeeShop.id}")
     private long coffeeShopId;
@@ -83,10 +83,10 @@ class SupplyMapperTest {
         SupplyAddingRequest supplyAddingRequest = buildRequest();
         when(coffeeShopService.findById(anyLong())).thenReturn(coffeeShop);
         when(supplierService.findById(anyLong())).thenReturn(supplier);
-        when(materialService.findById(1L)).thenReturn(firstMaterial);
-        when(materialService.findById(2L)).thenReturn(secondMaterial);
+        List<SupplyLine> supplyLineList = Collections.nCopies(2, mock(SupplyLine.class));
+        when(supplyLineMapper.toSupplyLineList(any(SupplyAddingRequest.class))).thenReturn(supplyLineList);
         Supply supply = mapper.toSupply(supplyAddingRequest);
-        assertToSupply(supply);
+        assertToSupply(supply, supplyLineList);
     }
 
     private void assertToSupplyDto(Supply supply, SupplyDto supplyDto) {
@@ -96,11 +96,10 @@ class SupplyMapperTest {
         assertTrue(supplyDto.getSupplyComposition().containsKey(firstMaterialName));
         assertTrue(supplyDto.getSupplyComposition().containsKey(secondMaterialName));
     }
-    private void assertToSupply(Supply supply) {
+    private void assertToSupply(Supply supply, List<SupplyLine> supplyLineList) {
         assertEquals(supply.getCoffeeShop(), coffeeShop);
         assertEquals(supply.getSupplier(), supplier);
-        assertTrue(supply.getComposition().stream().anyMatch(supplyLine -> supplyLine.getMaterial().equals(firstMaterial)));
-        assertTrue(supply.getComposition().stream().anyMatch(supplyLine -> supplyLine.getMaterial().equals(secondMaterial)));
+        assertEquals(supply.getComposition(), supplyLineList);
     }
 
     private Supply buildSupply() {

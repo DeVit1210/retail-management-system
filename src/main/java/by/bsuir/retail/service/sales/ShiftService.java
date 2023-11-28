@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +42,12 @@ public class ShiftService {
     public Shift findActiveByCashier(Cashier cashier) {
         return shiftRepository.findByCashierAndActiveIsTrue(cashier)
                 .orElseThrow(() -> new IllegalStateException("cashier is not working now!"));
+    }
+
+    public ResponseEntity<MultipleEntityResponse> getAll() {
+        List<Shift> shiftList = shiftRepository.findAll();
+        List<Double> incomeList = shiftList.stream().map(orderService::getShiftTotalIncome).toList();
+        return responseBuilder.buildMultipleEntityResponse(mapper.toShiftDtoList(shiftList, incomeList));
     }
 
     public ResponseEntity<MultipleEntityResponse> getCurrentShiftHistory(Cashier cashier) {

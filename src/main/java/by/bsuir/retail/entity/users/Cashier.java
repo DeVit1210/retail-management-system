@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +28,7 @@ public class Cashier extends User implements RetailManagementEntity {
     @ManyToOne
     private CoffeeShop coffeeShop;
     @OneToMany(mappedBy = "cashier", fetch = FetchType.LAZY)
-    private List<Shift> shiftList;
+    private List<Shift> shiftList = new ArrayList<>();
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(Role.CASHIER.name()));

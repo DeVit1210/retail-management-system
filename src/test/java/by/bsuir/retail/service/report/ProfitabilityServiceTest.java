@@ -30,7 +30,6 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -201,9 +200,9 @@ class ProfitabilityServiceTest {
         Material secondMaterial = MaterialTestBuilder.builder().withId(2).withPurchaseCost(2.5).build();
         Material thirdMaterial = MaterialTestBuilder.builder().withId(3).withPurchaseCost(2.5).build();
 
-        Map<Material, Integer> firstComposition = Map.of(firstMaterial, 1, secondMaterial, 2);
-        Map<Material, Integer> secondComposition = Map.of(firstMaterial, 1, thirdMaterial, 2);
-        Map<Material, Integer> thirdComposition = Map.of(firstMaterial, 2, secondMaterial, 2, thirdMaterial, 3);
+        Map<Material, Integer> firstComposition = Map.of(firstMaterial, 1000, secondMaterial, 2000);
+        Map<Material, Integer> secondComposition = Map.of(firstMaterial, 1000, thirdMaterial, 2000);
+        Map<Material, Integer> thirdComposition = Map.of(firstMaterial, 2000, secondMaterial, 2000, thirdMaterial, 3000);
 
         TechProcess firstTechProcess = TechProcessTestBuilder.builder().withIngredients(firstComposition).build();
         TechProcess secondTechProcess = TechProcessTestBuilder.builder().withIngredients(secondComposition).build();

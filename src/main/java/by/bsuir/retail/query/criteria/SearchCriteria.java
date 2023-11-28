@@ -5,10 +5,9 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
-public abstract class SearchCriteria{
+public abstract class SearchCriteria {
     protected String fieldName;
     private Operator operator;
 

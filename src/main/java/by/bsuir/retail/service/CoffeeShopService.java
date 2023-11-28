@@ -14,7 +14,6 @@ import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.query.SpecificationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -41,9 +40,7 @@ public class CoffeeShopService {
     }
 
     public List<CoffeeShop> findAll(SearchQueryRequest request) {
-        Specification<CoffeeShop> specificationChain
-                = specificationService.createSpecificationChain(request, CoffeeShop.class);
-        return coffeeShopRepository.findAll(specificationChain);
+        return specificationService.executeQuery(request, coffeeShopRepository::findAll, CoffeeShop.class);
     }
 
 

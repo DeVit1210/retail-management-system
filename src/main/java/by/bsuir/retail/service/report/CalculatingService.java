@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class CalculatingService {
     private final PaymentService paymentService;
     public double getOrderTotalCost(Order order) {
-        Payment payment = order.getPayment();
+        Payment payment = paymentService.findByOrder(order);
         return paymentService.getPaymentTotalCost(payment);
     }
 }

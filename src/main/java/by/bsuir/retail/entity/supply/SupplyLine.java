@@ -3,16 +3,14 @@ package by.bsuir.retail.entity.supply;
 import by.bsuir.retail.entity.RetailManagementEntity;
 import by.bsuir.retail.entity.products.Material;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "supply_history")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

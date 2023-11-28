@@ -3,9 +3,11 @@ package by.bsuir.retail.entity;
 import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.entity.supply.Supply;
 import by.bsuir.retail.entity.users.Cashier;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,11 +25,12 @@ public class CoffeeShop {
     private String name;
     private String address;
 
-    @OneToMany(mappedBy = "coffeeShop")
-    private List<Cashier> cashierList;
+    @OneToMany(mappedBy = "coffeeShop", fetch = FetchType.LAZY)
+    private List<Cashier> cashierList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "coffeeShop")
-    private List<Supply> supplyList;
+    @OneToMany(mappedBy = "coffeeShop", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<Supply> supplyList = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "warehouse")
