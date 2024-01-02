@@ -29,7 +29,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:test.properties")
@@ -74,7 +75,7 @@ class OrderMapperTest {
     @Test
     void testToOrder() {
         OrderAddingRequest request = buildRequest();
-        when(cashierService.findById(anyLong())).thenReturn(cashier);
+        when(cashierService.getAuthenticatedCashier()).thenReturn(cashier);
         List<OrderLine> orderLineList = Collections.nCopies(2, mock(OrderLine.class));
         when(orderLineMapper.toOrderLineList(any(OrderAddingRequest.class))).thenReturn(orderLineList);
         Order order = mapper.toOrder(request);
@@ -82,7 +83,6 @@ class OrderMapperTest {
     }
     private void assertToOrderDto(Order order, OrderDto orderDto) {
         assertEquals(orderDto.getDiscountPercent(), order.getDiscountPercent());
-        assertEquals(orderDto.getCreatedAt(), order.getCreatedAt().format(formatter));
         assertEquals(orderDto.getTotalCost(), orderCost);
         assertEquals(orderDto.getCashierName(), order.getCashier().getFullName());
         assertEquals(orderDto.getOrderComposition().size(), 2);
@@ -90,15 +90,13 @@ class OrderMapperTest {
         assertTrue(orderDto.getOrderComposition().containsKey(secondProductName));
     }
     private void assertToOrder(Order order, List<OrderLine> orderLineList) {
-        assertEquals(order.getCreatedAt(), LocalDateTime.parse(orderCreatedAt, formatter));
         assertEquals(order.getCashier(), cashier);
         assertEquals(order.getComposition(), orderLineList);
     }
     private Order buildOrder() {
-        LocalDateTime createdAt = LocalDateTime.parse(orderCreatedAt, formatter);
         return OrderTestBuilder.builder()
                 .withCashier(cashier)
-                .withCreatedAt(createdAt)
+                .withCreatedAt(LocalDateTime.now())
                 .withComposition(List.of(
                         OrderLineTestBuilder.builder().withProduct(firstProduct).withQuantity(1).build(),
                         OrderLineTestBuilder.builder().withProduct(secondProduct).withQuantity(2).build()
@@ -108,14 +106,10 @@ class OrderMapperTest {
 
     private OrderAddingRequest buildRequest() {
         return OrderAddingRequest.builder()
-                .cashierId(cashierId)
-                .createdAt(orderCreatedAt)
                 .orderComposition(new HashMap<>() {{
                     put(1L, 1);
                     put(2L, 2);
                 }})
                 .build();
     }
-
-
 }

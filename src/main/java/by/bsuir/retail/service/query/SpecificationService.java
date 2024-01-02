@@ -36,7 +36,10 @@ public class SpecificationService {
     }
 
     public <T> Sort sortedBy(SearchQueryRequest request, Class<T> clazz) {
-        return Sort.by(Sort.Direction.ASC, "properties");
+        return Sort.by(
+                request.isAscendingSort() ? Sort.Direction.ASC : Sort.Direction.DESC,
+                request.getSortFieldName()
+        );
     }
 
 
@@ -47,5 +50,4 @@ public class SpecificationService {
         Sort sort = sortedBy(request, tClass);
         return repositoryCallFunction.apply(specification, sort);
     }
-
 }

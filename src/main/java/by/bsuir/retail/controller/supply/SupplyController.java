@@ -24,4 +24,9 @@ public class SupplyController {
     public ResponseEntity<SingleEntityResponse> addSupply(@RequestBody SupplyAddingRequest request) {
         return supplyService.addSupply(request);
     }
+
+    @GetMapping("/supplier/{supplierId}")
+    public ResponseEntity<MultipleEntityResponse> getAllBySupplier(@PathVariable long supplierId) {
+        return supplyService.findBySupplier(supplierId);
+    }
 }

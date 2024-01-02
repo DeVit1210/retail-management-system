@@ -11,10 +11,9 @@ import java.util.Map;
 public class OrderDto implements RetailManagementEntity {
     private long id;
     private String cashierName;
+    private String coffeeShopName;
     private String createdAt;
     private Map<String, Integer> orderComposition;
     private int discountPercent;
     private double totalCost;
-//    private int totalCostWithDiscount;
-//    private int totalCostWithoutDiscount;
 }

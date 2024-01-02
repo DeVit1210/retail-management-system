@@ -38,8 +38,7 @@ import java.util.stream.Stream;
 import static by.bsuir.retail.entity.sales.profitability.FilterType.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -78,14 +77,14 @@ class ProfitabilityServiceTest {
     void testCalculateProductProfitability(ProfitabilityResponse expectedResult, long productId, FinancialRequest request) {
         configureCalculateProductProfitabilityMocks();
         ResponseEntity<SingleEntityResponse> result = profitabilityService.calculateProfitability(productId, request);
-        System.out.println(result.getBody().getResponse());
+        System.out.println(Objects.requireNonNull(result.getBody()).getResponse());
         assertEquals(expectedResult, Objects.requireNonNull(result.getBody().getResponse()));
     }
 
 
     private void configureCalculateTotalProfitabilityMocks() {
         List<Product> productList = List.of(firstProduct, secondProduct, thirdProduct);
-        when(productService.findAll()).thenReturn(productList);
+        when(productService.findAllWithTechProcess()).thenReturn(productList);
         when(responseBuilder.buildMultipleEntityResponse(anyList())).thenCallRealMethod();
     }
 
@@ -98,9 +97,9 @@ class ProfitabilityServiceTest {
 
     static Stream<Arguments> calculateProductProfitabilityProvider() {
         return Stream.of(
-                Arguments.of(new ProfitabilityResponse( 10.0, 5.0), firstProductId, null),
-                Arguments.of(new ProfitabilityResponse( 20.0, 7.0), secondProductId, null),
-                Arguments.of(new ProfitabilityResponse( 30.0, 15.0), thirdProductId, null),
+                Arguments.of(new ProfitabilityResponse( 10.0, 5.0), firstProductId, FinancialRequest.builder().filterType(NONE.getType()).build()),
+                Arguments.of(new ProfitabilityResponse( 20.0, 7.0), secondProductId, FinancialRequest.builder().filterType(NONE.getType()).build()),
+                Arguments.of(new ProfitabilityResponse( 30.0, 15.0), thirdProductId, FinancialRequest.builder().filterType(NONE.getType()).build()),
                 Arguments.of(
                         new ProfitabilityResponse( 10.0, 6.5),
                         firstProductId,
@@ -152,7 +151,7 @@ class ProfitabilityServiceTest {
                                 new ProfitabilityResponse( 10.0, 5.0),
                                 new ProfitabilityResponse( 20.0, 7.0),
                                 new ProfitabilityResponse( 30.0, 15.0)
-                        ), null
+                        ), FinancialRequest.builder().filterType(NONE.getType()).build()
                 ),
                 Arguments.of(
                         List.of(

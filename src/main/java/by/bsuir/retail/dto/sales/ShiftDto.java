@@ -7,6 +7,8 @@ import lombok.Getter;
 @Builder
 @Getter
 public class ShiftDto implements RetailManagementEntity {
+    private long id;
+    private String coffeeShopName;
     private String cashierName;
     private String startTime;
     private String endTime;

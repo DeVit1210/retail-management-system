@@ -1,9 +1,7 @@
 package by.bsuir.retail.query.criteria;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import by.bsuir.retail.entity.RetailManagementEntity;
+import jakarta.persistence.criteria.*;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -12,7 +10,11 @@ public abstract class SearchCriteria {
     private Operator operator;
 
     public <T> Predicate handleEquals(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-        return builder.equal(root.get(this.fieldName), getValue());
+        Path<Object> objectPath = root.get(this.fieldName);
+        if(RetailManagementEntity.class.isAssignableFrom(objectPath.getJavaType())) {
+            return builder.equal(objectPath.get("id"),getValue());
+        }
+        return builder.equal(objectPath, getValue());
     }
 
     public <T> Predicate handleNotEquals(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
@@ -40,5 +42,4 @@ public abstract class SearchCriteria {
     public abstract <T> Predicate handleLower(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder);
 
     public abstract <T> Predicate handleLowerEquals(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder);
-
 }

@@ -23,12 +23,13 @@ public abstract class OrderMapper {
     @Autowired
     protected OrderLineMapper orderLineMapper;
     @Mapping(target = "cashierName", source = "order.cashier.fullName")
+    @Mapping(target = "coffeeShopName", source = "order.cashier.coffeeShop.name")
     @Mapping(target = "createdAt", source = "createdAt", dateFormat = "yyyy-MM-dd HH:mm")
     @Mapping(target = "orderComposition", expression = "java(mapOrderComposition(order))")
     @Mapping(target = "totalCost", expression = "java(calculatingService.getOrderTotalCost(order))")
     public abstract OrderDto toOrderDto(Order order);
 
-    @Mapping(target = "cashier", expression = "java(cashierService.findById(request.getCashierId()))")
+    @Mapping(target = "cashier", expression = "java(cashierService.getAuthenticatedCashier())")
     @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "composition", expression = "java(orderLineMapper.toOrderLineList(request))")
     public abstract Order toOrder(OrderAddingRequest request);

@@ -1,7 +1,6 @@
 package by.bsuir.retail.request.query;
 
 import by.bsuir.retail.dto.query.SearchCriteriaDto;
-import by.bsuir.retail.query.criteria.SearchCriteria;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,4 +10,6 @@ import java.util.List;
 @Getter
 public class SearchQueryRequest {
     private List<SearchCriteriaDto> searchCriteriaList;
+    private boolean ascendingSort;
+    private String sortFieldName;
 }

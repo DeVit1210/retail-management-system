@@ -8,7 +8,6 @@ import by.bsuir.retail.request.supply.SupplyAddingRequest;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
-import by.bsuir.retail.service.CoffeeShopService;
 import by.bsuir.retail.service.WarehouseService;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import by.bsuir.retail.service.query.SpecificationService;
@@ -16,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -50,6 +50,7 @@ public class SupplyService {
         return responseBuilder.buildMultipleEntityResponse(mapper.toSupplyDtoList(findAll(request)));
     }
 
+    @Transactional
     public ResponseEntity<SingleEntityResponse> addSupply(SupplyAddingRequest request) {
         Supply supply = mapper.toSupply(request);
         warehouseService.updateWarehouse(supply);
@@ -69,4 +70,8 @@ public class SupplyService {
                 .reduce(0.0, Double::sum);
     }
 
+    public ResponseEntity<MultipleEntityResponse> findBySupplier(long supplierId) {
+        List<Supply> supplyList = supplyRepository.findAllBySupplier_Id(supplierId);
+        return responseBuilder.buildMultipleEntityResponse(mapper.toSupplyDtoList(supplyList));
+    }
 }

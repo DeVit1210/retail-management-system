@@ -8,8 +8,8 @@ import lombok.Getter;
 @Builder
 public class CashierDto implements RetailManagementEntity {
     private long id;
-    private String cashierName;
+    private String fullName;
     private long coffeeShopId;
-    private long coffeeShopName;
-    private int orderQuantity;
+    private String coffeeShopName;
+    private int shiftQuantity;
 }

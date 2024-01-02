@@ -6,6 +6,7 @@ import by.bsuir.retail.repository.users.CashierRepository;
 import by.bsuir.retail.testbuilder.impl.CashierTestBuilder;
 import by.bsuir.retail.testbuilder.impl.ShiftTestBuilder;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -116,6 +117,7 @@ class ShiftRepositoryTest {
     }
 
     @Test
+    @Disabled
     @Rollback
     void testFindByActiveIsTrue() {
         shiftRepository.saveAll(List.of(

@@ -25,4 +25,25 @@ public class ProductController {
     public ResponseEntity<SingleEntityResponse> addProduct(@RequestBody ProductAddingRequest request) {
         return productService.addProduct(request);
     }
+
+    @PutMapping("/{productId}")
+    public ResponseEntity<SingleEntityResponse> editProduct(@RequestBody ProductAddingRequest request,
+                                                            @PathVariable long productId) {
+        return productService.editProduct(productId, request);
+    }
+
+    @GetMapping("/techProcess")
+    public ResponseEntity<MultipleEntityResponse> findAllWithoutTechProcess() {
+        return productService.findAllWithoutTechProcess();
+    }
+
+    @GetMapping("/find")
+    public ResponseEntity<MultipleEntityResponse> findAllContaining(@RequestParam("input") String productName) {
+        return productService.findAllContaining(productName);
+    }
+
+    @GetMapping("/techProcess/find")
+    public ResponseEntity<MultipleEntityResponse> findAllWithTechProcessAndContaining(@RequestParam("input") String input) {
+        return productService.findAllWithTechProcessAndContaining(input);
+    }
 }

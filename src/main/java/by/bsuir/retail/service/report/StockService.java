@@ -3,10 +3,10 @@ package by.bsuir.retail.service.report;
 import by.bsuir.retail.entity.CoffeeShop;
 import by.bsuir.retail.entity.products.Material;
 import by.bsuir.retail.entity.sales.OrderLine;
-import by.bsuir.retail.response.report.StockReportResponse;
 import by.bsuir.retail.response.buidler.ResponseBuilder;
 import by.bsuir.retail.response.buidler.StockReportResponseBuilder;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
+import by.bsuir.retail.response.report.StockReportResponse;
 import by.bsuir.retail.service.CoffeeShopService;
 import by.bsuir.retail.service.products.MaterialService;
 import by.bsuir.retail.service.sales.OrderLineService;
@@ -31,7 +31,9 @@ public class StockService {
     public ResponseEntity<MultipleEntityResponse> generateStockReportForCoffeeShop(long coffeeShopId) {
         CoffeeShop coffeeShop = coffeeShopService.findById(coffeeShopId);
         List<OrderLine> orderLineList = orderLineService.getCoffeeShopOrderLineList(coffeeShop);
-        Map<Material, Integer> totalExpensesForEachMaterial = this.getTotalExpensesForEachMaterial(orderLineList);
+        Map<Material, Integer> warehouse = coffeeShop.getWarehouse();
+        Map<Material, Integer> expensesForEachMaterial = this.getTotalExpensesForEachMaterial(orderLineList);
+        Map<Material, Integer> totalExpensesForEachMaterial = this.merge(warehouse, expensesForEachMaterial);
         List<StockReportResponse> stockReportResponseList =
                 totalExpensesForEachMaterial.entrySet().stream().map(toStockReportResponse(coffeeShop)).toList();
         return responseBuilder.buildMultipleEntityResponse(stockReportResponseList);
@@ -45,6 +47,14 @@ public class StockService {
         return responseBuilder.buildMultipleEntityResponse(stockReportResponseList);
     }
 
+    private Map<Material, Integer> merge(Map<Material, Integer> warehouse, Map<Material, Integer> expensesForEachMaterial) {
+        Map<Material, Integer> result = new HashMap<>();
+        warehouse.forEach((material, integer) -> {
+            result.put(material, expensesForEachMaterial.getOrDefault(material, 0));
+        });
+        return result;
+    }
+
     private Function<Map.Entry<Material, Integer>, StockReportResponse> toStockReportResponse(CoffeeShop coffeeShop) {
         return entry -> StockReportResponseBuilder.forMaterial(entry.getKey())
                 .withCoffeeShopName(coffeeShop.getName())
@@ -56,7 +66,7 @@ public class StockService {
     private Function<Map.Entry<CoffeeShop, Integer>, StockReportResponse> toStockReportResponse(Material material) {
         return entry -> StockReportResponseBuilder.forMaterial(material)
                 .withCoffeeShopName(entry.getKey().getName())
-                .withLeftover(entry.getKey().getWarehouse().get(material))
+                .withLeftover(entry.getKey().getWarehouse().getOrDefault(material, 0))
                 .withTotalExpense(entry.getValue())
                 .buildReport();
     }

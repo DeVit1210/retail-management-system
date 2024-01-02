@@ -25,14 +25,24 @@ public class ShiftController {
         return shiftService.closeShift(cashierService.getAuthenticatedCashier());
     }
 
+    @GetMapping("/history/{shiftId}")
+    public ResponseEntity<MultipleEntityResponse> getShiftHistory(@PathVariable long shiftId) {
+        return shiftService.getShiftHistory(shiftId);
+    }
+
     @GetMapping("/active/cashier")
     public ResponseEntity<MultipleEntityResponse> getCurrentShiftHistory() {
         return shiftService.getCurrentShiftHistory(cashierService.getAuthenticatedCashier());
     }
 
     @GetMapping("/history/cashier")
-    public ResponseEntity<MultipleEntityResponse> getShiftHistory() {
+    public ResponseEntity<MultipleEntityResponse> getCurrentCashierShiftHistory() {
         return shiftService.getShiftHistory(cashierService.getAuthenticatedCashier());
+    }
+
+    @GetMapping("/history/cashier/{cashierId}")
+    public ResponseEntity<MultipleEntityResponse> getCashierShiftHistory(@PathVariable long cashierId) {
+        return shiftService.getShiftHistory(cashierService.findById(cashierId));
     }
 
     @GetMapping("/active")
@@ -53,5 +63,15 @@ public class ShiftController {
     @GetMapping("/history")
     public ResponseEntity<MultipleEntityResponse> getAll() {
         return shiftService.getAll();
+    }
+
+    @GetMapping("/isActive")
+    public boolean isShiftOpen() {
+        return shiftService.isShiftOpened(cashierService.getAuthenticatedCashier());
+    }
+
+    @GetMapping("/history/last")
+    public ResponseEntity<SingleEntityResponse> getLastShift() {
+        return shiftService.getLastShift(cashierService.getAuthenticatedCashier());
     }
 }

@@ -1,5 +1,6 @@
 package by.bsuir.retail.controller.sales;
 
+import by.bsuir.retail.request.query.SearchQueryRequest;
 import by.bsuir.retail.request.sales.OrderAddingRequest;
 import by.bsuir.retail.response.entity.MultipleEntityResponse;
 import by.bsuir.retail.response.entity.SingleEntityResponse;
@@ -13,16 +14,29 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/order")
 public class OrderController {
     private final OrderService orderService;
+
     @GetMapping
-    public ResponseEntity<MultipleEntityResponse> getAllOrder() {
+    public ResponseEntity<MultipleEntityResponse> getAll() {
         return orderService.getAll();
     }
+
+    @PostMapping("/filter")
+    public ResponseEntity<MultipleEntityResponse> getAll(@RequestBody SearchQueryRequest request) {
+        return orderService.getAll(request);
+    }
+
     @GetMapping("/{orderId}")
     public ResponseEntity<SingleEntityResponse> getOrder(@PathVariable long orderId) {
         return orderService.getById(orderId);
     }
+
     @PostMapping
     public ResponseEntity<SingleEntityResponse> addOrder(@RequestBody OrderAddingRequest request) {
         return orderService.addOrder(request);
+    }
+
+    @GetMapping("/coffeeShop/{coffeeShopId}")
+    public ResponseEntity<MultipleEntityResponse> getOrdersByCoffeeShop(@PathVariable long coffeeShopId) {
+        return orderService.getAllByCoffeeShop(coffeeShopId);
     }
 }

@@ -11,7 +11,6 @@ import by.bsuir.retail.response.entity.SingleEntityResponse;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import by.bsuir.retail.service.query.SpecificationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +33,7 @@ public class MaterialService {
     }
 
     public ResponseEntity<MultipleEntityResponse> findAll(SearchQueryRequest request) {
-        Specification<Material> specificationChain = specificationService.createSpecificationChain(request, Material.class);
-        List<Material> materialList = materialRepository.findAll(specificationChain);
+        List<Material> materialList = specificationService.executeQuery(request, materialRepository::findAll, Material.class);
         return responseBuilder.buildMultipleEntityResponse(mapper.toMaterialDtoList(materialList));
     }
 
@@ -49,5 +47,15 @@ public class MaterialService {
         return responseBuilder.buildSingleEntityResponse(findById(materialId));
     }
 
+    public ResponseEntity<SingleEntityResponse> editMaterial(long materialId, MaterialAddingRequest request) {
+        Material material = mapper.toMaterial(request);
+        material.setId(materialId);
+        Material updatedMaterial = materialRepository.save(material);
+        return responseBuilder.buildSingleEntityResponse(mapper.toMaterialDto(updatedMaterial));
+    }
 
+    public ResponseEntity<MultipleEntityResponse> findAllContaining(String input) {
+        List<Material> materialList = materialRepository.findAllByNameContainingIgnoreCase(input);
+        return responseBuilder.buildMultipleEntityResponse(mapper.toMaterialDtoList(materialList));
+    }
 }

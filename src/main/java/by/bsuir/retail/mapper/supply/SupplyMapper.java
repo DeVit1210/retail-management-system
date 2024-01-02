@@ -26,6 +26,7 @@ public abstract class SupplyMapper {
     @Mapping(target = "coffeeShopName", source = "supply.coffeeShop.name")
     @Mapping(target = "supplierName", source = "supply.supplier.companyName")
     @Mapping(target = "supplyComposition", expression = "java(mapComposition(supply))")
+    @Mapping(target = "createdAt", source = "createdAt", dateFormat = "HH:mm dd-MM-yyyy")
     public abstract SupplyDto toSupplyDto(Supply supply);
 
     @Mapping(target = "coffeeShop", expression = "java(coffeeShopService.findById(request.getCoffeeShopId()))")

@@ -5,13 +5,15 @@ import by.bsuir.retail.query.criteria.SearchCriteria;
 import by.bsuir.retail.query.criteria.SearchCriteriaFactory;
 import by.bsuir.retail.query.rule.Rule;
 import by.bsuir.retail.query.rule.impl.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class RuleEngine {
-    private SearchCriteriaFactory searchCriteriaFactory;
+    private final SearchCriteriaFactory searchCriteriaFactory;
     public Rule process(SearchCriteriaDto dto) {
         SearchCriteria searchCriteria = searchCriteriaFactory.create(dto);
         return buildRuleList(searchCriteria).stream()

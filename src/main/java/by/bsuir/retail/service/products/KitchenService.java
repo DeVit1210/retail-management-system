@@ -14,7 +14,6 @@ import by.bsuir.retail.service.WarehouseService;
 import by.bsuir.retail.service.exception.WrongRetailEntityIdException;
 import by.bsuir.retail.service.query.SpecificationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -39,9 +38,8 @@ public class KitchenService {
     }
 
     public ResponseEntity<MultipleEntityResponse> findAll(SearchQueryRequest request) {
-        Specification<TechProcess> specificationChain =
-                specificationService.createSpecificationChain(request, TechProcess.class);
-        List<TechProcess> techProcessList = techProcessRepository.findAll(specificationChain);
+        List<TechProcess> techProcessList =
+                specificationService.executeQuery(request, techProcessRepository::findAll, TechProcess.class);
         return responseBuilder.buildMultipleEntityResponse(mapper.toTechProcessDtoList(techProcessList));
     }
 

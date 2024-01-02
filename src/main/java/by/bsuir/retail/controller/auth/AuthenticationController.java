@@ -29,4 +29,5 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
         return authenticationService.login(request);
     }
+
 }

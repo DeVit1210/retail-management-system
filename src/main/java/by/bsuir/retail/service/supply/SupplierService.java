@@ -49,4 +49,11 @@ public class SupplierService {
     public ResponseEntity<SingleEntityResponse> getById(long supplierId) {
         return responseBuilder.buildSingleEntityResponse(findById(supplierId));
     }
+
+    public ResponseEntity<SingleEntityResponse> editSupplier(long supplierId, SupplierAddingRequest request) {
+        Supplier supplier = mapper.toSupplier(request);
+        supplier.setId(supplierId);
+        Supplier savedSupplier = supplierRepository.save(supplier);
+        return responseBuilder.buildSingleEntityResponse(mapper.toSupplierDto(savedSupplier));
+    }
 }

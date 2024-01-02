@@ -70,4 +70,5 @@ public class OrderLineService {
     private boolean isOrderLineInCoffeeShop(OrderLine orderLine, CoffeeShop coffeeShop) {
         return orderLine.getOrder().getCashier().getCoffeeShop().equals(coffeeShop);
     }
+
 }

@@ -29,7 +29,7 @@ public class ProfitabilityService {
     private final ResponseBuilder responseBuilder;
 
     public ResponseEntity<MultipleEntityResponse> calculateProfitability(FinancialRequest request) {
-        List<ProfitabilityResponse> list = productService.findAll().stream()
+        List<ProfitabilityResponse> list = productService.findAllWithTechProcess().stream()
                 .map(product -> this.calculateProfitability(product, request))
                 .toList();
         return responseBuilder.buildMultipleEntityResponse(list);

@@ -11,7 +11,8 @@ public enum FilterType {
 
     BY_COFFEE_SHOP("coffeeShop"),
     BY_DATE("date"),
-    BY_COFFEE_SHOP_AND_DATE("coffeeShop date");
+    BY_COFFEE_SHOP_AND_DATE("coffeeShop date"),
+    NONE("none");
 
     private final String type;
 

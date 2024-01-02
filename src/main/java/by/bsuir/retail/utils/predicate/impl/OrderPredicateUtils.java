@@ -22,5 +22,4 @@ public class OrderPredicateUtils implements PredicateUtils<Order> {
     public Class<Order> getPredicateClass() {
         return Order.class;
     }
-
 }

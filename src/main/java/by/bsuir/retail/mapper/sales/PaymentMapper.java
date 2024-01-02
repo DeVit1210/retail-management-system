@@ -14,7 +14,7 @@ public interface PaymentMapper {
     @Mapping(target = "totalPaymentAmount", expression = "java(payment.getPaidInCash() + payment.getPaidWithCard())")
     PaymentDto toPaymentDto(Payment payment);
     @Mapping(target = "order", source = "order")
-    @Mapping(target = "createdAt", source = "request.createdAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
     Payment toPayment(OrderAddingRequest request, Order order);
     List<PaymentDto> toPaymentDtoList(List<Payment> paymentList);
 }

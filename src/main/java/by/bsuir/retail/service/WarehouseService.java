@@ -13,12 +13,14 @@ import by.bsuir.retail.service.exception.NotSufficientMaterialAmountException;
 import by.bsuir.retail.service.products.TechProcessExecutor;
 import by.bsuir.retail.utils.ThrowableUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class WarehouseService {
     private final CoffeeShopService coffeeShopService;
@@ -53,7 +55,7 @@ public class WarehouseService {
         ThrowableUtils.prepareTest(currentQuantity, leftover -> leftover > transfer.getQuantity()).orElseThrow(
                 new NotSufficientMaterialAmountException(currentQuantity, transferQuantity, transferMaterial.getName())
         );
-        warehouse.replace(transferMaterial, transferQuantity - currentQuantity);
+        warehouse.replace(transferMaterial, currentQuantity - transferQuantity);
         coffeeShopService.updateCoffeeShop(coffeeShop);
     }
 

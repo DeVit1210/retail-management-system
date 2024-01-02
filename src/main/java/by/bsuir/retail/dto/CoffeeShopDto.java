@@ -13,4 +13,5 @@ public class CoffeeShopDto implements RetailManagementEntity {
     private String name;
     private String address;
     private Map<String, Integer> warehouse;
+    private int cashierQuantity;
 }

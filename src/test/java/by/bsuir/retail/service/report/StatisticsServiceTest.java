@@ -27,8 +27,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import static by.bsuir.retail.entity.sales.profitability.FilterType.BY_COFFEE_SHOP;
-import static by.bsuir.retail.entity.sales.profitability.FilterType.BY_COFFEE_SHOP_AND_DATE;
+import static by.bsuir.retail.entity.sales.profitability.FilterType.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -71,7 +70,7 @@ class StatisticsServiceTest {
                                 .totalIncome(orderCost * 3)
                                 .totalExpenses(supplyCost * 4)
                                 .build(),
-                        null
+                        FinancialRequest.builder().filterType(NONE.getType()).build()
                 ),
                 Arguments.of(
                         FinancialReportResponse.builder()

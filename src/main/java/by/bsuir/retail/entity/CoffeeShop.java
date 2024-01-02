@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,5 +37,5 @@ public class CoffeeShop {
     @CollectionTable(name = "warehouse")
     @MapKeyColumn
     @Column(name = "quantity")
-    private Map<Material, Integer> warehouse;
+    private Map<Material, Integer> warehouse = new HashMap<>();
 }

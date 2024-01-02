@@ -25,4 +25,10 @@ public class SupplierController {
     public ResponseEntity<SingleEntityResponse> addSupplier(@RequestBody SupplierAddingRequest request) {
         return supplierService.addSupplier(request);
     }
+
+    @PutMapping("/{supplierId}")
+    public ResponseEntity<SingleEntityResponse> editSupplier(@RequestBody SupplierAddingRequest request,
+                                                             @PathVariable long supplierId) {
+        return supplierService.editSupplier(supplierId, request);
+    }
 }

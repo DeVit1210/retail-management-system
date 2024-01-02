@@ -28,6 +28,7 @@ public class ResponseBuilder {
         Map<String, Object> claims = claimsBuilderInvoker.newClaimsBuilder(authority).buildClaims(username);
         return ResponseEntity.ok(AuthenticationResponse.builder()
                 .authenticationToken(jwtUtils.generateToken(claims, username))
+                .authority(authority.getAuthority())
                 .build()
         );
     }

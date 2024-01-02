@@ -1,12 +1,12 @@
 package by.bsuir.retail.mapper.query;
 
-import by.bsuir.retail.query.criteria.impl.*;
 import by.bsuir.retail.dto.query.SearchCriteriaDto;
-import by.bsuir.retail.query.engine.RuleEngine;
+import by.bsuir.retail.query.criteria.impl.BasicSearchCriteria;
+import by.bsuir.retail.query.criteria.impl.DateSearchCriteria;
+import by.bsuir.retail.query.criteria.impl.DoubleSearchCriteria;
+import by.bsuir.retail.query.criteria.impl.TimeSearchCriteria;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface SearchCriteriaMapper {
@@ -24,5 +24,4 @@ public interface SearchCriteriaMapper {
 
     @Mapping(target = "operator", expression = "java(Operator.fromSignature(dto.getOperatorSignature()))")
     BasicSearchCriteria toBasicSearchCriteria(SearchCriteriaDto dto);
-
 }

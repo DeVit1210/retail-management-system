@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface CoffeeShopMapper {
     @Mapping(target = "warehouse", expression = "java(mapWarehouse(coffeeShop))")
+    @Mapping(target = "cashierQuantity", expression = "java(coffeeShop.getCashierList().size())")
     CoffeeShopDto toCoffeeShopDto(CoffeeShop coffeeShop);
     CoffeeShop toCoffeeShop(CoffeeShopAddingRequest request);
     List<CoffeeShopDto> toCoffeeShopDtoList(List<CoffeeShop> coffeeShopList);

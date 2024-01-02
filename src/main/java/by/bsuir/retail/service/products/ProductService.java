@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -64,4 +65,36 @@ public class ProductService {
         return responseBuilder.buildSingleEntityResponse(mapper.toProductDto(savedProduct));
     }
 
+    public ResponseEntity<SingleEntityResponse> editProduct(long productId, ProductAddingRequest request) {
+        Product product = mapper.toProduct(request);
+        product.setId(productId);
+        Product savedProduct = productRepository.save(product);
+        return responseBuilder.buildSingleEntityResponse(mapper.toProductDto(savedProduct));
+    }
+
+    public ResponseEntity<MultipleEntityResponse> findAllWithoutTechProcess() {
+        List<Product> withoutTechProcess = productRepository.findAll().stream()
+                .filter(product -> Objects.isNull(product.getTechProcess()))
+                .toList();
+        return responseBuilder.buildMultipleEntityResponse(mapper.toProductDtoList(withoutTechProcess));
+    }
+
+    public List<Product> findAllWithTechProcess() {
+        return productRepository.findAll().stream()
+                .filter(product -> Objects.nonNull(product.getTechProcess()))
+                .toList();
+    }
+
+    public ResponseEntity<MultipleEntityResponse> findAllContaining(String productName) {
+        List<Product> productList = productRepository.findAllByNameContainingIgnoreCase(productName);
+        return responseBuilder.buildMultipleEntityResponse(mapper.toProductDtoList(productList));
+    }
+
+    public ResponseEntity<MultipleEntityResponse> findAllWithTechProcessAndContaining(String productName) {
+        List<Product> productList = productRepository.findAllByNameContainingIgnoreCase(productName)
+                .stream()
+                .filter(product -> Objects.nonNull(product.getTechProcess()))
+                .toList();
+        return responseBuilder.buildMultipleEntityResponse(mapper.toProductDtoList(productList));
+    }
 }

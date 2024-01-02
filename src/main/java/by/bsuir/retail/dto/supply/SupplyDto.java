@@ -13,6 +13,7 @@ public class SupplyDto implements RetailManagementEntity {
     private long coffeeShopId;
     private String coffeeShopName;
     private String supplierName;
+    private String createdAt;
     private Map<String, Integer> supplyComposition;
     private double totalCost;
 }

@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -50,6 +51,11 @@ public class ShiftService {
         return responseBuilder.buildMultipleEntityResponse(mapper.toShiftDtoList(shiftList, incomeList));
     }
 
+    public ResponseEntity<MultipleEntityResponse> getShiftHistory(long shiftId) {
+        Shift shift = findById(shiftId);
+        return orderService.getShiftOrderList(shift);
+    }
+
     public ResponseEntity<MultipleEntityResponse> getCurrentShiftHistory(Cashier cashier) {
         Shift activeShift = findActiveByCashier(cashier);
         return orderService.getShiftOrderList(activeShift);
@@ -71,10 +77,14 @@ public class ShiftService {
 
     // TODO: add CreatedResponse (with id and ResponseStatus.CREATED(201))
     public void openShift(Cashier cashier) {
-        ThrowableUtils.prepareTest(cashier, c -> !shiftRepository.existsByCashierAndActiveIsTrue(c))
+        ThrowableUtils.prepareTest(cashier, c -> !isShiftOpened(c))
                 .orElseThrow(new ShiftAlreadyOpenedException(cashier.getId()));
         Shift shift = Shift.builder().startTime(LocalDateTime.now()).cashier(cashier).active(true).build();
         shiftRepository.save(shift);
+    }
+
+    public boolean isShiftOpened(Cashier cashier) {
+        return shiftRepository.existsByCashierAndActiveIsTrue(cashier);
     }
 
     public ResponseEntity<SingleEntityResponse> closeShift(Cashier cashier) {
@@ -98,6 +108,14 @@ public class ShiftService {
         List<Shift> shiftList = shiftRepository.findByCashierIn(cashierList);
         List<Double> totalIncomeList = mapToTotalShiftIncomeList(shiftList);
         return responseBuilder.buildMultipleEntityResponse(mapper.toShiftDtoList(shiftList, totalIncomeList));
+    }
+
+    public ResponseEntity<SingleEntityResponse> getLastShift(Cashier cashier) {
+        Shift lastShift = shiftRepository.findByCashier(cashier).stream()
+                .max(Comparator.comparing(Shift::getEndTime))
+                .orElseGet(Shift::new);
+        double lastShiftTotalIncome = orderService.getShiftTotalIncome(lastShift);
+        return responseBuilder.buildSingleEntityResponse(mapper.toShiftDto(lastShift, lastShiftTotalIncome));
     }
 
     private List<Double> mapToTotalShiftIncomeList(List<Shift> shiftList) {
